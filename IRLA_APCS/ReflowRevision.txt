@@ -1,0 +1,26 @@
+﻿===============================================================================
+Program PL Reflow Self Con:
+===============================================================================
+Ver4.04_121010      Software Revision Start																										     //783 Rohm.dll Ver120607
+					- IN -OUT Pcs Display Miss(Use before process data)
+					- 121126 Lock only "M" M/C can manual input
+
+Ver4.05_130130      - Log in OPno.for Manual Input (Reduct OPno.input duplicate)  
+					- Predictive textbox Input ,Output
+	   _130218		- New Key Board addition.
+	   _130320      - R-08 Manual input same time with Auto Run Protect	
+	   _130422      - DBX Update method change (Use VB.NET Component)By TOS
+
+Ver4.06 130423      - addition Alarm table database system
+					- edit to send log of SD 	   
+					- New record to Dbx in start and stop
+					- Add list in Manual for run 2 time
+					
+Ver4.06 130614      - edit function run 2 times
+					- edit send LOTREQ in TDC					
+					
+		-130625	    -Check data to send . it cannot run when data send Space Data
+		
+		-130701		-Protect Data from magazine send to Character 13
+		
+		-150825     -Renovate all SelfCon
