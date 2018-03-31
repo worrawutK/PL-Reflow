@@ -2,7 +2,8 @@
 Imports System.IO
 Imports System.Runtime.Serialization.Formatters.Binary
 Imports System.Threading
-
+Imports iLibrary
+Imports Rohm.Common.Logging
 Public Class frmMain
     Private m_TdcService As TdcService
     Public CtlFocust As Control
@@ -556,7 +557,14 @@ Public Class frmMain
             MsgBox(ex.Message)
         End Try
     End Sub
-
+#Region "Apcs_Pro Valiable"
+    Private c_ApcsProService As IApcsProService = New ApcsProService()
+    Private lotInfo As iLibrary.LotInfo
+    Private machineInfo As MachineInfo
+    Private userInfo As UserInfo
+    Private log As New Logger
+    Private ResultApcsProService As LotUpdateInfo = Nothing
+#End Region
     Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
         Dim TmpData As String = ""
         Dim ArrayData As String()
@@ -588,7 +596,44 @@ LBL_QUEUE_LOTSET_CHECK:
         End SyncLock
 
 LBL_QUEUE_LotSet_Err:
+#Region "Apcs_Pro LotSetUp"
 
+        Try
+            ' iLibrary.AppConfig.AddConnectionString("ApcsProConnectionString", "Server=10.28.32.122;Database=APCSProDB_V0_96_15;User Id=sa;Password=p@$$w0rd;")
+            Dim strHostName As String
+            Dim strIPAddress As String
+            strHostName = System.Net.Dns.GetHostName()
+            strIPAddress = System.Net.Dns.GetHostByName(strHostName).AddressList(0).ToString()
+            Dim machineInfoArray As MachineInfo() = c_ApcsProService.GetMachineInfoArrayByCellConIp(strIPAddress)
+            For Each mc As MachineInfo In machineInfoArray
+                machineInfo = mc
+            Next
+            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
+            machineInfo = c_ApcsProService.GetMachineInfo(machineInfo.Id)
+            userInfo = c_ApcsProService.GetUserInfo(OPNo)
+            Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
+
+            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, "", "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "")
+            End If
+        Catch ex As Exception
+            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
+            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "")
+
+        End Try
+#End Region
+#Region "APCS Pro LotStart"
+        Try
+            Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
+            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, "", "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "")
+            End If
+        Catch ex As Exception
+            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), "")
+        End Try
+#End Region
         Dim resSet As TdcResponse = m_TdcService.LotSet(MCNo, LotNo, CDate(StartTime), OPNo, 0)
         If resSet.HasError Then
             If RepeatCountLotSet > 5 Then 'กรณีที่ Err 70,71,72 วนรันซ้ำมากกว่า 5 ครั้ง เป็น Err Log แล้วรัน Lot ต่อไป
@@ -637,7 +682,17 @@ LBL_QUEUE_LOTEND_CHECK:
         End SyncLock
 
 LBL_QUEUE_LotEnd_Err:
-
+#Region "APCS Pro LotEnd"
+        Try
+            Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
+            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), "", "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "")
+            End If
+        Catch ex As Exception
+            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), "")
+        End Try
+#End Region
         Dim resEnd As TdcResponse = m_TdcService.LotEnd(MCNo, LotNo, CDate(EndTime), CInt(GoodQty), CInt(NGQTy), 1, OPNo)
         If resEnd.HasError Then
             If RepeatCountLotEnd > 5 Then 'กรณีที่ Err 70,71,72 วนรันซ้ำมากกว่า 5 ครั้ง เป็น Err Log แล้วรัน Lot ต่อไป
