@@ -5,25 +5,20 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{4D0C7221-8429-49B0-B277-046917D2E3FC}</ProjectGuid>
+    <ProjectGuid>{F2FCFB3A-D462-41F6-85CE-BE70548C84A8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>WindowsApplication1.My.MyApplication</StartupObject>
-    <RootNamespace>WindowsApplication1</RootNamespace>
-    <AssemblyName>IRLA_APCS</AssemblyName>
+    <StartupObject>ReflowManual.My.MyApplication</StartupObject>
+    <RootNamespace>ReflowManual</RootNamespace>
+    <AssemblyName>ReflowManual</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
-    <OptionStrict>On</OptionStrict>
+    <OptionStrict>Off</OptionStrict>
     <OptionInfer>On</OptionInfer>
-    <ApplicationIcon>RohmIcon.ico</ApplicationIcon>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
-    <UpgradeBackupLocation>
-    </UpgradeBackupLocation>
-    <OldToolsVersion>3.5</OldToolsVersion>
+    <ApplicationIcon>CD.ico</ApplicationIcon>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -36,8 +31,14 @@
     <MapFileExtensions>true</MapFileExtensions>
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,9 +46,8 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>IRLA_APCS.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>ReflowManual.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -55,26 +55,15 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>IRLA_APCS.xml</DocumentationFile>
-    <NoWarn>42353,42354,42355</NoWarn>
-    <WarningsAsErrors>41999,42016,42017,42018,42019,42020,42021,42022,42032,42036</WarningsAsErrors>
+    <DocumentationFile>ReflowManual.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="iLibrary, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\iLibrary.dll</HintPath>
-    </Reference>
     <Reference Include="Rohm.Apcs.Tdc, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL" />
-    <Reference Include="Rohm.Common.Logging, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\Rohm.Common.Logging.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
@@ -86,10 +75,6 @@
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="TextboxTool, Version=1.0.4784.16140, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>bin\Debug\TextboxTool.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -99,7 +84,6 @@
     <Import Include="System.Data" />
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
-    <Import Include="System.IO" />
     <Import Include="System.Windows.Forms" />
     <Import Include="System.Linq" />
     <Import Include="System.Xml.Linq" />
@@ -110,44 +94,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DBxDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="frmConfig.Designer.vb">
-      <DependentUpon>frmConfig.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmConfig.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmEndManual.Designer.vb">
-      <DependentUpon>frmEndManual.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmEndManual.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="FrmKeyBoard.Designer.vb">
       <DependentUpon>FrmKeyBoard.vb</DependentUpon>
     </Compile>
     <Compile Include="FrmKeyBoard.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="frmSearch.Designer.vb">
-      <DependentUpon>frmSearch.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmSearch.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="frmShowAlarmData.Designer.vb">
-      <DependentUpon>frmShowAlarmData.vb</DependentUpon>
-    </Compile>
-    <Compile Include="frmShowAlarmData.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="ReflowData.vb" />
-    <Compile Include="Module1.vb" />
-    <Compile Include="UDPSocket.vb" />
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -155,54 +107,47 @@
       <DependentUpon>frmMain.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmNumpad.Designer.vb">
+      <DependentUpon>frmNumpad.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmNumpad.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ModuleGobal.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="ReflowData.vb" />
+    <Compile Include="TmpTDC.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="frmConfig.resx">
-      <DependentUpon>frmConfig.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmEndManual.resx">
-      <DependentUpon>frmEndManual.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FrmKeyBoard.resx">
       <DependentUpon>FrmKeyBoard.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmSearch.resx">
-      <DependentUpon>frmSearch.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="frmShowAlarmData.resx">
-      <DependentUpon>frmShowAlarmData.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
-      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmNumpad.resx">
+      <DependentUpon>frmNumpad.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="My Project\Application.myapp">
-      <Generator>MyApplicationCodeGenerator</Generator>
-      <LastGenOutput>Application.Designer.vb</LastGenOutput>
-    </None>
-    <None Include="My Project\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>My</CustomToolNamespace>
-      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -217,11 +162,25 @@
     <None Include="DBxDataSet.xss">
       <DependentUpon>DBxDataSet.xsd</DependentUpon>
     </None>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ReflowRevision.txt" />
-    <None Include="Resources\rohm.bmp" />
-    <Content Include="RohmIcon.ico" />
+    <None Include="Resources\Rohm_logo_2009.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="Resources\RohmLogo.PNG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="CD.ico" />
     <Content Include="SelfCon10.ico" />
   </ItemGroup>
   <ItemGroup>

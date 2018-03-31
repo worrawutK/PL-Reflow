@@ -22,139 +22,139 @@ Partial Class frmMain
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-        Me.components = New System.ComponentModel.Container
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Me.lbStart = New System.Windows.Forms.Label
-        Me.lbIp = New System.Windows.Forms.Label
-        Me.lbOp = New System.Windows.Forms.Label
-        Me.lbStop = New System.Windows.Forms.Label
-        Me.lbInput = New System.Windows.Forms.Label
-        Me.lbDevice = New System.Windows.Forms.Label
-        Me.lbOutput = New System.Windows.Forms.Label
-        Me.lbPackage = New System.Windows.Forms.Label
-        Me.lbLotNo = New System.Windows.Forms.Label
-        Me.lbMC = New System.Windows.Forms.Label
-        Me.TabControl1 = New System.Windows.Forms.TabControl
-        Me.TpProductData = New System.Windows.Forms.TabPage
-        Me.BtEndLot = New System.Windows.Forms.Button
-        Me.gbxLotEnd = New System.Windows.Forms.GroupBox
-        Me.radResetEnd = New System.Windows.Forms.RadioButton
-        Me.radAccuEnd = New System.Windows.Forms.RadioButton
-        Me.radNormalEnd = New System.Windows.Forms.RadioButton
-        Me.TPMaintenance = New System.Windows.Forms.TabPage
-        Me.LbCounterFile = New System.Windows.Forms.Label
-        Me.Button1 = New System.Windows.Forms.Button
-        Me.BtSetting = New System.Windows.Forms.Button
-        Me.ComLog = New System.Windows.Forms.TabPage
-        Me.lbLotReq = New System.Windows.Forms.Label
-        Me.lbLotSetEnd = New System.Windows.Forms.Label
-        Me.cbSDGood = New System.Windows.Forms.CheckBox
-        Me.BtClearLog = New System.Windows.Forms.Button
-        Me.CommLog = New System.Windows.Forms.TextBox
-        Me.TabPage1 = New System.Windows.Forms.TabPage
-        Me.ReflowDataDataGridView = New System.Windows.Forms.DataGridView
-        Me.LotNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MCNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LotStartTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.OPNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.InputQtyDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.OutputQtyDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LotEndTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MagazineNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.TemperatureGroupDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.RemarkDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.AlarmTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.lbStart = New System.Windows.Forms.Label()
+        Me.lbIp = New System.Windows.Forms.Label()
+        Me.lbOp = New System.Windows.Forms.Label()
+        Me.lbStop = New System.Windows.Forms.Label()
+        Me.lbInput = New System.Windows.Forms.Label()
+        Me.lbDevice = New System.Windows.Forms.Label()
+        Me.lbOutput = New System.Windows.Forms.Label()
+        Me.lbPackage = New System.Windows.Forms.Label()
+        Me.lbLotNo = New System.Windows.Forms.Label()
+        Me.lbMC = New System.Windows.Forms.Label()
+        Me.TabControl1 = New System.Windows.Forms.TabControl()
+        Me.TpProductData = New System.Windows.Forms.TabPage()
+        Me.BtEndLot = New System.Windows.Forms.Button()
+        Me.gbxLotEnd = New System.Windows.Forms.GroupBox()
+        Me.radResetEnd = New System.Windows.Forms.RadioButton()
+        Me.radAccuEnd = New System.Windows.Forms.RadioButton()
+        Me.radNormalEnd = New System.Windows.Forms.RadioButton()
+        Me.TPMaintenance = New System.Windows.Forms.TabPage()
+        Me.LbCounterFile = New System.Windows.Forms.Label()
+        Me.Button1 = New System.Windows.Forms.Button()
+        Me.BtSetting = New System.Windows.Forms.Button()
+        Me.ComLog = New System.Windows.Forms.TabPage()
+        Me.lbLotReq = New System.Windows.Forms.Label()
+        Me.lbLotSetEnd = New System.Windows.Forms.Label()
+        Me.cbSDGood = New System.Windows.Forms.CheckBox()
+        Me.BtClearLog = New System.Windows.Forms.Button()
+        Me.CommLog = New System.Windows.Forms.TextBox()
+        Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.ReflowDataDataGridView = New System.Windows.Forms.DataGridView()
+        Me.LotNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MCNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LotStartTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OPNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.InputQtyDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OutputQtyDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LotEndTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MagazineNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TemperatureGroupDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RemarkDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlarmTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowDataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DBxDataSet = New WindowsApplication1.DBxDataSet
-        Me.ReflowAlarmInfoDataGridView = New System.Windows.Forms.DataGridView
-        Me.RecordTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MCNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.AlarmIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.LotNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.ClearTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.DBxDataSet = New WindowsApplication1.DBxDataSet()
+        Me.ReflowAlarmInfoDataGridView = New System.Windows.Forms.DataGridView()
+        Me.RecordTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MCNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlarmIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LotNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.ClearTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowAlarmInfoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView
-        Me.IDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.AlarmNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.MachineTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
-        Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn
+        Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView()
+        Me.IDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlarmNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MachineTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowAlarmTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.TabPage2 = New System.Windows.Forms.TabPage
-        Me.Button20 = New System.Windows.Forms.Button
-        Me.Button19 = New System.Windows.Forms.Button
-        Me.Button18 = New System.Windows.Forms.Button
-        Me.Button16 = New System.Windows.Forms.Button
-        Me.Button15 = New System.Windows.Forms.Button
-        Me.Button14 = New System.Windows.Forms.Button
-        Me.Button13 = New System.Windows.Forms.Button
-        Me.Button10 = New System.Windows.Forms.Button
-        Me.Button11 = New System.Windows.Forms.Button
-        Me.Button9 = New System.Windows.Forms.Button
-        Me.Button8 = New System.Windows.Forms.Button
-        Me.Button12 = New System.Windows.Forms.Button
-        Me.Button2 = New System.Windows.Forms.Button
-        Me.Button7 = New System.Windows.Forms.Button
-        Me.Button6 = New System.Windows.Forms.Button
-        Me.Button3 = New System.Windows.Forms.Button
-        Me.Button4 = New System.Windows.Forms.Button
-        Me.Button5 = New System.Windows.Forms.Button
-        Me.APCSClose = New System.Windows.Forms.Button
-        Me.lbNotification = New System.Windows.Forms.Label
-        Me.MinimizeButton = New System.Windows.Forms.Button
-        Me.LbGroup = New System.Windows.Forms.Label
-        Me.LbVersion = New System.Windows.Forms.Label
-        Me.Lbtime = New System.Windows.Forms.Label
+        Me.TabPage2 = New System.Windows.Forms.TabPage()
+        Me.Button20 = New System.Windows.Forms.Button()
+        Me.Button19 = New System.Windows.Forms.Button()
+        Me.Button18 = New System.Windows.Forms.Button()
+        Me.Button16 = New System.Windows.Forms.Button()
+        Me.Button15 = New System.Windows.Forms.Button()
+        Me.Button14 = New System.Windows.Forms.Button()
+        Me.Button13 = New System.Windows.Forms.Button()
+        Me.Button10 = New System.Windows.Forms.Button()
+        Me.Button11 = New System.Windows.Forms.Button()
+        Me.Button9 = New System.Windows.Forms.Button()
+        Me.Button8 = New System.Windows.Forms.Button()
+        Me.Button12 = New System.Windows.Forms.Button()
+        Me.Button2 = New System.Windows.Forms.Button()
+        Me.Button7 = New System.Windows.Forms.Button()
+        Me.Button6 = New System.Windows.Forms.Button()
+        Me.Button3 = New System.Windows.Forms.Button()
+        Me.Button4 = New System.Windows.Forms.Button()
+        Me.Button5 = New System.Windows.Forms.Button()
+        Me.APCSClose = New System.Windows.Forms.Button()
+        Me.lbNotification = New System.Windows.Forms.Label()
+        Me.MinimizeButton = New System.Windows.Forms.Button()
+        Me.LbGroup = New System.Windows.Forms.Label()
+        Me.LbVersion = New System.Windows.Forms.Label()
+        Me.Lbtime = New System.Windows.Forms.Label()
         Me.TimerDateTime = New System.Windows.Forms.Timer(Me.components)
-        Me.LbMagazine = New System.Windows.Forms.Label
-        Me.bgTDC = New System.ComponentModel.BackgroundWorker
-        Me.bgTDCLotReq = New System.ComponentModel.BackgroundWorker
-        Me.lbStatusMC = New System.Windows.Forms.Label
-        Me.ANDONToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.WORKRECORDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.BMREQUESTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.PMREPAIRINGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.SEARCHToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.AndonToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.WorkRecordToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.BMRequestToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.PMRepairingToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-        Me.SearchToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.AndonToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.WorkRecordToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem
-        Me.BMRequestToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.PMRepairingToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.SearchToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.AndonToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip
-        Me.AndonToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem
-        Me.WorkRecordToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.HelpToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem
-        Me.BMRequestToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.PMRepairingToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.SearchToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem
-        Me.Label1 = New System.Windows.Forms.Label
-        Me.Label2 = New System.Windows.Forms.Label
-        Me.Label3 = New System.Windows.Forms.Label
-        Me.Label4 = New System.Windows.Forms.Label
-        Me.Label5 = New System.Windows.Forms.Label
-        Me.Label6 = New System.Windows.Forms.Label
-        Me.Label7 = New System.Windows.Forms.Label
-        Me.Label8 = New System.Windows.Forms.Label
-        Me.Label9 = New System.Windows.Forms.Label
-        Me.Label10 = New System.Windows.Forms.Label
-        Me.Label11 = New System.Windows.Forms.Label
-        Me.Label12 = New System.Windows.Forms.Label
-        Me.Label13 = New System.Windows.Forms.Label
-        Me.Label14 = New System.Windows.Forms.Label
-        Me.PictureBox1 = New System.Windows.Forms.PictureBox
-        Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter
-        Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter
-        Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter
-        Me.lbNetversion = New System.Windows.Forms.Label
-        Me.WIPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+        Me.LbMagazine = New System.Windows.Forms.Label()
+        Me.bgTDC = New System.ComponentModel.BackgroundWorker()
+        Me.bgTDCLotReq = New System.ComponentModel.BackgroundWorker()
+        Me.lbStatusMC = New System.Windows.Forms.Label()
+        Me.ANDONToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WORKRECORDToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BMREQUESTToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PMREPAIRINGToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SEARCHToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AndonToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WorkRecordToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BMRequestToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PMRepairingToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SearchToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AndonToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WorkRecordToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BMRequestToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PMRepairingToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SearchToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.AndonToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
+        Me.AndonToolStripMenuItem4 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WorkRecordToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.HelpToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.BMRequestToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PMRepairingToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SearchToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
+        Me.WIPToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.Label1 = New System.Windows.Forms.Label()
+        Me.Label2 = New System.Windows.Forms.Label()
+        Me.Label3 = New System.Windows.Forms.Label()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.Label5 = New System.Windows.Forms.Label()
+        Me.Label6 = New System.Windows.Forms.Label()
+        Me.Label7 = New System.Windows.Forms.Label()
+        Me.Label8 = New System.Windows.Forms.Label()
+        Me.Label9 = New System.Windows.Forms.Label()
+        Me.Label10 = New System.Windows.Forms.Label()
+        Me.Label11 = New System.Windows.Forms.Label()
+        Me.Label12 = New System.Windows.Forms.Label()
+        Me.Label13 = New System.Windows.Forms.Label()
+        Me.Label14 = New System.Windows.Forms.Label()
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox()
+        Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter()
+        Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter()
+        Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter()
+        Me.lbNetversion = New System.Windows.Forms.Label()
         Me.TabControl1.SuspendLayout()
         Me.TpProductData.SuspendLayout()
         Me.gbxLotEnd.SuspendLayout()
@@ -814,7 +814,6 @@ Partial Class frmMain
         '
         'Button10
         '
-        Me.Button10.Enabled = False
         Me.Button10.Location = New System.Drawing.Point(161, 79)
         Me.Button10.Name = "Button10"
         Me.Button10.Size = New System.Drawing.Size(75, 23)
@@ -835,25 +834,21 @@ Partial Class frmMain
         '
         'Button9
         '
-        Me.Button9.Enabled = False
         Me.Button9.Location = New System.Drawing.Point(161, 286)
         Me.Button9.Name = "Button9"
         Me.Button9.Size = New System.Drawing.Size(75, 23)
         Me.Button9.TabIndex = 0
         Me.Button9.Text = "MC2 End"
         Me.Button9.UseVisualStyleBackColor = True
-        Me.Button9.Visible = False
         '
         'Button8
         '
-        Me.Button8.Enabled = False
         Me.Button8.Location = New System.Drawing.Point(161, 241)
         Me.Button8.Name = "Button8"
         Me.Button8.Size = New System.Drawing.Size(75, 23)
         Me.Button8.TabIndex = 0
         Me.Button8.Text = "MC2 SC"
         Me.Button8.UseVisualStyleBackColor = True
-        Me.Button8.Visible = False
         '
         'Button12
         '
@@ -877,18 +872,15 @@ Partial Class frmMain
         '
         'Button7
         '
-        Me.Button7.Enabled = False
         Me.Button7.Location = New System.Drawing.Point(161, 172)
         Me.Button7.Name = "Button7"
         Me.Button7.Size = New System.Drawing.Size(75, 23)
         Me.Button7.TabIndex = 0
         Me.Button7.Text = "MC2 SD"
         Me.Button7.UseVisualStyleBackColor = True
-        Me.Button7.Visible = False
         '
         'Button6
         '
-        Me.Button6.Enabled = False
         Me.Button6.Location = New System.Drawing.Point(161, 126)
         Me.Button6.Name = "Button6"
         Me.Button6.Size = New System.Drawing.Size(75, 23)
@@ -1148,7 +1140,7 @@ Partial Class frmMain
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AndonToolStripMenuItem4, Me.WorkRecordToolStripMenuItem3, Me.HelpToolStripMenuItem2, Me.BMRequestToolStripMenuItem3, Me.PMRepairingToolStripMenuItem3, Me.SearchToolStripMenuItem3, Me.WIPToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(51, 166)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(736, 27)
+        Me.MenuStrip1.Size = New System.Drawing.Size(644, 27)
         Me.MenuStrip1.TabIndex = 213
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -1187,6 +1179,12 @@ Partial Class frmMain
         Me.SearchToolStripMenuItem3.Name = "SearchToolStripMenuItem3"
         Me.SearchToolStripMenuItem3.Size = New System.Drawing.Size(76, 23)
         Me.SearchToolStripMenuItem3.Text = "Search"
+        '
+        'WIPToolStripMenuItem
+        '
+        Me.WIPToolStripMenuItem.Name = "WIPToolStripMenuItem"
+        Me.WIPToolStripMenuItem.Size = New System.Drawing.Size(55, 23)
+        Me.WIPToolStripMenuItem.Text = "WIP"
         '
         'Label1
         '
@@ -1360,10 +1358,10 @@ Partial Class frmMain
         'Label14
         '
         Me.Label14.AutoSize = True
-        Me.Label14.Font = New System.Drawing.Font("Narkisim", 35.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(177, Byte))
+        Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 35.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(177, Byte))
         Me.Label14.Location = New System.Drawing.Point(62, 101)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(199, 47)
+        Me.Label14.Size = New System.Drawing.Size(230, 54)
         Me.Label14.TabIndex = 215
         Me.Label14.Text = "REFLOW"
         '
@@ -1396,12 +1394,6 @@ Partial Class frmMain
         Me.lbNetversion.Size = New System.Drawing.Size(45, 13)
         Me.lbNetversion.TabIndex = 217
         Me.lbNetversion.Text = "Label15"
-        '
-        'WIPToolStripMenuItem
-        '
-        Me.WIPToolStripMenuItem.Name = "WIPToolStripMenuItem"
-        Me.WIPToolStripMenuItem.Size = New System.Drawing.Size(55, 23)
-        Me.WIPToolStripMenuItem.Text = "WIP"
         '
         'frmMain
         '
