@@ -1140,10 +1140,10 @@ LBL_QUEUE_LotSet_Err:
             Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
             ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
             If Not ResultApcsProService.IsOk Then
-                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "")
+                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, LotNo)
             End If
         Catch ex As Exception
-            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), "")
+            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), LotNo)
         End Try
 #End Region
         GoTo LBL_QUEUE_LOTSET_CHECK
@@ -1219,10 +1219,10 @@ LBL_QUEUE_LotEnd_Err:
             Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
             ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), 0, "", 1, currentServerTime.Datetime, log)
             If Not ResultApcsProService.IsOk Then
-                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "")
+                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, LotNo)
             End If
         Catch ex As Exception
-            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), "")
+            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), LotNo)
         End Try
 #End Region
         CountErr03 = 0
@@ -1379,11 +1379,11 @@ LBL_QUEUE_LotEnd_Err:
 
             ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
             If Not ResultApcsProService.IsOk Then
-                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "")
+                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, LotNo)
             End If
         Catch ex As Exception
             'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
-            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "")
+            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), LotNo)
 
         End Try
 #End Region
