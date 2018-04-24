@@ -562,7 +562,7 @@ Public Class frmMain
     Private lotInfo As iLibrary.LotInfo
     Private machineInfo As MachineInfo
     Private userInfo As UserInfo
-    Private log As Logger
+    Private log As New Logger
     Private ResultApcsProService As LotUpdateInfo = Nothing
 #End Region
     Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
@@ -630,7 +630,7 @@ LBL_QUEUE_LotSet_Err:
             lotInfo = c_ApcsProService.GetLotInfo(LotNo)
             machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
             userInfo = c_ApcsProService.GetUserInfo(OPNo)
-            log = New Logger("1.0", machineInfo.Name)
+            log = New Logger("1.0", MCNo)
             Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
 
             ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)

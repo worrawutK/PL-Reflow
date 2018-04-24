@@ -101,7 +101,7 @@ Public Class frmMain
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lbNetversion.Text = "170109"
+        lbNetversion.Text = "180424 APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
 
@@ -351,6 +351,7 @@ Public Class frmMain
                     If m_Offline = _SelfConMode.Offline Then 'Run Offline
                         SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
                         m_SelfData.LotInform = "Run Offline"
+
                     Else 'Run Online
                         SyncLock m_Locker
                             Dim strLotReqData As String = m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.LotStartMode & "," & m_SelfData.IPA
@@ -1066,7 +1067,9 @@ Public Class frmMain
     Private lotInfo As iLibrary.LotInfo
     Private machineInfo As MachineInfo
     Private userInfo As UserInfo
-    Private log As Logger
+    Private currentServerTime As DateTimeInfo
+    Private log As New Logger
+    Private packageEnable As Boolean = False
     Private ResultApcsProService As LotUpdateInfo = Nothing
 #End Region
     Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
@@ -1135,15 +1138,49 @@ LBL_QUEUE_LotSet_Err:
                     GoTo LBL_QUEUE_LotSet_Err
             End Select
         End If
-#Region "APCS Pro LotStart"
+#Region "Apcs_Pro LotSetUp"
+
         Try
-            Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+
+            log = New Logger("1.0", MCNo)
+            packageEnable = c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log)
+            If Not packageEnable Then
+                GoTo LBL_QUEUE_LOTSET_CHECK
+            End If
+
+            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
+            If lotInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
+            End If
+            machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
+            If machineInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
+            End If
+            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
+            If userInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
+            End If
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+
+            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
             If Not ResultApcsProService.IsOk Then
-                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, LotNo)
+                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
             End If
         Catch ex As Exception
-            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), LotNo)
+            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
+            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
+
+        End Try
+#End Region
+#Region "APCS Pro LotStart"
+        Try
+            'currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
         End Try
 #End Region
         GoTo LBL_QUEUE_LOTSET_CHECK
@@ -1214,18 +1251,22 @@ LBL_QUEUE_LotEnd_Err:
                     GoTo LBL_QUEUE_LotEnd_Err
             End Select
         End If
+        CountErr03 = 0
 #Region "APCS Pro LotEnd"
         Try
-            Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
+            If Not packageEnable Then
+                GoTo LBL_QUEUE_LOTEND_CHECK
+            End If
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
             ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), 0, "", 1, currentServerTime.Datetime, log)
             If Not ResultApcsProService.IsOk Then
-                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, LotNo)
+                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
             End If
         Catch ex As Exception
-            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.ToString(), LotNo)
+            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
         End Try
 #End Region
-        CountErr03 = 0
+
         GoTo LBL_QUEUE_LOTEND_CHECK
     End Sub
 
@@ -1358,35 +1399,7 @@ LBL_QUEUE_LotEnd_Err:
             strMess = "00 : Running"
         End If
 
-#Region "Apcs_Pro LotSetUp"
 
-        Try
-            ' iLibrary.AppConfig.AddConnectionString("ApcsProConnectionString", "Server=10.28.32.122;Database=APCSProDB_V0_96_15;User Id=sa;Password=p@$$w0rd;")
-            'Dim strHostName As String
-            'Dim strIPAddress As String
-            'strHostName = System.Net.Dns.GetHostName()
-            'strIPAddress = System.Net.Dns.GetHostByName(strHostName).AddressList(0).ToString()
-            'Dim machineInfoArray As MachineInfo() = c_ApcsProService.GetMachineInfoArrayByCellConIp(strIPAddress)
-            'For Each mc As MachineInfo In machineInfoArray
-            '    machineInfo = mc
-            'Next
-
-            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
-            machineInfo = c_ApcsProService.GetMachineInfo("RF-" & MCNo)
-            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
-            log = New Logger("1.0", machineInfo.Name)
-            Dim currentServerTime As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(log)
-
-            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, LotNo)
-            End If
-        Catch ex As Exception
-            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
-            log.OperationLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), LotNo)
-
-        End Try
-#End Region
 
         Dim StrData As String = strMess
         m_SelfData.LotInform = StrData
