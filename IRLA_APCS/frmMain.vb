@@ -2003,6 +2003,10 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
-        UpdateMachineOnlineState(machineInfo.Id, 0, log)
+        Try
+            UpdateMachineOnlineState(machineInfo.Id, 0, log)
+        Catch ex As Exception
+
+        End Try
     End Sub
 End Class
