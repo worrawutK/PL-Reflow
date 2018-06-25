@@ -1,4 +1,4 @@
-﻿<Serializable()> _
+﻿<Serializable()>
 Public Class ReflowData
     Private _mcNum As String
     Public Property McNo() As String
@@ -288,6 +288,46 @@ Public Class ReflowData
         End Get
         Set(ByVal value As Integer)
             _LeqLock = value
+        End Set
+    End Property
+
+    Private c_CellConState As Integer
+    Public Property CellConState() As Integer
+        Get
+            Return c_CellConState
+        End Get
+        Set(ByVal value As Integer)
+            c_CellConState = value
+        End Set
+    End Property
+End Class
+Public Class TDCInfo
+    Private _isPass As Boolean
+    Public Property IsPass() As Boolean
+        Get
+            Return _isPass
+        End Get
+        Set(ByVal value As Boolean)
+            _isPass = value
+        End Set
+    End Property
+
+    Private _ErrorMessage As String
+    Public Property ErrorMessage() As String
+        Get
+            Return _ErrorMessage
+        End Get
+        Set(ByVal value As String)
+            _ErrorMessage = value
+        End Set
+    End Property
+    Private _ErrorCode As String
+    Public Property ErrorCode() As String
+        Get
+            Return _ErrorCode
+        End Get
+        Set(ByVal value As String)
+            _ErrorCode = value
         End Set
     End Property
 End Class

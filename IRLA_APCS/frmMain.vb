@@ -5,6 +5,7 @@ Imports Rohm.Apcs.Tdc
 Imports System.Runtime.Serialization.Formatters.Soap
 Imports iLibrary
 Imports Rohm.Common.Logging
+Imports WindowsApplication1.ServiceReference1
 
 Public Class frmMain
     Private m_TdcService As TdcService
@@ -16,78 +17,91 @@ Public Class frmMain
     Private m_LotSetQueue As Queue(Of String) = New Queue(Of String)
     Private m_LotEndQueue As Queue(Of String) = New Queue(Of String)
     Private m_LotReqQueue As Queue(Of String) = New Queue(Of String)
+    Dim c_dlg As TdcAlarmMessageForm
     'Private m_LotReqMesQueue As Queue(Of String) = New Queue(Of String)
 
-    Sub SaveTDCConfig()
-        Using sw As StreamWriter = New StreamWriter(Path.Combine(My.Application.Info.DirectoryPath, "Config.txt"), False)
-            Dim TDCConfig As String
-            TDCConfig = "01 not found = " & m_01 & vbCrLf
-            TDCConfig &= "02 running = " & m_02 & vbCrLf
-            TDCConfig &= "03 not run= " & m_03 & vbCrLf
-            TDCConfig &= "04 machine not found = " & m_04 & vbCrLf
-            TDCConfig &= "05 error lot status= " & m_05 & vbCrLf
-            TDCConfig &= "06 error process = " & m_06 & vbCrLf
-            TDCConfig &= "70 error connect database = " & m_70 & vbCrLf
-            TDCConfig &= "71 error read data base = " & m_71 & vbCrLf
-            TDCConfig &= "72 error write data base = " & m_72 & vbCrLf
-            TDCConfig &= "99 other = " & m_99 & vbCrLf
-            TDCConfig &= "Run Off Line= " & m_Offline
-            sw.WriteLine(TDCConfig)
-        End Using
-    End Sub
+    'Sub SaveTDCConfig()
+    '    Using sw As StreamWriter = New StreamWriter(Path.Combine(My.Application.Info.DirectoryPath, "Config.txt"), False)
+    '        Dim TDCConfig As String
+    '        TDCConfig = "01 not found = " & m_01 & vbCrLf
+    '        TDCConfig &= "02 running = " & m_02 & vbCrLf
+    '        TDCConfig &= "03 not run= " & m_03 & vbCrLf
+    '        TDCConfig &= "04 machine not found = " & m_04 & vbCrLf
+    '        TDCConfig &= "05 error lot status= " & m_05 & vbCrLf
+    '        TDCConfig &= "06 error process = " & m_06 & vbCrLf
+    '        TDCConfig &= "70 error connect database = " & m_70 & vbCrLf
+    '        TDCConfig &= "71 error read data base = " & m_71 & vbCrLf
+    '        TDCConfig &= "72 error write data base = " & m_72 & vbCrLf
+    '        TDCConfig &= "99 other = " & m_99 & vbCrLf
+    '        TDCConfig &= "Run Off Line= " & m_Offline
+    '        sw.WriteLine(TDCConfig)
+    '    End Using
+    'End Sub
 
     Sub LoadTDCConfig()
-        Using sr As StreamReader = New StreamReader(Path.Combine(My.Application.Info.DirectoryPath, "Config.txt"))
-            Dim strData As String = sr.ReadToEnd()
-            Dim strTmp As String() = strData.Split(CChar(vbCrLf))
-            Dim SplitDat As String()
-            For Each DataString As String In strTmp
-                If DataString.Contains("01") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_01 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("02") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_02 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("03") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_03 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("04") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_04 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("05") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_05 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("06") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_06 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("70") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_70 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("71") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_71 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("72") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_72 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("99") Then
-                    SplitDat = DataString.Split(CChar("="))
-                    m_99 = CBool(SplitDat(1).Trim)
-                ElseIf DataString.Contains("Run Offline") Then
-                    SplitDat = DataString.Split(CChar("="))
+        If m_SelfData.CellConState <> 0 Then
+            lbStatusMC.Text = "Run Offline"
+            lbStatusMC.BackColor = Color.Red
+        Else
+            lbStatusMC.Text = "Online"
+            lbStatusMC.BackColor = Color.Lime
+        End If
 
-                    If SplitDat(1).Trim <> "Online" Then
-                        m_Offline = _SelfConMode.Offline
-                        lbStatusMC.Text = "Run Offline"
-                        lbStatusMC.BackColor = Color.Red
-                    Else
-                        m_Offline = _SelfConMode.Online
-                        lbStatusMC.Text = "Online"
-                        lbStatusMC.BackColor = Color.Lime
-                    End If
 
-                End If
-            Next
-        End Using
+
+
+
+        'Using sr As StreamReader = New StreamReader(Path.Combine(My.Application.Info.DirectoryPath, "Config.txt"))
+        '    Dim strData As String = sr.ReadToEnd()
+        '    Dim strTmp As String() = strData.Split(CChar(vbCrLf))
+        '    Dim SplitDat As String()
+        '    For Each DataString As String In strTmp
+        '        If DataString.Contains("01") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_01 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("02") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_02 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("03") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_03 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("04") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_04 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("05") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_05 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("06") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_06 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("70") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_70 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("71") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_71 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("72") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_72 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("99") Then
+        '            SplitDat = DataString.Split(CChar("="))
+        '            m_99 = CBool(SplitDat(1).Trim)
+        '        ElseIf DataString.Contains("Run Offline") Then
+        '            SplitDat = DataString.Split(CChar("="))
+
+        '            If SplitDat(1).Trim <> "Online" Then
+        '                m_Offline = _SelfConMode.Offline
+        '                lbStatusMC.Text = "Run Offline"
+        '                lbStatusMC.BackColor = Color.Red
+        '            Else
+        '                m_Offline = _SelfConMode.Online
+        '                lbStatusMC.Text = "Online"
+        '                lbStatusMC.BackColor = Color.Lime
+        '            End If
+
+        '        End If
+        '    Next
+        'End Using
     End Sub
 
 #Region "========================== Windows Form Designer generated code ==============================="
@@ -101,7 +115,7 @@ Public Class frmMain
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lbNetversion.Text = "180424 APCS Pro." '"170109"
+        lbNetversion.Text = "180612 APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
 
@@ -304,23 +318,47 @@ Public Class frmMain
                     'เชค Data error
                     If strLotNo = "" Then      ' LOT
                         AlarmMessage("LotNo ไม่ถูกต้องกรุณากรุณาตรวจสอบ Input ใหม่อีกครั้ง")
+                        Exit Sub
                     ElseIf strOPNo = "" Then  'OP
                         AlarmMessage("OPNo ไม่ถูกต้องกรุณาตรวจสอบและ Input ใหม่อีกครั้ง")
+                        Exit Sub
                     ElseIf IsNumeric(strOPNo) = False Then
                         AlarmMessage("OPNo ไม่ถูกต้องกรุณาตรวจสอบและ Input ใหม่อีกครั้ง")
+                        Exit Sub
                     ElseIf intInputData = 0 Then  'Input
                         AlarmMessage("Input ไม่ถูกต้องกรุณาตรวจสอบและ Input ใหม่อีกครั้ง")
+                        Exit Sub
                     End If
 
                     If frmShowAlarmData.Visible = True Then
                         frmShowAlarmData.Close()
                     End If
-
-                    'กรณี Reply ของ LotReq แล้ว Timeout Online
-                    If (m_Offline = _SelfConMode.Online AndAlso strLotNo = m_SelfData.LotNo) AndAlso m_SelfData.LeqLock = _EquipmentState.Unlock AndAlso m_SelfData.LotStatus <> _StatusLot.LotEnd Then
-                        SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                        Exit Sub
+                    If c_dlg IsNot Nothing Then
+                        If c_dlg.Visible = True Then
+                            c_dlg.Visible = False
+                        End If
                     End If
+                    'กรณี Reply ของ LotReq แล้ว Timeout Online
+                    'If (m_Offline = _SelfConMode.Online AndAlso strLotNo = m_SelfData.LotNo) AndAlso m_SelfData.LeqLock = _EquipmentState.Unlock AndAlso m_SelfData.LotStatus <> _StatusLot.LotEnd Then
+                    '    SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
+                    '    Exit Sub
+                    'End If
+                    'TDC
+                    If m_SelfData.CellConState = _SelfConMode.Offline Then 'Run Offline
+                        SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
+                        m_SelfData.LotInform = "Run Offline"
+                    Else 'Run Online
+                        Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal)
+                        If ApcsInfo.IsPass = False Then
+                            SendTheMessage(m_SelfData.IPA, "LP01" & vbCr, m_SelfData.McNo)
+                            Exit Sub
+                        Else
+                            m_SelfData.LotInform = ApcsInfo.ErrorMessage
+                            SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
+                        End If
+                    End If
+
+
 
                     m_SelfData.LotNo = strLotNo
                     m_SelfData.Package = strPackage
@@ -343,27 +381,27 @@ Public Class frmMain
 
                     m_SelfData.LotSetOfSending = False
 
-                    m_SelfData.LotStartMode = _TDCMode.NormalInput
+                    ' m_SelfData.LotStartMode = _TDCMode.NormalInput
 
                     UpdateDisplay()
 
                     'TDC
-                    If m_Offline = _SelfConMode.Offline Then 'Run Offline
-                        SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                        m_SelfData.LotInform = "Run Offline"
+                    'If m_Offline = _SelfConMode.Offline Then 'Run Offline
+                    '    SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
+                    '    m_SelfData.LotInform = "Run Offline"
 
-                    Else 'Run Online
-                        SyncLock m_Locker
-                            Dim strLotReqData As String = m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.LotStartMode & "," & m_SelfData.IPA
-                            m_LotReqQueue.Enqueue(strLotReqData)
-                        End SyncLock
+                    'Else 'Run Online
+                    '    SyncLock m_Locker
+                    '        Dim strLotReqData As String = m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.LotStartMode & "," & m_SelfData.IPA
+                    '        m_LotReqQueue.Enqueue(strLotReqData)
+                    '    End SyncLock
 
-                        If bgTDCLotReq.IsBusy = False Then
-                            lbLotReq.BackColor = Color.Lime
-                            bgTDCLotReq.RunWorkerAsync()
-                        End If
+                    '    If bgTDCLotReq.IsBusy = False Then
+                    '        lbLotReq.BackColor = Color.Lime
+                    '        bgTDCLotReq.RunWorkerAsync()
+                    '    End If
 
-                    End If
+                    'End If
 
                     SaveLotStartToDbx()
                     SaveReflowDataTableXml()
@@ -426,17 +464,17 @@ Public Class frmMain
 
                         If m_SelfData.LotSetOfSending = False Then
                             m_SelfData.LotSetOfSending = True
-
+                            LotSetTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StartTime), m_SelfData.OpNo)
                             'Send TDC
-                            SyncLock m_Locker
-                                Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
-                                m_LotSetQueue.Enqueue(strLotSetData)
-                            End SyncLock
+                            'SyncLock m_Locker
+                            '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
+                            '    m_LotSetQueue.Enqueue(strLotSetData)
+                            'End SyncLock
 
-                            If bgTDC.IsBusy = False Then
-                                lbLotSetEnd.BackColor = Color.Lime
-                                bgTDC.RunWorkerAsync()
-                            End If
+                            'If bgTDC.IsBusy = False Then
+                            '    lbLotSetEnd.BackColor = Color.Lime
+                            '    bgTDC.RunWorkerAsync()
+                            'End If
 
                             SaveBackup()
                         End If
@@ -478,15 +516,18 @@ Public Class frmMain
                     If m_SelfData.LotSetOfSending = False Then
                         Try
                             m_SelfData.LotSetOfSending = True
-                            'Send TDC
-                            SyncLock m_Locker
-                                Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
-                                m_LotSetQueue.Enqueue(strLotSetData)
-                            End SyncLock
-                            If bgTDC.IsBusy = False Then
-                                lbLotSetEnd.BackColor = Color.Lime
-                                bgTDC.RunWorkerAsync()
-                            End If
+                            LotSetTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StartTime), m_SelfData.OpNo)
+
+                            ''Send TDC
+                            'SyncLock m_Locker
+                            '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
+                            '    m_LotSetQueue.Enqueue(strLotSetData)
+                            'End SyncLock
+                            'If bgTDC.IsBusy = False Then
+                            '    lbLotSetEnd.BackColor = Color.Lime
+                            '    bgTDC.RunWorkerAsync()
+                            'End If
+
                         Catch ex As Exception
                             addlogfile("LE TDC LOTSET: " & ex.Message)
                         End Try
@@ -494,30 +535,30 @@ Public Class frmMain
 
                     'TDC เก็บข้อมูลแล้วส่ง TDC
                     Try
-                        If radResetEnd.Checked Then
-                            m_SelfData.LotEndMode = _TDCMode.Reload
-                        ElseIf radAccuEnd.Checked Then
-                            m_SelfData.LotEndMode = _TDCMode.ReInput
-                        Else
-                            m_SelfData.LotEndMode = _TDCMode.NormalEnd
-                        End If
+                        'If radResetEnd.Checked Then
+                        '    m_SelfData.LotEndMode = _TDCMode.Reload
+                        'ElseIf radAccuEnd.Checked Then
+                        '    m_SelfData.LotEndMode = _TDCMode.ReInput
+                        'Else
+                        '    m_SelfData.LotEndMode = _TDCMode.NormalEnd
+                        'End If
 
-                        Dim tmpData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & CDate(m_SelfData.StopTime) & "," & CInt(m_SelfData.Output) & "," & CInt(m_SelfData.NGQty) & "," & m_SelfData.OpNo & "," & m_SelfData.LotEndMode
-                        SyncLock m_Locker
-                            m_LotEndQueue.Enqueue(tmpData)
-                        End SyncLock
+                        'Dim tmpData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & CDate(m_SelfData.StopTime) & "," & CInt(m_SelfData.Output) & "," & CInt(m_SelfData.NGQty) & "," & m_SelfData.OpNo & "," & m_SelfData.LotEndMode
+                        'SyncLock m_Locker
+                        '    m_LotEndQueue.Enqueue(tmpData)
+                        'End SyncLock
 
-                        If bgTDC.IsBusy = False Then
-                            lbLotSetEnd.BackColor = Color.Lime
-                            bgTDC.RunWorkerAsync()
-                        End If
-
+                        'If bgTDC.IsBusy = False Then
+                        '    lbLotSetEnd.BackColor = Color.Lime
+                        '    bgTDC.RunWorkerAsync()
+                        'End If
+                        LotEndTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StopTime), m_SelfData.Output, m_SelfData.NGQty, m_SelfData.OpNo)
                     Catch ex As Exception
                         addlogfile("LE TDC LOTEND: " & ex.Message)
                     End Try
 
                     'If Not radNormal.Checked Then radNormal.Checked = True '//783
-                    If Not radNormalEnd.Checked Then radNormalEnd.Checked = True '//783
+                    'If Not radNormalEnd.Checked Then radNormalEnd.Checked = True '//783
 
                     'เซฟข้อมูลลงใน DBx
                     SaveBackup()
@@ -896,7 +937,7 @@ Public Class frmMain
         Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflow.xml"
         Using fw As New IO.FileStream(pathData, FileMode.Create)
             Dim bs As New SoapFormatter
-            bs.Serialize(fw, m_SelfData )
+            bs.Serialize(fw, m_SelfData)
         End Using
     End Sub
 
@@ -999,7 +1040,7 @@ Public Class frmMain
     End Sub
 
     Private Sub Button13_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button13.Click
-        Dim Ip As String = "10.3.3.3"
+        Dim Ip As String = "10.1.1.50"
         Dim Data As String = "LR,1535A4444V,SOP22     ,BD3805F4444(BW)        ,005588,0AD8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
@@ -1072,340 +1113,340 @@ Public Class frmMain
     Private packageEnable As Boolean = False
     Private ResultApcsProService As LotUpdateInfo = Nothing
 #End Region
-    Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
-        Dim TmpData As String = ""
-        Dim ArrayData As String()
-        'LotSet
-        Dim MCNo As String
-        Dim LotNo As String
-        Dim StartTime As String
-        Dim OPNo As String
-        Dim LotSetMode As String = ""
+    '    Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
+    '        Dim TmpData As String = ""
+    '        Dim ArrayData As String()
+    '        'LotSet
+    '        Dim MCNo As String
+    '        Dim LotNo As String
+    '        Dim StartTime As String
+    '        Dim OPNo As String
+    '        Dim LotSetMode As String = ""
 
-        'LotEnd
-        Dim EndTime As String
-        Dim GoodQty As Integer
-        Dim NGQTy As Integer
-        Dim CountErr03 As Integer = 0
-        Dim LotEndMode As String = ""
+    '        'LotEnd
+    '        Dim EndTime As String
+    '        Dim GoodQty As Integer
+    '        Dim NGQTy As Integer
+    '        Dim CountErr03 As Integer = 0
+    '        Dim LotEndMode As String = ""
 
-LBL_QUEUE_LOTSET_CHECK:
-        Dim RepeatCountLotSet As Integer = 0
-        SyncLock m_Locker
-            If m_LotSetQueue.Count > 0 Then 'ทำ LotSet จนกว่าจะหมด Qeue
-                TmpData = m_LotSetQueue.Dequeue
-                ArrayData = TmpData.Split(CChar(","))
-                MCNo = ArrayData(0)
-                LotNo = ArrayData(1)
-                StartTime = ArrayData(2)
-                OPNo = ArrayData(3)
-                LotSetMode = ArrayData(4)
-                RepeatCountLotSet = 0
-            Else 'ทำ LotEnd จนกว่าจะหมด Qeue
-                GoTo LBL_QUEUE_LOTEND_CHECK
-            End If
-        End SyncLock
+    'LBL_QUEUE_LOTSET_CHECK:
+    '        Dim RepeatCountLotSet As Integer = 0
+    '        SyncLock m_Locker
+    '            If m_LotSetQueue.Count > 0 Then 'ทำ LotSet จนกว่าจะหมด Qeue
+    '                TmpData = m_LotSetQueue.Dequeue
+    '                ArrayData = TmpData.Split(CChar(","))
+    '                MCNo = ArrayData(0)
+    '                LotNo = ArrayData(1)
+    '                StartTime = ArrayData(2)
+    '                OPNo = ArrayData(3)
+    '                LotSetMode = ArrayData(4)
+    '                RepeatCountLotSet = 0
+    '            Else 'ทำ LotEnd จนกว่าจะหมด Qeue
+    '                GoTo LBL_QUEUE_LOTEND_CHECK
+    '            End If
+    '        End SyncLock
 
-LBL_QUEUE_LotSet_Err:
+    'LBL_QUEUE_LotSet_Err:
 
-        Dim resSet As TdcResponse = m_TdcService.LotSet(MCNo, LotNo, CDate(StartTime), OPNo, RunModeType.Normal)
-        If resSet.HasError Then
-            If RepeatCountLotSet > 5 Then 'กรณีที่ Err 70,71,72 วนรันซ้ำมากกว่า 5 ครั้ง เป็น Err Log แล้วรัน Lot ต่อไป
-                addlogfile("LotSet : " & TmpData)
-                GoTo LBL_QUEUE_LOTSET_CHECK
-            End If
+    '        Dim resSet As TdcResponse = m_TdcService.LotSet(MCNo, LotNo, CDate(StartTime), OPNo, RunModeType.Normal)
+    '        If resSet.HasError Then
+    '            If RepeatCountLotSet > 5 Then 'กรณีที่ Err 70,71,72 วนรันซ้ำมากกว่า 5 ครั้ง เป็น Err Log แล้วรัน Lot ต่อไป
+    '                addlogfile("LotSet : " & TmpData)
+    '                GoTo LBL_QUEUE_LOTSET_CHECK
+    '            End If
 
-            Select Case resSet.ErrorCode
-                Case "04"
-                    RepeatCountLotSet += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotSet_Err
-                Case "70"
-                    RepeatCountLotSet += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotSet_Err
-                Case "71"
-                    RepeatCountLotSet += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotSet_Err
-                Case "72"
-                    RepeatCountLotSet += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotSet_Err
-                Case "99"
-                    RepeatCountLotSet += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotSet_Err
-            End Select
-        End If
-#Region "Apcs_Pro LotSetUp"
+    '            Select Case resSet.ErrorCode
+    '                Case "04"
+    '                    RepeatCountLotSet += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotSet_Err
+    '                Case "70"
+    '                    RepeatCountLotSet += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotSet_Err
+    '                Case "71"
+    '                    RepeatCountLotSet += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotSet_Err
+    '                Case "72"
+    '                    RepeatCountLotSet += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotSet_Err
+    '                Case "99"
+    '                    RepeatCountLotSet += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotSet_Err
+    '            End Select
+    '        End If
+    '#Region "Apcs_Pro LotSetUp"
 
-        Try
+    '        Try
 
-            log = New Logger("1.0", MCNo)
-            packageEnable = c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log)
-            If Not packageEnable Then
-                GoTo LBL_QUEUE_LOTSET_CHECK
-            End If
+    '            log = New Logger("1.0", MCNo)
+    '            packageEnable = c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log)
+    '            If Not packageEnable Then
+    '                GoTo LBL_QUEUE_LOTSET_CHECK
+    '            End If
 
-            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
-            If lotInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
-            End If
-            machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
-            If machineInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
-            End If
-            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
-            If userInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
-            End If
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+    '            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
+    '            If lotInfo Is Nothing Then
+    '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
+    '            End If
+    '            machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
+    '            If machineInfo Is Nothing Then
+    '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
+    '            End If
+    '            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
+    '            If userInfo Is Nothing Then
+    '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
+    '            End If
+    '            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
 
-            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
-            End If
-        Catch ex As Exception
-            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
-            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
+    '            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+    '            If Not ResultApcsProService.IsOk Then
+    '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
+    '            End If
+    '        Catch ex As Exception
+    '            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
+    '            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
 
-        End Try
-#End Region
-#Region "APCS Pro LotStart"
-        Try
-            'currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-        End Try
-#End Region
-        GoTo LBL_QUEUE_LOTSET_CHECK
-
-
-LBL_QUEUE_LOTEND_CHECK:
-        Dim RepeatCountLotEnd As Integer = 0
-        SyncLock m_Locker
-
-            If m_LotEndQueue.Count > 0 Then 'ทำ LotEnd จนกว่าจะหมด Qeue
-                TmpData = m_LotEndQueue.Dequeue
-                ArrayData = TmpData.Split(CChar(","))
-                MCNo = ArrayData(0)
-                LotNo = ArrayData(1)
-                EndTime = ArrayData(2)
-                GoodQty = CInt(ArrayData(3))
-
-                If ArrayData(4) = "" Then
-                    NGQTy = 0
-                Else
-                    NGQTy = CInt(ArrayData(4))
-                End If
-                OPNo = ArrayData(5)
-                LotEndMode = ArrayData(6)
-                RepeatCountLotEnd = 0
-            Else 'ทำ LotEnd จนกว่าจะหมด Qeue
-                Exit Sub
-            End If
-        End SyncLock
-
-LBL_QUEUE_LotEnd_Err:
-
-        Dim resEnd As TdcResponse = m_TdcService.LotEnd(MCNo, LotNo, CDate(EndTime), CInt(GoodQty), CInt(NGQTy), CType(LotEndMode, EndModeType), OPNo)
-        If resEnd.HasError Then
-            If RepeatCountLotEnd > 5 Then 'กรณีที่ Err 70,71,72 วนรันซ้ำมากกว่า 5 ครั้ง เป็น Err Log แล้วรัน Lot ต่อไป
-                addlogfile("LotEnd : " & TmpData)
-                GoTo LBL_QUEUE_LOTEND_CHECK
-            End If
-            Select Case resEnd.ErrorCode
-                Case "03" 'Lot was not started or ended 150921
-                    CountErr03 += 1 '                                  150923
-                    If CountErr03 > 10 Then '                          150923
-                        addlogfile("LotErr03 : " & TmpData) '          150923
-                        CountErr03 = 0 '                               150923
-                        GoTo LBL_QUEUE_LOTEND_CHECK '                  150923
-                    End If '150923
-                    m_LotEndQueue.Enqueue(TmpData)
-                    GoTo LBL_QUEUE_LOTSET_CHECK
-                Case "04" 'MC not found
-                    RepeatCountLotEnd += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotEnd_Err
-                Case "70"
-                    RepeatCountLotEnd += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotEnd_Err
-                Case "71"
-                    RepeatCountLotEnd += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotEnd_Err
-                Case "72"
-                    RepeatCountLotEnd += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotEnd_Err
-                Case "99"
-                    RepeatCountLotEnd += 1
-                    Thread.Sleep(3000)
-                    GoTo LBL_QUEUE_LotEnd_Err
-            End Select
-        End If
-        CountErr03 = 0
-#Region "APCS Pro LotEnd"
-        Try
-            If Not packageEnable Then
-                GoTo LBL_QUEUE_LOTEND_CHECK
-            End If
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-        End Try
-#End Region
-
-        GoTo LBL_QUEUE_LOTEND_CHECK
-    End Sub
+    '        End Try
+    '#End Region
+    '#Region "APCS Pro LotStart"
+    '        Try
+    '            'currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+    '            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+    '            If Not ResultApcsProService.IsOk Then
+    '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+    '            End If
+    '        Catch ex As Exception
+    '            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+    '        End Try
+    '#End Region
+    '        GoTo LBL_QUEUE_LOTSET_CHECK
 
 
-    Private Sub bgTDCLotReq_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDCLotReq.DoWork
+    'LBL_QUEUE_LOTEND_CHECK:
+    '        Dim RepeatCountLotEnd As Integer = 0
+    '        SyncLock m_Locker
 
-        Dim TmpData As String
-        Dim ArrayData() As String
-        Dim MCNo As String
-        Dim LotNo As String
-        Dim LotSetMode As Integer
-        Dim IPAdr As String
-        Dim RepeatCountLotReq As Integer
+    '            If m_LotEndQueue.Count > 0 Then 'ทำ LotEnd จนกว่าจะหมด Qeue
+    '                TmpData = m_LotEndQueue.Dequeue
+    '                ArrayData = TmpData.Split(CChar(","))
+    '                MCNo = ArrayData(0)
+    '                LotNo = ArrayData(1)
+    '                EndTime = ArrayData(2)
+    '                GoodQty = CInt(ArrayData(3))
 
-        SyncLock m_Locker
-            If m_LotReqQueue.Count > 0 Then 'ทำ LotSet จนกว่าจะหมด Qeue
-                'McNo,LotNo,LotStartMode,IPA
-                TmpData = m_LotReqQueue.Dequeue
-                ArrayData = TmpData.Split(CChar(","))
-                MCNo = ArrayData(0)
-                LotNo = ArrayData(1)
-                LotSetMode = CInt(ArrayData(2))
-                IPAdr = ArrayData(3)
-                RepeatCountLotReq = 0
-            Else
-                Exit Sub
-            End If
-        End SyncLock
+    '                If ArrayData(4) = "" Then
+    '                    NGQTy = 0
+    '                Else
+    '                    NGQTy = CInt(ArrayData(4))
+    '                End If
+    '                OPNo = ArrayData(5)
+    '                LotEndMode = ArrayData(6)
+    '                RepeatCountLotEnd = 0
+    '            Else 'ทำ LotEnd จนกว่าจะหมด Qeue
+    '                Exit Sub
+    '            End If
+    '        End SyncLock
+
+    'LBL_QUEUE_LotEnd_Err:
+
+    '        Dim resEnd As TdcResponse = m_TdcService.LotEnd(MCNo, LotNo, CDate(EndTime), CInt(GoodQty), CInt(NGQTy), CType(LotEndMode, EndModeType), OPNo)
+    '        If resEnd.HasError Then
+    '            If RepeatCountLotEnd > 5 Then 'กรณีที่ Err 70,71,72 วนรันซ้ำมากกว่า 5 ครั้ง เป็น Err Log แล้วรัน Lot ต่อไป
+    '                addlogfile("LotEnd : " & TmpData)
+    '                GoTo LBL_QUEUE_LOTEND_CHECK
+    '            End If
+    '            Select Case resEnd.ErrorCode
+    '                Case "03" 'Lot was not started or ended 150921
+    '                    CountErr03 += 1 '                                  150923
+    '                    If CountErr03 > 10 Then '                          150923
+    '                        addlogfile("LotErr03 : " & TmpData) '          150923
+    '                        CountErr03 = 0 '                               150923
+    '                        GoTo LBL_QUEUE_LOTEND_CHECK '                  150923
+    '                    End If '150923
+    '                    m_LotEndQueue.Enqueue(TmpData)
+    '                    GoTo LBL_QUEUE_LOTSET_CHECK
+    '                Case "04" 'MC not found
+    '                    RepeatCountLotEnd += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotEnd_Err
+    '                Case "70"
+    '                    RepeatCountLotEnd += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotEnd_Err
+    '                Case "71"
+    '                    RepeatCountLotEnd += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotEnd_Err
+    '                Case "72"
+    '                    RepeatCountLotEnd += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotEnd_Err
+    '                Case "99"
+    '                    RepeatCountLotEnd += 1
+    '                    Thread.Sleep(3000)
+    '                    GoTo LBL_QUEUE_LotEnd_Err
+    '            End Select
+    '        End If
+    '        CountErr03 = 0
+    '#Region "APCS Pro LotEnd"
+    '        Try
+    '            If Not packageEnable Then
+    '                GoTo LBL_QUEUE_LOTEND_CHECK
+    '            End If
+    '            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+    '            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), 0, "", 1, currentServerTime.Datetime, log)
+    '            If Not ResultApcsProService.IsOk Then
+    '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+    '            End If
+    '        Catch ex As Exception
+    '            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+    '        End Try
+    '#End Region
+
+    '        GoTo LBL_QUEUE_LOTEND_CHECK
+    '    End Sub
 
 
+    'Private Sub bgTDCLotReq_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDCLotReq.DoWork
 
-        Dim strMess As String = ""
+    '    Dim TmpData As String
+    '    Dim ArrayData() As String
+    '    Dim MCNo As String
+    '    Dim LotNo As String
+    '    Dim LotSetMode As Integer
+    '    Dim IPAdr As String
+    '    Dim RepeatCountLotReq As Integer
 
-        Dim res As TdcResponse = m_TdcService.LotRequest("RF-" & MCNo, LotNo, RunModeType.Normal)
-        If res.HasError Then
-            If res.ErrorCode = "01" Then
-                strMess = "01 : Not found"
-                If m_01 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "02" Then
-                strMess = "02 : Running"
-                If m_02 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "03" Then
-                strMess = "03 : Not run"
-                If m_03 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "04" Then
-                strMess = "04 : Machine not found"
-                If m_04 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "05" Then
-                strMess = "05 : Error lot status"
-                If m_05 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "06" Then
-                strMess = "06 : Error process"
-                If m_06 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "70" Then
-                strMess = "70 : Error connect database"
-                If m_70 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "71" Then
-                strMess = "71 : Error read database"
-                If m_71 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "72" Then
-                strMess = "72 : Error write database"
-                If m_72 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "99" Then
-                strMess = "99 : Other"
-                If m_99 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            End If
-        Else
-            m_SelfData.LeqLock = _EquipmentState.Unlock
-            SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-            strMess = "00 : Running"
-        End If
+    '    SyncLock m_Locker
+    '        If m_LotReqQueue.Count > 0 Then 'ทำ LotSet จนกว่าจะหมด Qeue
+    '            'McNo,LotNo,LotStartMode,IPA
+    '            TmpData = m_LotReqQueue.Dequeue
+    '            ArrayData = TmpData.Split(CChar(","))
+    '            MCNo = ArrayData(0)
+    '            LotNo = ArrayData(1)
+    '            LotSetMode = CInt(ArrayData(2))
+    '            IPAdr = ArrayData(3)
+    '            RepeatCountLotReq = 0
+    '        Else
+    '            Exit Sub
+    '        End If
+    '    End SyncLock
 
 
 
-        Dim StrData As String = strMess
-        m_SelfData.LotInform = StrData
-        SaveBackup()
+    '    Dim strMess As String = ""
 
-    End Sub
+    '    Dim res As TdcResponse = m_TdcService.LotRequest("RF-" & MCNo, LotNo, RunModeType.Normal)
+    '    If res.HasError Then
+    '        If res.ErrorCode = "01" Then
+    '            strMess = "01 : Not found"
+    '            If m_01 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "02" Then
+    '            strMess = "02 : Running"
+    '            If m_02 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "03" Then
+    '            strMess = "03 : Not run"
+    '            If m_03 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "04" Then
+    '            strMess = "04 : Machine not found"
+    '            If m_04 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "05" Then
+    '            strMess = "05 : Error lot status"
+    '            If m_05 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "06" Then
+    '            strMess = "06 : Error process"
+    '            If m_06 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "70" Then
+    '            strMess = "70 : Error connect database"
+    '            If m_70 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "71" Then
+    '            strMess = "71 : Error read database"
+    '            If m_71 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "72" Then
+    '            strMess = "72 : Error write database"
+    '            If m_72 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        ElseIf res.ErrorCode = "99" Then
+    '            strMess = "99 : Other"
+    '            If m_99 = True Then
+    '                m_SelfData.LeqLock = _EquipmentState.Unlock
+    '                SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '            Else
+    '                m_SelfData.LeqLock = _EquipmentState.LOCK
+    '                SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+    '            End If
+    '        End If
+    '    Else
+    '        m_SelfData.LeqLock = _EquipmentState.Unlock
+    '        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+    '        strMess = "00 : Running"
+    '    End If
+
+
+
+    '    Dim StrData As String = strMess
+    '    m_SelfData.LotInform = StrData
+    '    SaveBackup()
+
+    'End Sub
 
 
     Private Sub bgTDC_RunWorkerCompleted(ByVal sender As System.Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgTDC.RunWorkerCompleted
@@ -1490,78 +1531,78 @@ LBL_QUEUE_LotEnd_Err:
     End Sub
 
     Public Sub SaveConfig()
-        Dim PathLog As String = My.Application.Info.DirectoryPath & "\Config.txt"
-        'create objext and open an exist file
-        Dim objWriter As New System.IO.StreamWriter(PathLog, False)
-        Dim StatusMode As String
-        If m_Offline = _SelfConMode.Online Then
-            StatusMode = "Online"
-        Else
-            StatusMode = "Offline"
-        End If
-        'write an error to file
-        Dim strLog As String
-        strLog = "01 Not found  = " & m_01 & vbCrLf & _
-        "02 Running = " & m_02 & vbCrLf & _
-        "03 Not Run  = " & m_03 & vbCrLf & _
-        "04 Machine not found = " & m_04 & vbCrLf & _
-        "05 Error Lot State = " & m_05 & vbCrLf & _
-        "06 Error Process = " & m_06 & vbCrLf & _
-        "70 Error Connect Database  = " & m_70 & vbCrLf & _
-        "72 Error Write Database = " & m_72 & vbCrLf & _
-        "99 Other  = " & m_99 & vbCrLf & _
-        "Run Offline = " & StatusMode
-        objWriter.WriteLine(strLog)
-        'close file
-        objWriter.Close()
+        'Dim PathLog As String = My.Application.Info.DirectoryPath & "\Config.txt"
+        ''create objext and open an exist file
+        'Dim objWriter As New System.IO.StreamWriter(PathLog, False)
+        'Dim StatusMode As String
+        'If m_Offline = _SelfConMode.Online Then
+        '    StatusMode = "Online"
+        'Else
+        '    StatusMode = "Offline"
+        'End If
+        ''write an error to file
+        'Dim strLog As String
+        'strLog = "01 Not found  = " & m_01 & vbCrLf & _
+        '"02 Running = " & m_02 & vbCrLf & _
+        '"03 Not Run  = " & m_03 & vbCrLf & _
+        '"04 Machine not found = " & m_04 & vbCrLf & _
+        '"05 Error Lot State = " & m_05 & vbCrLf & _
+        '"06 Error Process = " & m_06 & vbCrLf & _
+        '"70 Error Connect Database  = " & m_70 & vbCrLf & _
+        '"72 Error Write Database = " & m_72 & vbCrLf & _
+        '"99 Other  = " & m_99 & vbCrLf & _
+        '"Run Offline = " & StatusMode
+        'objWriter.WriteLine(strLog)
+        ''close file
+        'objWriter.Close()
 
     End Sub
 
     Public Sub LoadConfigTDC()
 
-        Dim PathLog As String = My.Application.Info.DirectoryPath & "\Config.txt"
+        'Dim PathLog As String = My.Application.Info.DirectoryPath & "\Config.txt"
 
-        Dim sr As StreamReader = File.OpenText(PathLog)
-        Dim tmpData As String = ""
-        Dim strDataArray As String()
-        Do While sr.Peek >= 0
-            tmpData &= sr.ReadLine & ","
-        Loop
-        sr.Close()
-        tmpData = tmpData.Trim(CChar(","))
-        strDataArray = tmpData.Split(CChar(","))
-        For Each str As String In strDataArray
-            If str.Trim <> "" Then
-                Dim tempAr As String() = str.Split(CChar("="))
-                If tempAr(0).Contains("01") = True Then
-                    m_01 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("02") = True Then
-                    m_02 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("03") = True Then
-                    m_03 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("04") = True Then
-                    m_04 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("05") = True Then
-                    m_05 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("06") = True Then
-                    m_06 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("70") = True Then
-                    m_70 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("72") = True Then
-                    m_72 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("99") = True Then
-                    m_99 = CBool(tempAr(1).Trim)
-                ElseIf tempAr(0).Contains("Offline") = True Then
-                    If tempAr(1).Trim = "Online" Then
-                        m_Offline = _SelfConMode.Online
-                        lbStatusMC.BackColor = Color.Lime
-                    Else
-                        m_Offline = _SelfConMode.Offline
-                        lbStatusMC.BackColor = Color.Red
-                    End If
-                End If
-            End If
-        Next
+        'Dim sr As StreamReader = File.OpenText(PathLog)
+        'Dim tmpData As String = ""
+        'Dim strDataArray As String()
+        'Do While sr.Peek >= 0
+        '    tmpData &= sr.ReadLine & ","
+        'Loop
+        'sr.Close()
+        'tmpData = tmpData.Trim(CChar(","))
+        'strDataArray = tmpData.Split(CChar(","))
+        'For Each str As String In strDataArray
+        '    If str.Trim <> "" Then
+        '        Dim tempAr As String() = str.Split(CChar("="))
+        '        If tempAr(0).Contains("01") = True Then
+        '            m_01 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("02") = True Then
+        '            m_02 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("03") = True Then
+        '            m_03 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("04") = True Then
+        '            m_04 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("05") = True Then
+        '            m_05 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("06") = True Then
+        '            m_06 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("70") = True Then
+        '            m_70 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("72") = True Then
+        '            m_72 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("99") = True Then
+        '            m_99 = CBool(tempAr(1).Trim)
+        '        ElseIf tempAr(0).Contains("Offline") = True Then
+        '            If tempAr(1).Trim = "Online" Then
+        '                m_Offline = _SelfConMode.Online
+        '                lbStatusMC.BackColor = Color.Lime
+        '            Else
+        '                m_Offline = _SelfConMode.Offline
+        '                lbStatusMC.BackColor = Color.Red
+        '            End If
+        '        End If
+        '    End If
+        'Next
 
     End Sub
 
@@ -1576,5 +1617,107 @@ LBL_QUEUE_LotEnd_Err:
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType) As TDCInfo
+        Dim apcsInfo As New TDCInfo
+        Dim mc As String = "RF-" & My.Settings.MCNo
+
+        Dim res As TdcLotRequestResponse = m_TdcService.LotRequest(mc, LotNo, rm)
+
+        If res.HasError Then
+
+            Using svError As ApcsWebServiceSoapClient = New ApcsWebServiceSoapClient
+                If svError.LotRptIgnoreError(mc, res.ErrorCode) = False Then
+                    Dim li As Rohm.Apcs.Tdc.LotInfo = Nothing
+                    li = m_TdcService.GetLotInfo(LotNo, mc)
+                    c_dlg = New TdcAlarmMessageForm(res.ErrorCode, res.ErrorMessage, LotNo, li)
+                    c_dlg.Show()
+                    apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
+                    apcsInfo.ErrorCode = res.ErrorCode
+                    apcsInfo.IsPass = False
+                    Return apcsInfo
+                End If
+            End Using
+            apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
+            apcsInfo.IsPass = True
+            Return apcsInfo
+        Else
+            apcsInfo.ErrorMessage = "00 : Run Normal"
+            apcsInfo.IsPass = True
+            Return apcsInfo
+        End If
+
+    End Function
+
+    Private Sub LotSetTdc(MCno As String, LotNo As String, StartTime As DateTime, OpNo As String)
+        Dim res As TdcResponse = m_TdcService.LotSet(MCno, LotNo, StartTime, OpNo, RunModeType.Normal)
+
+#Region "Apcs_Pro LotSetUp"
+
+        Try
+
+            log = New Logger("1.0", MCno)
+            packageEnable = c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log)
+            If Not packageEnable Then
+                Exit Sub
+            End If
+
+            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
+            If lotInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotSet LotNo", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
+            End If
+            machineInfo = c_ApcsProService.GetMachineInfo(MCno)
+            If machineInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotSet MC", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCno)
+            End If
+            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
+            If userInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotSet User", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
+            End If
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+
+            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotSet ApcsProService ", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCno & ",OPNo:" & m_SelfData.OpNo)
+            End If
+        Catch ex As Exception
+            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
+            log.ConnectionLogger.Write(0, "APCS Pro LotSet Err", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCno & ",OPNo:" & m_SelfData.OpNo)
+
+        End Try
+#End Region
+    End Sub
+    Private Sub LotEndTdc(McNo As String, LotNo As String, EndTime As DateTime, Good As Integer, Ng As Integer, OpNo As String)
+        Dim res As TdcResponse = m_TdcService.LotEnd(McNo, LotNo, EndTime, Good, Ng, EndModeType.Normal, OpNo)
+#Region "APCS Pro LotEnd"
+        Try
+            If Not packageEnable Then
+                Exit Sub
+            End If
+
+            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
+            If lotInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotEnd LotNo", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
+            End If
+            machineInfo = c_ApcsProService.GetMachineInfo(McNo)
+            If machineInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotEnd MC", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", McNo)
+            End If
+            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
+            If userInfo Is Nothing Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotEnd User", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
+            End If
+
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+
+            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, Good, Ng, 0, "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.ConnectionLogger.Write(0, "APCS Pro LotEnd", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & McNo & ",OPNo:" & OpNo)
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "APCS Pro LotEnd Err", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & McNo & ",OPNo:" & OpNo)
+        End Try
+#End Region
     End Sub
 End Class

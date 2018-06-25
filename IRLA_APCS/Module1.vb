@@ -1,17 +1,17 @@
 ﻿Module Module1
 
     Public m_SelfData As New ReflowData
-    Public m_01 As Boolean
-    Public m_02 As Boolean
-    Public m_03 As Boolean
-    Public m_04 As Boolean
-    Public m_05 As Boolean
-    Public m_06 As Boolean
-    Public m_70 As Boolean
-    Public m_71 As Boolean
-    Public m_72 As Boolean
-    Public m_99 As Boolean
-    Public m_Offline As Integer
+    'Public m_01 As Boolean
+    'Public m_02 As Boolean
+    'Public m_03 As Boolean
+    'Public m_04 As Boolean
+    'Public m_05 As Boolean
+    'Public m_06 As Boolean
+    'Public m_70 As Boolean
+    'Public m_71 As Boolean
+    'Public m_72 As Boolean
+    'Public m_99 As Boolean
+    ' Public m_Offline As Integer
 
     Enum _StatusLot
         LotSetup = 1
