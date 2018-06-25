@@ -5,6 +5,7 @@ Imports Rohm.Apcs.Tdc
 Imports System.Runtime.Serialization.Formatters.Soap
 Imports iLibrary
 Imports Rohm.Common.Logging
+Imports System.Xml.Serialization
 
 Public Class frmMain
     Private m_TdcService As TdcService
@@ -101,7 +102,7 @@ Public Class frmMain
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lbNetversion.Text = "180424 APCS Pro." '"170109"
+        lbNetversion.Text = "180501 APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
 
@@ -120,6 +121,7 @@ Public Class frmMain
         m_SelfData.IPA = My.Settings.IP
         UpdateDisplay()
 
+        XmlLoad(c_ApcsPro, c_ApcsPro.GetType())
     End Sub
     Sub LoadPFAlarmTable()
         Dim pathReflowTable As String = Path.Combine(My.Application.Info.DirectoryPath, "ReflowAlarmTable.xml")
@@ -282,7 +284,279 @@ Public Class frmMain
         frmShowAlarmData.Show()
         frmShowAlarmData.lbAlarmMes.Text = Mes
     End Sub
+    Private Function GetInfoPro(MCNo As String, LotNo As String, OpNo As String) As UserInfo
 
+        log = New Logger("1.0", MCNo)
+        lotInfo = c_ApcsProService.GetLotInfo(LotNo)
+        If lotInfo Is Nothing Then
+            log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
+        End If
+        If machineInfo Is Nothing Then
+            machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
+        End If
+        If machineInfo Is Nothing Then
+            log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
+        End If
+        userInfo = c_ApcsProService.GetUserInfo(OpNo)
+        If userInfo Is Nothing Then
+            log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", OpNo)
+        End If
+        c_ApcsPro.LotNo = LotNo
+        c_ApcsPro.MachineNo = MCNo
+        c_ApcsPro.UserCode = OpNo
+
+        XmlSave(c_ApcsPro)
+        Return userInfo
+    End Function
+#Region "APCS Pro Function"
+    Private Sub Reload(goodQty As Integer, ngQty As Integer, mcNo As String, opNo As String, lotNo As String)
+        Try
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+            ResultApcsProService = c_ApcsProService.AbnormalLotEnd_BackToThe_BeforeProcess(lotInfo.Id, machineInfo.Id, userInfo.Id, False, goodQty, ngQty, 0, "", 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.ConnectionLogger.Write(0, "Reload", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotEnd_BackToThe_BeforeProcess", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                MsgBox(ResultApcsProService.ErrorMessage)
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "Reload", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotEnd_BackToThe_BeforeProcess", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+        End Try
+    End Sub
+    Private Sub LotHold(mcNo As String, opNo As String, lotNo As String)
+        Try
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+            ResultApcsProService = c_ApcsProService.AbnormalLotHold(lotInfo.Id, machineInfo.Id, userInfo.Id, 1, currentServerTime.Datetime, log)
+            If Not ResultApcsProService.IsOk Then
+                log.ConnectionLogger.Write(0, "LotHold", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotHold", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                MsgBox(ResultApcsProService.ErrorMessage)
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "LotHold", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotHold", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+        End Try
+    End Sub
+    Private Sub LotCancel(mcNo As String, opNo As String, lotNo As String)
+        Try
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+            ResultApcsProService = c_ApcsProService.LotCancel(lotInfo.Id, machineInfo.Id, userInfo.Id, 1, log)
+            If Not ResultApcsProService.IsOk Then
+                log.ConnectionLogger.Write(0, "LotCancel", "OUT", "CellCon", "iLibrary", 0, "LotCancel", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                MsgBox(ResultApcsProService.ErrorMessage)
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "LotCancel", "OUT", "CellCon", "iLibrary", 0, "LotCancel", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+        End Try
+
+    End Sub
+    'Private Sub ReInput(goodQty As Integer, ngQty As Integer, mcNo As String, opNo As String, lotNo As String)
+    '    currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+    '    ResultApcsProService = c_ApcsProService.ReInput(lotInfo.Id, machineInfo.Id, userInfo.Id, goodQty, ngQty, 1, currentServerTime.Datetime, log)
+    '    If Not ResultApcsProService.IsOk Then
+    '        log.ConnectionLogger.Write(0, "ReInput", "OUT", "CellCon", "iLibrary", 0, "ReInput", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+    '        MsgBox(ResultApcsProService.ErrorMessage)
+    '    End If
+    'End Sub
+#End Region
+#Region "APCS Pro CheckPermission"
+    Private Function CheckPermissionApcsPro(MCNo As String, userInfo As iLibrary.UserInfo, functionName As String, logger As Logger, Optional appName As String = "CellController") As Boolean
+        currentServerTime = c_ApcsProService.Get_DateTimeInfo(logger)
+        Dim userPermission As CheckUserPermissionResult = c_ApcsProService.CheckUserPermission(userInfo, appName, functionName)
+        If Not userPermission.IsPass Then
+            MsgBox(userPermission.ErrorMessage)
+            Return False
+        End If
+        If Not c_ApcsProService.Check_PermissionMachinesByLMS(userInfo.Id, MCNo, logger) Then
+            MsgBox("รหัส : " & userInfo.Code & " ไม่ผ่านการตรวจสอบในระบบ Licenser กรุณาติดต่อ ETG (MCNo : " & MCNo & ")")
+            Return False
+        End If
+        If Not c_ApcsProService.Check_UserLotAutoMotive(userInfo, lotInfo, logger) Then
+            MsgBox("รหัส : " & userInfo.Code & " User ที่ไม่ใช่ Automotive ไม่สามารถรัน Lot Automotive ได้ กรุณาติดต่อ ETG (Lot Automotive : " & MCNo & ")")
+            Return False
+        End If
+        Return True
+    End Function
+#End Region
+
+#Region "APCS Pro LotStart"
+    Private Sub StartLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String)
+        Try
+            ' If packageEnable Then
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+                ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, Recipe, log)
+                If Not ResultApcsProService.IsOk Then
+                    log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+                End If
+                ResultApcsProService = c_ApcsProService.OnlineStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+                If Not ResultApcsProService.IsOk Then
+                    log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+                End If
+            ' Else
+            'log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            'End If
+
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+        End Try
+    End Sub
+    Private Sub OnlineStartLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String)
+        Try
+            'If packageEnable Then
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+                ResultApcsProService = c_ApcsProService.OnlineStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+                If Not ResultApcsProService.IsOk Then
+                    log.ConnectionLogger.Write(0, "OnlineStartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+                End If
+            'Else
+            'log.ConnectionLogger.Write(0, "OnlineStartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            'End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "OnlineStartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+        End Try
+    End Sub
+#End Region
+#Region "APCS Pro LotEnd"
+    Private Sub EndLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String, good As Integer, ng As Integer)
+        Try
+            'If packageEnable Then
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+
+                ResultApcsProService = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, good, ng, 0, "", 1, currentServerTime.Datetime, log)
+                If Not ResultApcsProService.IsOk Then
+                    log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+                End If
+
+                ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, good, ng, 0, "", 1, currentServerTime.Datetime, log)
+                UpdateMachineState(machineInfo.Id, MachineProcessingState.Idle, log)
+                If Not ResultApcsProService.IsOk Then
+                    log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+                End If
+
+            ' Else
+            'log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "CheckPackageEnable", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            ' End If
+
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+        End Try
+    End Sub
+    Private Sub OnlineEndLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String, good As Integer, ng As Integer)
+        Try
+            ' If packageEnable Then
+            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+                ResultApcsProService = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, good, ng, 0, "", 1, currentServerTime.Datetime, log)
+                If Not ResultApcsProService.IsOk Then
+                    log.ConnectionLogger.Write(0, "OnlineEndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+                End If
+            ' Else
+            ' log.ConnectionLogger.Write(0, "OnlineEndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            'End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "OnlineEndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+        End Try
+    End Sub
+#End Region
+#Region "Machine State and Machine OnlineState"
+    Enum MachineProcessingState
+        Idle = 1
+        Ready = 3
+        Execute = 4
+        Pause = 5
+        LotSetUp = 6
+    End Enum
+    Private Sub UpdateMachineState(machineID As Integer, runState As Integer, log As Logger, Optional userID As Integer = -1)
+        c_ApcsProService.Update_MachineState(machineID, runState, userID, log)
+    End Sub
+    Private Sub UpdateMachineOnlineState(machineID As Integer, onlineState As Integer, log As Logger, Optional userID As Integer = -1)
+        c_ApcsProService.Update_MachineOnlineState(machineID, onlineState, userID, log)
+    End Sub
+#End Region
+#Region "License"
+    Private Sub LicenseWarning(user As UserInfo)
+        Try
+            If user.License(0).Is_Warning Then
+                MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
+                'lbNotification.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "LicenseWarning", "OUT", "CellCon", "iLibrary", 0, "user.License(0)", "", "")
+        End Try
+
+    End Sub
+#End Region
+    Private XmlPathDataApcsPro As String = My.Application.Info.DirectoryPath & "\ApcsPro.xml"
+    Private Sub XmlSave(data As ApcsPro)
+        Try
+            Using fs As New System.IO.FileStream(XmlPathDataApcsPro, System.IO.FileMode.Create)
+                Dim bs = New XmlSerializer(data.GetType())
+                bs.Serialize(fs, data)
+            End Using
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "XmlSave", "OUT", "", "", 0, "XmlSave", ex.Message.ToString, "")
+        End Try
+
+    End Sub
+    Private Sub XmlLoad(ByRef data As ApcsPro, type As Type)
+        Try
+            If (File.Exists(XmlPathDataApcsPro)) Then
+                Using fs As New System.IO.FileStream(XmlPathDataApcsPro, System.IO.FileMode.Open)
+                    Dim bs = New XmlSerializer(type)
+                    data = CType(bs.Deserialize(fs), ApcsPro)
+                End Using
+                GetInfoPro(data.MachineNo, data.LotNo, data.UserCode)
+                Recipe = data.Recipe
+                UpdateMachineOnlineState(machineInfo.Id, 1, log)
+            End If
+        Catch ex As Exception
+            log.ConnectionLogger.Write(0, "XmlLoad", "OUT", "", "", 0, "XmlLoad", ex.Message.ToString, "")
+        End Try
+
+    End Sub
+#Region "Apcs_Pro LotSetUp"
+    Private Function SetUpApcsPro(mcNo As String, lotNo As String, package As String, opNo As String, logger As Logger) As Boolean
+        'Auto Move TDC
+        Try
+            m_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
+            Dim userInf As UserInfo = GetInfoPro(mcNo, lotNo, opNo)
+
+            If CheckPermissionApcsPro(mcNo, userInf, "PL-SetupLot", logger) Then
+                LicenseWarning(userInf)
+                lotInfo = c_ApcsProService.GetLotInfo(lotNo)
+                If lotInfo Is Nothing Then
+                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", lotNo)
+                End If
+                If machineInfo Is Nothing Then
+                    machineInfo = c_ApcsProService.GetMachineInfo(mcNo)
+                End If
+                If machineInfo Is Nothing Then
+                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", mcNo)
+                End If
+                userInfo = c_ApcsProService.GetUserInfo(opNo)
+                If userInfo Is Nothing Then
+                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", opNo)
+                End If
+                currentServerTime = c_ApcsProService.Get_DateTimeInfo(logger)
+                ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
+                UpdateMachineState(machineInfo.Id, MachineProcessingState.LotSetUp, log)
+                If Not ResultApcsProService.IsOk Then
+                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                    MsgBox(ResultApcsProService.ErrorMessage)
+                    Return False
+                End If
+                Recipe = ResultApcsProService.Recipe1
+                c_ApcsPro.Recipe = Recipe
+                XmlSave(c_ApcsPro)
+                Return True
+                'Return SetupLotPro(mcNo, lotNo, opNo)
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox("(SetUpApcsPro)" & ex.Message.ToString)
+            logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+
+            Return False
+        End Try
+
+    End Function
+#End Region
     Private Sub GetCode(ByVal UserCtrlReflow As ReflowData)
 
         Dim strText() As String = m_SelfData.LotData.Split(CChar(","))
@@ -347,14 +621,28 @@ Public Class frmMain
 
                     UpdateDisplay()
 
+
                     'TDC
+                    log = New Logger("1.0", "RF-" & m_SelfData.McNo)
                     If m_Offline = _SelfConMode.Offline Then 'Run Offline
-                        SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                        m_SelfData.LotInform = "Run Offline"
+                        If c_ApcsProService.CheckPackageEnable(strPackage, log) Then
+                            If c_ApcsProService.CheckLotisExist(m_SelfData.LotNo, log) Then
+                                If SetUpApcsPro("RF-" & m_SelfData.McNo, m_SelfData.LotNo, strPackage, m_SelfData.OpNo, log) Then
+                                    'm_TdcService.MoveLot(m_SelfData.LotNo, "RF-" & m_SelfData.McNo, m_SelfData.OpNo, "0255")
+                                    SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, "RF-" & m_SelfData.McNo)
+                                    m_SelfData.LotInform = "Run Offline"
+                                Else
+                                    m_SelfData.LeqLock = _EquipmentState.LOCK
+                                    SendTheMessage(m_SelfData.IPA, "LP01" & vbCr, "RF-" & m_SelfData.McNo)
+                                End If
+                            End If
+
+                        End If
 
                     Else 'Run Online
+                        'SetUpApcsPro("RF-" & m_SelfData.McNo, m_SelfData.LotNo, strPackage, m_SelfData.OpNo, False)
                         SyncLock m_Locker
-                            Dim strLotReqData As String = m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.LotStartMode & "," & m_SelfData.IPA
+                            Dim strLotReqData As String = m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.LotStartMode & "," & m_SelfData.IPA & "," & strPackage
                             m_LotReqQueue.Enqueue(strLotReqData)
                         End SyncLock
 
@@ -373,6 +661,7 @@ Public Class frmMain
                 End Try
 
             Case "SA" 'SA
+                UpdateMachineState(machineInfo.Id, MachineProcessingState.Execute, log)
                 If m_SelfData.StartTime <> "" And m_SelfData.StopTime = "" Then
                     Try
                         Dim LotNo As String = m_SelfData.LotNo
@@ -387,12 +676,14 @@ Public Class frmMain
                 End If
 
             Case "SB" 'SB
+                UpdateMachineState(machineInfo.Id, MachineProcessingState.Idle, log)
                 If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
                     m_SelfData.LotStatus = _StatusLot.LotStop
                     UpdateDisplay()
                 End If
 
             Case "SC" 'SC,AlarmNo
+                UpdateMachineState(machineInfo.Id, MachineProcessingState.Pause, log)
                 If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
                     Try
                         Dim AlarmNo As String = strText(1).Trim
@@ -896,7 +1187,7 @@ Public Class frmMain
         Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflow.xml"
         Using fw As New IO.FileStream(pathData, FileMode.Create)
             Dim bs As New SoapFormatter
-            bs.Serialize(fw, m_SelfData )
+            bs.Serialize(fw, m_SelfData)
         End Using
     End Sub
 
@@ -994,7 +1285,7 @@ Public Class frmMain
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
         Dim Ip As String = "10.1.1.50"
-        Dim Data As String = "LR,1535A3333V,SOP22     ,BD3805F1234(BW)        ,005588,07D8,0000000,001E,B." & vbCr
+        Dim Data As String = "LR,9999A0006V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
@@ -1071,6 +1362,9 @@ Public Class frmMain
     Private log As New Logger
     Private packageEnable As Boolean = False
     Private ResultApcsProService As LotUpdateInfo = Nothing
+    Private Recipe As String
+    '' Private functionName As String
+    Private c_ApcsPro As New ApcsPro
 #End Region
     Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
         Dim TmpData As String = ""
@@ -1138,51 +1432,13 @@ LBL_QUEUE_LotSet_Err:
                     GoTo LBL_QUEUE_LotSet_Err
             End Select
         End If
-#Region "Apcs_Pro LotSetUp"
+        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log) Then
+            If c_ApcsProService.CheckLotisExist(m_SelfData.LotNo, log) Then
+                StartLotPro(lotInfo, machineInfo, OPNo)
+                OnlineStartLotPro(lotInfo, machineInfo, OPNo)
+            End If
+        End If
 
-        Try
-
-            log = New Logger("1.0", MCNo)
-            packageEnable = c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log)
-            If Not packageEnable Then
-                GoTo LBL_QUEUE_LOTSET_CHECK
-            End If
-
-            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
-            If lotInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
-            End If
-            machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
-            If machineInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
-            End If
-            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
-            If userInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
-            End If
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-
-            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
-            End If
-        Catch ex As Exception
-            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
-            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & m_SelfData.OpNo)
-
-        End Try
-#End Region
-#Region "APCS Pro LotStart"
-        Try
-            'currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-        End Try
-#End Region
         GoTo LBL_QUEUE_LOTSET_CHECK
 
 
@@ -1252,20 +1508,27 @@ LBL_QUEUE_LotEnd_Err:
             End Select
         End If
         CountErr03 = 0
-#Region "APCS Pro LotEnd"
-        Try
-            If Not packageEnable Then
-                GoTo LBL_QUEUE_LOTEND_CHECK
+        '#Region "APCS Pro LotEnd"
+        '        Try
+        '            If Not packageEnable Then
+        '                GoTo LBL_QUEUE_LOTEND_CHECK
+        '            End If
+        '            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+        '            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), 0, "", 1, currentServerTime.Datetime, log)
+        '            If Not ResultApcsProService.IsOk Then
+        '                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+        '            End If
+        '        Catch ex As Exception
+        '            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
+        '        End Try
+        '#End Region
+        'ApcsPro End
+        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log) Then
+            If c_ApcsProService.CheckLotisExist(m_SelfData.LotNo, log) Then
+                OnlineEndLotPro(lotInfo, machineInfo, OPNo, CInt(GoodQty), CInt(NGQTy))
+                EndLotPro(lotInfo, machineInfo, OPNo, CInt(GoodQty), CInt(NGQTy))
             End If
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, CInt(GoodQty), CInt(NGQTy), 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "bgTDC_DoWork", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCNo & ",OPNo:" & OPNo)
-        End Try
-#End Region
+        End If
 
         GoTo LBL_QUEUE_LOTEND_CHECK
     End Sub
@@ -1280,7 +1543,7 @@ LBL_QUEUE_LotEnd_Err:
         Dim LotSetMode As Integer
         Dim IPAdr As String
         Dim RepeatCountLotReq As Integer
-
+        Dim Package As String
         SyncLock m_Locker
             If m_LotReqQueue.Count > 0 Then 'ทำ LotSet จนกว่าจะหมด Qeue
                 'McNo,LotNo,LotStartMode,IPA
@@ -1291,114 +1554,120 @@ LBL_QUEUE_LotEnd_Err:
                 LotSetMode = CInt(ArrayData(2))
                 IPAdr = ArrayData(3)
                 RepeatCountLotReq = 0
+                Package = ArrayData(4)
             Else
                 Exit Sub
             End If
         End SyncLock
 
-
-
         Dim strMess As String = ""
-
-        Dim res As TdcResponse = m_TdcService.LotRequest("RF-" & MCNo, LotNo, RunModeType.Normal)
-        If res.HasError Then
-            If res.ErrorCode = "01" Then
-                strMess = "01 : Not found"
-                If m_01 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "02" Then
-                strMess = "02 : Running"
-                If m_02 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "03" Then
-                strMess = "03 : Not run"
-                If m_03 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "04" Then
-                strMess = "04 : Machine not found"
-                If m_04 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "05" Then
-                strMess = "05 : Error lot status"
-                If m_05 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "06" Then
-                strMess = "06 : Error process"
-                If m_06 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "70" Then
-                strMess = "70 : Error connect database"
-                If m_70 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "71" Then
-                strMess = "71 : Error read database"
-                If m_71 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "72" Then
-                strMess = "72 : Error write database"
-                If m_72 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
-                End If
-            ElseIf res.ErrorCode = "99" Then
-                strMess = "99 : Other"
-                If m_99 = True Then
-                    m_SelfData.LeqLock = _EquipmentState.Unlock
-                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-                Else
-                    m_SelfData.LeqLock = _EquipmentState.LOCK
-                    SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+        If Not c_ApcsProService.CheckPackageEnable(Package, log) Then
+            Dim res As TdcResponse = m_TdcService.LotRequest("RF-" & MCNo, LotNo, RunModeType.Normal)
+            If res.HasError Then
+                If res.ErrorCode = "01" Then
+                    strMess = "01 : Not found"
+                    If m_01 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "02" Then
+                    strMess = "02 : Running"
+                    If m_02 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "03" Then
+                    strMess = "03 : Not run"
+                    If m_03 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "04" Then
+                    strMess = "04 : Machine not found"
+                    If m_04 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "05" Then
+                    strMess = "05 : Error lot status"
+                    If m_05 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "06" Then
+                    strMess = "06 : Error process"
+                    If m_06 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "70" Then
+                    strMess = "70 : Error connect database"
+                    If m_70 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "71" Then
+                    strMess = "71 : Error read database"
+                    If m_71 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "72" Then
+                    strMess = "72 : Error write database"
+                    If m_72 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
+                ElseIf res.ErrorCode = "99" Then
+                    strMess = "99 : Other"
+                    If m_99 = True Then
+                        m_SelfData.LeqLock = _EquipmentState.Unlock
+                        SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    Else
+                        m_SelfData.LeqLock = _EquipmentState.LOCK
+                        SendTheMessage(IPAdr, "LP01" & vbCr, MCNo)
+                    End If
                 End If
             End If
         Else
-            m_SelfData.LeqLock = _EquipmentState.Unlock
-            SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
-            strMess = "00 : Running"
+            If c_ApcsProService.CheckLotisExist(LotNo, log) Then
+                If SetUpApcsPro("RF-" & MCNo, LotNo, Package, m_SelfData.OpNo, log) Then
+                    m_SelfData.LeqLock = _EquipmentState.Unlock
+                    SendTheMessage(IPAdr, "LP00" & vbCr, MCNo)
+                    strMess = "00 : Running"
+                Else
+                    m_SelfData.LeqLock = _EquipmentState.LOCK
+                    SendTheMessage(m_SelfData.IPA, "LP01" & vbCr, "RF-" & m_SelfData.McNo)
+                End If
+            End If
         End If
-
 
 
         Dim StrData As String = strMess
@@ -1576,5 +1845,9 @@ LBL_QUEUE_LotEnd_Err:
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
+    End Sub
+
+    Private Sub frmMain_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
+        UpdateMachineOnlineState(machineInfo.Id, 0, log)
     End Sub
 End Class
