@@ -178,10 +178,9 @@ Partial Class frmMain
         Me.lbStart.AutoSize = True
         Me.lbStart.BackColor = System.Drawing.Color.Transparent
         Me.lbStart.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStart.Location = New System.Drawing.Point(367, 977)
-        Me.lbStart.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbStart.Location = New System.Drawing.Point(275, 794)
         Me.lbStart.Name = "lbStart"
-        Me.lbStart.Size = New System.Drawing.Size(123, 29)
+        Me.lbStart.Size = New System.Drawing.Size(97, 25)
         Me.lbStart.TabIndex = 27
         Me.lbStart.Text = "StartTime"
         '
@@ -191,10 +190,9 @@ Partial Class frmMain
         Me.lbIp.BackColor = System.Drawing.Color.Transparent
         Me.lbIp.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.lbIp.ForeColor = System.Drawing.Color.Black
-        Me.lbIp.Location = New System.Drawing.Point(367, 286)
-        Me.lbIp.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbIp.Location = New System.Drawing.Point(275, 232)
         Me.lbIp.Name = "lbIp"
-        Me.lbIp.Size = New System.Drawing.Size(38, 29)
+        Me.lbIp.Size = New System.Drawing.Size(32, 25)
         Me.lbIp.TabIndex = 29
         Me.lbIp.Text = "IP"
         '
@@ -203,10 +201,9 @@ Partial Class frmMain
         Me.lbOp.AutoSize = True
         Me.lbOp.BackColor = System.Drawing.Color.Transparent
         Me.lbOp.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbOp.Location = New System.Drawing.Point(367, 409)
-        Me.lbOp.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbOp.Location = New System.Drawing.Point(275, 332)
         Me.lbOp.Name = "lbOp"
-        Me.lbOp.Size = New System.Drawing.Size(81, 29)
+        Me.lbOp.Size = New System.Drawing.Size(66, 25)
         Me.lbOp.TabIndex = 28
         Me.lbOp.Text = "OPNo"
         '
@@ -215,10 +212,9 @@ Partial Class frmMain
         Me.lbStop.AutoSize = True
         Me.lbStop.BackColor = System.Drawing.Color.Transparent
         Me.lbStop.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStop.Location = New System.Drawing.Point(367, 1055)
-        Me.lbStop.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbStop.Location = New System.Drawing.Point(275, 857)
         Me.lbStop.Name = "lbStop"
-        Me.lbStop.Size = New System.Drawing.Size(122, 29)
+        Me.lbStop.Size = New System.Drawing.Size(97, 25)
         Me.lbStop.TabIndex = 26
         Me.lbStop.Text = "StopTime"
         '
@@ -227,10 +223,9 @@ Partial Class frmMain
         Me.lbInput.AutoSize = True
         Me.lbInput.BackColor = System.Drawing.Color.Transparent
         Me.lbInput.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbInput.Location = New System.Drawing.Point(367, 686)
-        Me.lbInput.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbInput.Location = New System.Drawing.Point(275, 557)
         Me.lbInput.Name = "lbInput"
-        Me.lbInput.Size = New System.Drawing.Size(68, 29)
+        Me.lbInput.Size = New System.Drawing.Size(55, 25)
         Me.lbInput.TabIndex = 25
         Me.lbInput.Text = "Input"
         '
@@ -239,10 +234,9 @@ Partial Class frmMain
         Me.lbDevice.AutoSize = True
         Me.lbDevice.BackColor = System.Drawing.Color.Transparent
         Me.lbDevice.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbDevice.Location = New System.Drawing.Point(367, 615)
-        Me.lbDevice.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbDevice.Location = New System.Drawing.Point(275, 500)
         Me.lbDevice.Name = "lbDevice"
-        Me.lbDevice.Size = New System.Drawing.Size(91, 29)
+        Me.lbDevice.Size = New System.Drawing.Size(72, 25)
         Me.lbDevice.TabIndex = 21
         Me.lbDevice.Text = "Device"
         '
@@ -251,10 +245,9 @@ Partial Class frmMain
         Me.lbOutput.AutoSize = True
         Me.lbOutput.BackColor = System.Drawing.Color.Transparent
         Me.lbOutput.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbOutput.Location = New System.Drawing.Point(367, 759)
-        Me.lbOutput.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbOutput.Location = New System.Drawing.Point(275, 617)
         Me.lbOutput.Name = "lbOutput"
-        Me.lbOutput.Size = New System.Drawing.Size(91, 29)
+        Me.lbOutput.Size = New System.Drawing.Size(73, 25)
         Me.lbOutput.TabIndex = 20
         Me.lbOutput.Text = "OutPut"
         '
@@ -263,10 +256,9 @@ Partial Class frmMain
         Me.lbPackage.AutoSize = True
         Me.lbPackage.BackColor = System.Drawing.Color.Transparent
         Me.lbPackage.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbPackage.Location = New System.Drawing.Point(367, 548)
-        Me.lbPackage.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbPackage.Location = New System.Drawing.Point(275, 445)
         Me.lbPackage.Name = "lbPackage"
-        Me.lbPackage.Size = New System.Drawing.Size(112, 29)
+        Me.lbPackage.Size = New System.Drawing.Size(89, 25)
         Me.lbPackage.TabIndex = 23
         Me.lbPackage.Text = "Package"
         '
@@ -275,10 +267,9 @@ Partial Class frmMain
         Me.lbLotNo.AutoSize = True
         Me.lbLotNo.BackColor = System.Drawing.Color.Transparent
         Me.lbLotNo.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbLotNo.Location = New System.Drawing.Point(367, 476)
-        Me.lbLotNo.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbLotNo.Location = New System.Drawing.Point(275, 387)
         Me.lbLotNo.Name = "lbLotNo"
-        Me.lbLotNo.Size = New System.Drawing.Size(76, 29)
+        Me.lbLotNo.Size = New System.Drawing.Size(61, 25)
         Me.lbLotNo.TabIndex = 22
         Me.lbLotNo.Text = "Lotno"
         '
@@ -288,10 +279,9 @@ Partial Class frmMain
         Me.lbMC.BackColor = System.Drawing.Color.Transparent
         Me.lbMC.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.lbMC.ForeColor = System.Drawing.SystemColors.HotTrack
-        Me.lbMC.Location = New System.Drawing.Point(367, 346)
-        Me.lbMC.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbMC.Location = New System.Drawing.Point(275, 281)
         Me.lbMC.Name = "lbMC"
-        Me.lbMC.Size = New System.Drawing.Size(88, 29)
+        Me.lbMC.Size = New System.Drawing.Size(73, 25)
         Me.lbMC.TabIndex = 24
         Me.lbMC.Text = "MCNo"
         '
@@ -305,11 +295,10 @@ Partial Class frmMain
         Me.TabControl1.Controls.Add(Me.TabPage2)
         Me.TabControl1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TabControl1.ItemSize = New System.Drawing.Size(71, 45)
-        Me.TabControl1.Location = New System.Drawing.Point(915, 286)
-        Me.TabControl1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.TabControl1.Location = New System.Drawing.Point(686, 232)
         Me.TabControl1.Name = "TabControl1"
         Me.TabControl1.SelectedIndex = 0
-        Me.TabControl1.Size = New System.Drawing.Size(776, 926)
+        Me.TabControl1.Size = New System.Drawing.Size(582, 752)
         Me.TabControl1.TabIndex = 36
         '
         'TpProductData
@@ -319,9 +308,8 @@ Partial Class frmMain
         Me.TpProductData.Controls.Add(Me.gbxLotEnd)
         Me.TpProductData.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TpProductData.Location = New System.Drawing.Point(4, 49)
-        Me.TpProductData.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TpProductData.Name = "TpProductData"
-        Me.TpProductData.Size = New System.Drawing.Size(768, 873)
+        Me.TpProductData.Size = New System.Drawing.Size(574, 699)
         Me.TpProductData.TabIndex = 2
         Me.TpProductData.Text = "Product Mode"
         Me.TpProductData.UseVisualStyleBackColor = True
@@ -332,10 +320,9 @@ Partial Class frmMain
         Me.BtEndLot.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BtEndLot.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.BtEndLot.ForeColor = System.Drawing.Color.Black
-        Me.BtEndLot.Location = New System.Drawing.Point(111, 560)
-        Me.BtEndLot.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.BtEndLot.Location = New System.Drawing.Point(83, 455)
         Me.BtEndLot.Name = "BtEndLot"
-        Me.BtEndLot.Size = New System.Drawing.Size(359, 76)
+        Me.BtEndLot.Size = New System.Drawing.Size(269, 62)
         Me.BtEndLot.TabIndex = 206
         Me.BtEndLot.Text = "End Lot "
         Me.BtEndLot.UseVisualStyleBackColor = False
@@ -345,11 +332,9 @@ Partial Class frmMain
         Me.gbxLotEnd.Controls.Add(Me.radResetEnd)
         Me.gbxLotEnd.Controls.Add(Me.radAccuEnd)
         Me.gbxLotEnd.Controls.Add(Me.radNormalEnd)
-        Me.gbxLotEnd.Location = New System.Drawing.Point(61, 74)
-        Me.gbxLotEnd.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.gbxLotEnd.Location = New System.Drawing.Point(46, 60)
         Me.gbxLotEnd.Name = "gbxLotEnd"
-        Me.gbxLotEnd.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.gbxLotEnd.Size = New System.Drawing.Size(264, 172)
+        Me.gbxLotEnd.Size = New System.Drawing.Size(198, 140)
         Me.gbxLotEnd.TabIndex = 1
         Me.gbxLotEnd.TabStop = False
         Me.gbxLotEnd.Text = "Lot End Mode"
@@ -358,10 +343,9 @@ Partial Class frmMain
         '
         Me.radResetEnd.AutoSize = True
         Me.radResetEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.radResetEnd.Location = New System.Drawing.Point(32, 128)
-        Me.radResetEnd.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.radResetEnd.Location = New System.Drawing.Point(24, 104)
         Me.radResetEnd.Name = "radResetEnd"
-        Me.radResetEnd.Size = New System.Drawing.Size(128, 24)
+        Me.radResetEnd.Size = New System.Drawing.Size(101, 20)
         Me.radResetEnd.TabIndex = 2
         Me.radResetEnd.TabStop = True
         Me.radResetEnd.Text = "Re Input (All)"
@@ -371,10 +355,9 @@ Partial Class frmMain
         '
         Me.radAccuEnd.AutoSize = True
         Me.radAccuEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.radAccuEnd.Location = New System.Drawing.Point(32, 81)
-        Me.radAccuEnd.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.radAccuEnd.Location = New System.Drawing.Point(24, 66)
         Me.radAccuEnd.Name = "radAccuEnd"
-        Me.radAccuEnd.Size = New System.Drawing.Size(82, 24)
+        Me.radAccuEnd.Size = New System.Drawing.Size(71, 20)
         Me.radAccuEnd.TabIndex = 1
         Me.radAccuEnd.TabStop = True
         Me.radAccuEnd.Text = "Reload"
@@ -384,10 +367,9 @@ Partial Class frmMain
         '
         Me.radNormalEnd.AutoSize = True
         Me.radNormalEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.radNormalEnd.Location = New System.Drawing.Point(32, 34)
-        Me.radNormalEnd.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.radNormalEnd.Location = New System.Drawing.Point(24, 28)
         Me.radNormalEnd.Name = "radNormalEnd"
-        Me.radNormalEnd.Size = New System.Drawing.Size(118, 24)
+        Me.radNormalEnd.Size = New System.Drawing.Size(97, 20)
         Me.radNormalEnd.TabIndex = 0
         Me.radNormalEnd.TabStop = True
         Me.radNormalEnd.Text = "Normal End"
@@ -401,10 +383,9 @@ Partial Class frmMain
         Me.TPMaintenance.Controls.Add(Me.BtSetting)
         Me.TPMaintenance.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.TPMaintenance.Location = New System.Drawing.Point(4, 49)
-        Me.TPMaintenance.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TPMaintenance.Name = "TPMaintenance"
-        Me.TPMaintenance.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.TPMaintenance.Size = New System.Drawing.Size(768, 873)
+        Me.TPMaintenance.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TPMaintenance.Size = New System.Drawing.Size(574, 699)
         Me.TPMaintenance.TabIndex = 0
         Me.TPMaintenance.Text = "Maintenance"
         Me.TPMaintenance.UseVisualStyleBackColor = True
@@ -413,10 +394,9 @@ Partial Class frmMain
         '
         Me.LbCounterFile.AutoSize = True
         Me.LbCounterFile.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.LbCounterFile.Location = New System.Drawing.Point(73, 87)
-        Me.LbCounterFile.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LbCounterFile.Location = New System.Drawing.Point(55, 71)
         Me.LbCounterFile.Name = "LbCounterFile"
-        Me.LbCounterFile.Size = New System.Drawing.Size(16, 17)
+        Me.LbCounterFile.Size = New System.Drawing.Size(13, 13)
         Me.LbCounterFile.TabIndex = 52
         Me.LbCounterFile.Text = "0"
         '
@@ -425,10 +405,9 @@ Partial Class frmMain
         Me.Button1.BackgroundImage = CType(resources.GetObject("Button1.BackgroundImage"), System.Drawing.Image)
         Me.Button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.Button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.Button1.Location = New System.Drawing.Point(64, 31)
-        Me.Button1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button1.Location = New System.Drawing.Point(48, 25)
         Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(133, 74)
+        Me.Button1.Size = New System.Drawing.Size(100, 60)
         Me.Button1.TabIndex = 51
         Me.Button1.UseVisualStyleBackColor = True
         '
@@ -437,10 +416,9 @@ Partial Class frmMain
         Me.BtSetting.BackgroundImage = CType(resources.GetObject("BtSetting.BackgroundImage"), System.Drawing.Image)
         Me.BtSetting.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.BtSetting.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.BtSetting.Location = New System.Drawing.Point(257, 30)
-        Me.BtSetting.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.BtSetting.Location = New System.Drawing.Point(193, 24)
         Me.BtSetting.Name = "BtSetting"
-        Me.BtSetting.Size = New System.Drawing.Size(133, 74)
+        Me.BtSetting.Size = New System.Drawing.Size(100, 60)
         Me.BtSetting.TabIndex = 3
         Me.BtSetting.UseVisualStyleBackColor = True
         '
@@ -454,10 +432,9 @@ Partial Class frmMain
         Me.ComLog.Controls.Add(Me.CommLog)
         Me.ComLog.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ComLog.Location = New System.Drawing.Point(4, 49)
-        Me.ComLog.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.ComLog.Name = "ComLog"
-        Me.ComLog.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.ComLog.Size = New System.Drawing.Size(768, 873)
+        Me.ComLog.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.ComLog.Size = New System.Drawing.Size(574, 699)
         Me.ComLog.TabIndex = 1
         Me.ComLog.Text = "    ComLog    "
         Me.ComLog.UseVisualStyleBackColor = True
@@ -467,10 +444,9 @@ Partial Class frmMain
         Me.lbLotReq.AutoSize = True
         Me.lbLotReq.BackColor = System.Drawing.Color.Tomato
         Me.lbLotReq.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbLotReq.Location = New System.Drawing.Point(20, 524)
-        Me.lbLotReq.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbLotReq.Location = New System.Drawing.Point(15, 426)
         Me.lbLotReq.Name = "lbLotReq"
-        Me.lbLotReq.Size = New System.Drawing.Size(84, 20)
+        Me.lbLotReq.Size = New System.Drawing.Size(72, 17)
         Me.lbLotReq.TabIndex = 212
         Me.lbLotReq.Text = "LOTREQ"
         '
@@ -479,10 +455,9 @@ Partial Class frmMain
         Me.lbLotSetEnd.AutoSize = True
         Me.lbLotSetEnd.BackColor = System.Drawing.Color.Tomato
         Me.lbLotSetEnd.Font = New System.Drawing.Font("Microsoft Sans Serif", 10.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbLotSetEnd.Location = New System.Drawing.Point(20, 551)
-        Me.lbLotSetEnd.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbLotSetEnd.Location = New System.Drawing.Point(15, 448)
         Me.lbLotSetEnd.Name = "lbLotSetEnd"
-        Me.lbLotSetEnd.Size = New System.Drawing.Size(125, 20)
+        Me.lbLotSetEnd.Size = New System.Drawing.Size(106, 17)
         Me.lbLotSetEnd.TabIndex = 212
         Me.lbLotSetEnd.Text = "LOTSET/END"
         '
@@ -491,10 +466,9 @@ Partial Class frmMain
         Me.cbSDGood.AutoSize = True
         Me.cbSDGood.Checked = True
         Me.cbSDGood.CheckState = System.Windows.Forms.CheckState.Checked
-        Me.cbSDGood.Location = New System.Drawing.Point(51, 602)
-        Me.cbSDGood.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.cbSDGood.Location = New System.Drawing.Point(38, 489)
         Me.cbSDGood.Name = "cbSDGood"
-        Me.cbSDGood.Size = New System.Drawing.Size(100, 24)
+        Me.cbSDGood.Size = New System.Drawing.Size(83, 20)
         Me.cbSDGood.TabIndex = 3
         Me.cbSDGood.Text = "SD Good"
         Me.cbSDGood.UseVisualStyleBackColor = True
@@ -503,10 +477,9 @@ Partial Class frmMain
         '
         Me.BtClearLog.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.BtClearLog.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.BtClearLog.Location = New System.Drawing.Point(477, 556)
-        Me.BtClearLog.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.BtClearLog.Location = New System.Drawing.Point(358, 452)
         Me.BtClearLog.Name = "BtClearLog"
-        Me.BtClearLog.Size = New System.Drawing.Size(120, 74)
+        Me.BtClearLog.Size = New System.Drawing.Size(90, 60)
         Me.BtClearLog.TabIndex = 2
         Me.BtClearLog.Text = "Clear"
         Me.BtClearLog.UseVisualStyleBackColor = True
@@ -514,13 +487,12 @@ Partial Class frmMain
         'CommLog
         '
         Me.CommLog.BackColor = System.Drawing.SystemColors.ButtonHighlight
-        Me.CommLog.Location = New System.Drawing.Point(3, 4)
-        Me.CommLog.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.CommLog.Location = New System.Drawing.Point(2, 3)
         Me.CommLog.Multiline = True
         Me.CommLog.Name = "CommLog"
         Me.CommLog.ReadOnly = True
         Me.CommLog.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.CommLog.Size = New System.Drawing.Size(629, 494)
+        Me.CommLog.Size = New System.Drawing.Size(473, 402)
         Me.CommLog.TabIndex = 0
         '
         'TabPage1
@@ -530,10 +502,9 @@ Partial Class frmMain
         Me.TabPage1.Controls.Add(Me.ReflowAlarmInfoDataGridView)
         Me.TabPage1.Controls.Add(Me.ReflowAlarmTableDataGridView)
         Me.TabPage1.Location = New System.Drawing.Point(4, 49)
-        Me.TabPage1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TabPage1.Name = "TabPage1"
-        Me.TabPage1.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.TabPage1.Size = New System.Drawing.Size(768, 873)
+        Me.TabPage1.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage1.Size = New System.Drawing.Size(574, 699)
         Me.TabPage1.TabIndex = 4
         Me.TabPage1.Text = "AlarmInfo"
         Me.TabPage1.UseVisualStyleBackColor = True
@@ -546,11 +517,10 @@ Partial Class frmMain
         Me.ReflowDataDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowDataDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn1, Me.LotStartTimeDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn, Me.InputQtyDataGridViewTextBoxColumn, Me.OutputQtyDataGridViewTextBoxColumn, Me.LotEndTimeDataGridViewTextBoxColumn, Me.MagazineNoDataGridViewTextBoxColumn, Me.TemperatureGroupDataGridViewTextBoxColumn, Me.RemarkDataGridViewTextBoxColumn, Me.AlarmTotalDataGridViewTextBoxColumn})
         Me.ReflowDataDataGridView.DataSource = Me.ReflowDataBindingSource
-        Me.ReflowDataDataGridView.Location = New System.Drawing.Point(19, 304)
-        Me.ReflowDataDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ReflowDataDataGridView.Location = New System.Drawing.Point(14, 247)
         Me.ReflowDataDataGridView.Name = "ReflowDataDataGridView"
         Me.ReflowDataDataGridView.ReadOnly = True
-        Me.ReflowDataDataGridView.Size = New System.Drawing.Size(733, 288)
+        Me.ReflowDataDataGridView.Size = New System.Drawing.Size(550, 234)
         Me.ReflowDataDataGridView.TabIndex = 2
         '
         'LotNoDataGridViewTextBoxColumn1
@@ -647,10 +617,9 @@ Partial Class frmMain
         Me.ReflowAlarmInfoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowAlarmInfoDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecordTimeDataGridViewTextBoxColumn, Me.MCNoDataGridViewTextBoxColumn, Me.AlarmIDDataGridViewTextBoxColumn, Me.LotNoDataGridViewTextBoxColumn, Me.ClearTimeDataGridViewTextBoxColumn})
         Me.ReflowAlarmInfoDataGridView.DataSource = Me.ReflowAlarmInfoBindingSource
-        Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(377, 7)
-        Me.ReflowAlarmInfoDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(283, 6)
         Me.ReflowAlarmInfoDataGridView.Name = "ReflowAlarmInfoDataGridView"
-        Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(389, 271)
+        Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(292, 220)
         Me.ReflowAlarmInfoDataGridView.TabIndex = 1
         '
         'RecordTimeDataGridViewTextBoxColumn
@@ -696,11 +665,10 @@ Partial Class frmMain
         Me.ReflowAlarmTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowAlarmTableDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDDataGridViewTextBoxColumn, Me.AlarmNoDataGridViewTextBoxColumn, Me.MachineTypeDataGridViewTextBoxColumn, Me.AlarmTypeDataGridViewTextBoxColumn, Me.AlarmMessageDataGridViewTextBoxColumn})
         Me.ReflowAlarmTableDataGridView.DataSource = Me.ReflowAlarmTableBindingSource
-        Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(19, 7)
-        Me.ReflowAlarmTableDataGridView.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(14, 6)
         Me.ReflowAlarmTableDataGridView.Name = "ReflowAlarmTableDataGridView"
         Me.ReflowAlarmTableDataGridView.ReadOnly = True
-        Me.ReflowAlarmTableDataGridView.Size = New System.Drawing.Size(351, 271)
+        Me.ReflowAlarmTableDataGridView.Size = New System.Drawing.Size(263, 220)
         Me.ReflowAlarmTableDataGridView.TabIndex = 0
         '
         'IDDataGridViewTextBoxColumn
@@ -764,20 +732,18 @@ Partial Class frmMain
         Me.TabPage2.Controls.Add(Me.Button4)
         Me.TabPage2.Controls.Add(Me.Button5)
         Me.TabPage2.Location = New System.Drawing.Point(4, 49)
-        Me.TabPage2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
         Me.TabPage2.Name = "TabPage2"
-        Me.TabPage2.Padding = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.TabPage2.Size = New System.Drawing.Size(768, 873)
+        Me.TabPage2.Padding = New System.Windows.Forms.Padding(3, 3, 3, 3)
+        Me.TabPage2.Size = New System.Drawing.Size(574, 699)
         Me.TabPage2.TabIndex = 5
         Me.TabPage2.Text = "Test"
         Me.TabPage2.UseVisualStyleBackColor = True
         '
         'Button20
         '
-        Me.Button20.Location = New System.Drawing.Point(380, 352)
-        Me.Button20.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button20.Location = New System.Drawing.Point(285, 286)
         Me.Button20.Name = "Button20"
-        Me.Button20.Size = New System.Drawing.Size(100, 28)
+        Me.Button20.Size = New System.Drawing.Size(75, 23)
         Me.Button20.TabIndex = 8
         Me.Button20.Text = "LOTEND"
         Me.Button20.UseVisualStyleBackColor = True
@@ -785,10 +751,9 @@ Partial Class frmMain
         '
         'Button19
         '
-        Me.Button19.Location = New System.Drawing.Point(380, 261)
-        Me.Button19.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button19.Location = New System.Drawing.Point(285, 212)
         Me.Button19.Name = "Button19"
-        Me.Button19.Size = New System.Drawing.Size(100, 28)
+        Me.Button19.Size = New System.Drawing.Size(75, 23)
         Me.Button19.TabIndex = 7
         Me.Button19.Text = "LOTREQ"
         Me.Button19.UseVisualStyleBackColor = True
@@ -796,10 +761,9 @@ Partial Class frmMain
         '
         'Button18
         '
-        Me.Button18.Location = New System.Drawing.Point(380, 297)
-        Me.Button18.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button18.Location = New System.Drawing.Point(285, 241)
         Me.Button18.Name = "Button18"
-        Me.Button18.Size = New System.Drawing.Size(100, 28)
+        Me.Button18.Size = New System.Drawing.Size(75, 23)
         Me.Button18.TabIndex = 6
         Me.Button18.Text = "LotSet"
         Me.Button18.UseVisualStyleBackColor = True
@@ -808,10 +772,9 @@ Partial Class frmMain
         'Button16
         '
         Me.Button16.Enabled = False
-        Me.Button16.Location = New System.Drawing.Point(176, 516)
-        Me.Button16.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button16.Location = New System.Drawing.Point(132, 419)
         Me.Button16.Name = "Button16"
-        Me.Button16.Size = New System.Drawing.Size(100, 28)
+        Me.Button16.Size = New System.Drawing.Size(75, 23)
         Me.Button16.TabIndex = 5
         Me.Button16.Text = "MC1 SD2"
         Me.Button16.UseVisualStyleBackColor = True
@@ -820,10 +783,9 @@ Partial Class frmMain
         'Button15
         '
         Me.Button15.Enabled = False
-        Me.Button15.Location = New System.Drawing.Point(400, 212)
-        Me.Button15.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button15.Location = New System.Drawing.Point(300, 172)
         Me.Button15.Name = "Button15"
-        Me.Button15.Size = New System.Drawing.Size(100, 28)
+        Me.Button15.Size = New System.Drawing.Size(75, 23)
         Me.Button15.TabIndex = 4
         Me.Button15.Text = "Button15"
         Me.Button15.UseVisualStyleBackColor = True
@@ -832,10 +794,9 @@ Partial Class frmMain
         'Button14
         '
         Me.Button14.Enabled = False
-        Me.Button14.Location = New System.Drawing.Point(215, 436)
-        Me.Button14.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button14.Location = New System.Drawing.Point(161, 354)
         Me.Button14.Name = "Button14"
-        Me.Button14.Size = New System.Drawing.Size(249, 28)
+        Me.Button14.Size = New System.Drawing.Size(187, 23)
         Me.Button14.TabIndex = 3
         Me.Button14.Text = "vbcr,vbcr,text"
         Me.Button14.UseVisualStyleBackColor = True
@@ -843,20 +804,18 @@ Partial Class frmMain
         '
         'Button13
         '
-        Me.Button13.Location = New System.Drawing.Point(349, 97)
-        Me.Button13.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button13.Location = New System.Drawing.Point(262, 79)
         Me.Button13.Name = "Button13"
-        Me.Button13.Size = New System.Drawing.Size(100, 28)
+        Me.Button13.Size = New System.Drawing.Size(75, 23)
         Me.Button13.TabIndex = 1
         Me.Button13.Text = "MC3 LR"
         Me.Button13.UseVisualStyleBackColor = True
         '
         'Button10
         '
-        Me.Button10.Location = New System.Drawing.Point(215, 97)
-        Me.Button10.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button10.Location = New System.Drawing.Point(161, 79)
         Me.Button10.Name = "Button10"
-        Me.Button10.Size = New System.Drawing.Size(100, 28)
+        Me.Button10.Size = New System.Drawing.Size(75, 23)
         Me.Button10.TabIndex = 1
         Me.Button10.Text = "MC2 LR"
         Me.Button10.UseVisualStyleBackColor = True
@@ -864,10 +823,9 @@ Partial Class frmMain
         'Button11
         '
         Me.Button11.Enabled = False
-        Me.Button11.Location = New System.Drawing.Point(291, 516)
-        Me.Button11.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button11.Location = New System.Drawing.Point(218, 419)
         Me.Button11.Name = "Button11"
-        Me.Button11.Size = New System.Drawing.Size(100, 28)
+        Me.Button11.Size = New System.Drawing.Size(75, 23)
         Me.Button11.TabIndex = 2
         Me.Button11.Text = "Vbcr,vbcr"
         Me.Button11.UseVisualStyleBackColor = True
@@ -875,30 +833,27 @@ Partial Class frmMain
         '
         'Button9
         '
-        Me.Button9.Location = New System.Drawing.Point(215, 352)
-        Me.Button9.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button9.Location = New System.Drawing.Point(161, 286)
         Me.Button9.Name = "Button9"
-        Me.Button9.Size = New System.Drawing.Size(100, 28)
+        Me.Button9.Size = New System.Drawing.Size(75, 23)
         Me.Button9.TabIndex = 0
         Me.Button9.Text = "MC2 End"
         Me.Button9.UseVisualStyleBackColor = True
         '
         'Button8
         '
-        Me.Button8.Location = New System.Drawing.Point(215, 297)
-        Me.Button8.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button8.Location = New System.Drawing.Point(161, 241)
         Me.Button8.Name = "Button8"
-        Me.Button8.Size = New System.Drawing.Size(100, 28)
+        Me.Button8.Size = New System.Drawing.Size(75, 23)
         Me.Button8.TabIndex = 0
         Me.Button8.Text = "MC2 SC"
         Me.Button8.UseVisualStyleBackColor = True
         '
         'Button12
         '
-        Me.Button12.Location = New System.Drawing.Point(68, 516)
-        Me.Button12.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button12.Location = New System.Drawing.Point(51, 419)
         Me.Button12.Name = "Button12"
-        Me.Button12.Size = New System.Drawing.Size(100, 28)
+        Me.Button12.Size = New System.Drawing.Size(75, 23)
         Me.Button12.TabIndex = 1
         Me.Button12.Text = "MC1 LR"
         Me.Button12.UseVisualStyleBackColor = True
@@ -906,10 +861,9 @@ Partial Class frmMain
         '
         'Button2
         '
-        Me.Button2.Location = New System.Drawing.Point(68, 551)
-        Me.Button2.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button2.Location = New System.Drawing.Point(51, 448)
         Me.Button2.Name = "Button2"
-        Me.Button2.Size = New System.Drawing.Size(100, 28)
+        Me.Button2.Size = New System.Drawing.Size(75, 23)
         Me.Button2.TabIndex = 0
         Me.Button2.Text = "MC1 Start"
         Me.Button2.UseVisualStyleBackColor = True
@@ -917,30 +871,27 @@ Partial Class frmMain
         '
         'Button7
         '
-        Me.Button7.Location = New System.Drawing.Point(215, 212)
-        Me.Button7.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button7.Location = New System.Drawing.Point(161, 172)
         Me.Button7.Name = "Button7"
-        Me.Button7.Size = New System.Drawing.Size(100, 28)
+        Me.Button7.Size = New System.Drawing.Size(75, 23)
         Me.Button7.TabIndex = 0
         Me.Button7.Text = "MC2 SD"
         Me.Button7.UseVisualStyleBackColor = True
         '
         'Button6
         '
-        Me.Button6.Location = New System.Drawing.Point(215, 155)
-        Me.Button6.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button6.Location = New System.Drawing.Point(161, 126)
         Me.Button6.Name = "Button6"
-        Me.Button6.Size = New System.Drawing.Size(100, 28)
+        Me.Button6.Size = New System.Drawing.Size(75, 23)
         Me.Button6.TabIndex = 0
         Me.Button6.Text = "MC2 Start"
         Me.Button6.UseVisualStyleBackColor = True
         '
         'Button3
         '
-        Me.Button3.Location = New System.Drawing.Point(68, 587)
-        Me.Button3.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button3.Location = New System.Drawing.Point(51, 477)
         Me.Button3.Name = "Button3"
-        Me.Button3.Size = New System.Drawing.Size(100, 28)
+        Me.Button3.Size = New System.Drawing.Size(75, 23)
         Me.Button3.TabIndex = 0
         Me.Button3.Text = "MC1 SD"
         Me.Button3.UseVisualStyleBackColor = True
@@ -948,10 +899,9 @@ Partial Class frmMain
         '
         'Button4
         '
-        Me.Button4.Location = New System.Drawing.Point(183, 587)
-        Me.Button4.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button4.Location = New System.Drawing.Point(137, 477)
         Me.Button4.Name = "Button4"
-        Me.Button4.Size = New System.Drawing.Size(100, 28)
+        Me.Button4.Size = New System.Drawing.Size(75, 23)
         Me.Button4.TabIndex = 0
         Me.Button4.Text = "MC1 End"
         Me.Button4.UseVisualStyleBackColor = True
@@ -960,10 +910,9 @@ Partial Class frmMain
         'Button5
         '
         Me.Button5.Enabled = False
-        Me.Button5.Location = New System.Drawing.Point(183, 549)
-        Me.Button5.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.Button5.Location = New System.Drawing.Point(137, 446)
         Me.Button5.Name = "Button5"
-        Me.Button5.Size = New System.Drawing.Size(100, 28)
+        Me.Button5.Size = New System.Drawing.Size(75, 23)
         Me.Button5.TabIndex = 0
         Me.Button5.Text = "MC1 SC"
         Me.Button5.UseVisualStyleBackColor = True
@@ -976,10 +925,9 @@ Partial Class frmMain
         Me.APCSClose.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.APCSClose.FlatAppearance.MouseDownBackColor = System.Drawing.Color.Transparent
         Me.APCSClose.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.APCSClose.Location = New System.Drawing.Point(1388, 111)
-        Me.APCSClose.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.APCSClose.Location = New System.Drawing.Point(1041, 90)
         Me.APCSClose.Name = "APCSClose"
-        Me.APCSClose.Size = New System.Drawing.Size(85, 68)
+        Me.APCSClose.Size = New System.Drawing.Size(64, 55)
         Me.APCSClose.TabIndex = 53
         Me.APCSClose.UseVisualStyleBackColor = False
         '
@@ -989,10 +937,9 @@ Partial Class frmMain
         Me.lbNotification.BackColor = System.Drawing.Color.Transparent
         Me.lbNotification.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lbNotification.ForeColor = System.Drawing.Color.DarkOrange
-        Me.lbNotification.Location = New System.Drawing.Point(367, 1132)
-        Me.lbNotification.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbNotification.Location = New System.Drawing.Point(275, 920)
         Me.lbNotification.Name = "lbNotification"
-        Me.lbNotification.Size = New System.Drawing.Size(151, 29)
+        Me.lbNotification.Size = New System.Drawing.Size(119, 25)
         Me.lbNotification.TabIndex = 37
         Me.lbNotification.Text = "Notification"
         Me.lbNotification.TextAlign = System.Drawing.ContentAlignment.MiddleRight
@@ -1003,10 +950,9 @@ Partial Class frmMain
         Me.MinimizeButton.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.MinimizeButton.FlatAppearance.BorderColor = System.Drawing.Color.White
         Me.MinimizeButton.Image = CType(resources.GetObject("MinimizeButton.Image"), System.Drawing.Image)
-        Me.MinimizeButton.Location = New System.Drawing.Point(1293, 111)
-        Me.MinimizeButton.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.MinimizeButton.Location = New System.Drawing.Point(970, 90)
         Me.MinimizeButton.Name = "MinimizeButton"
-        Me.MinimizeButton.Size = New System.Drawing.Size(84, 68)
+        Me.MinimizeButton.Size = New System.Drawing.Size(63, 55)
         Me.MinimizeButton.TabIndex = 18
         Me.MinimizeButton.UseVisualStyleBackColor = False
         '
@@ -1015,10 +961,9 @@ Partial Class frmMain
         Me.LbGroup.AutoSize = True
         Me.LbGroup.BackColor = System.Drawing.Color.Transparent
         Me.LbGroup.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbGroup.Location = New System.Drawing.Point(367, 906)
-        Me.LbGroup.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LbGroup.Location = New System.Drawing.Point(275, 736)
         Me.LbGroup.Name = "LbGroup"
-        Me.LbGroup.Size = New System.Drawing.Size(150, 29)
+        Me.LbGroup.Size = New System.Drawing.Size(118, 25)
         Me.LbGroup.TabIndex = 45
         Me.LbGroup.Text = "GroupName"
         '
@@ -1026,10 +971,9 @@ Partial Class frmMain
         '
         Me.LbVersion.AutoSize = True
         Me.LbVersion.BackColor = System.Drawing.Color.White
-        Me.LbVersion.Location = New System.Drawing.Point(1308, 1233)
-        Me.LbVersion.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LbVersion.Location = New System.Drawing.Point(981, 1002)
         Me.LbVersion.Name = "LbVersion"
-        Me.LbVersion.Size = New System.Drawing.Size(233, 17)
+        Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
         Me.LbVersion.Text = "Reflow APCS Software Version 4.00"
         '
@@ -1038,10 +982,9 @@ Partial Class frmMain
         Me.Lbtime.AutoSize = True
         Me.Lbtime.BackColor = System.Drawing.Color.Transparent
         Me.Lbtime.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Lbtime.Location = New System.Drawing.Point(1456, 79)
-        Me.Lbtime.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Lbtime.Location = New System.Drawing.Point(1092, 64)
         Me.Lbtime.Name = "Lbtime"
-        Me.Lbtime.Size = New System.Drawing.Size(57, 17)
+        Me.Lbtime.Size = New System.Drawing.Size(45, 13)
         Me.Lbtime.TabIndex = 48
         Me.Lbtime.Text = "Label3"
         Me.Lbtime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -1056,10 +999,9 @@ Partial Class frmMain
         Me.LbMagazine.AutoSize = True
         Me.LbMagazine.BackColor = System.Drawing.Color.Transparent
         Me.LbMagazine.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbMagazine.Location = New System.Drawing.Point(367, 830)
-        Me.LbMagazine.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.LbMagazine.Location = New System.Drawing.Point(275, 674)
         Me.LbMagazine.Name = "LbMagazine"
-        Me.LbMagazine.Size = New System.Drawing.Size(123, 29)
+        Me.LbMagazine.Size = New System.Drawing.Size(98, 25)
         Me.LbMagazine.TabIndex = 51
         Me.LbMagazine.Text = "Magazine"
         '
@@ -1184,53 +1126,52 @@ Partial Class frmMain
         Me.MenuStrip1.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Bold)
         Me.MenuStrip1.ImageScalingSize = New System.Drawing.Size(20, 20)
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AndonToolStripMenuItem4, Me.WorkRecordToolStripMenuItem3, Me.HelpToolStripMenuItem2, Me.BMRequestToolStripMenuItem3, Me.PMRepairingToolStripMenuItem3, Me.SearchToolStripMenuItem3, Me.WIPToolStripMenuItem})
-        Me.MenuStrip1.Location = New System.Drawing.Point(68, 204)
+        Me.MenuStrip1.Location = New System.Drawing.Point(51, 166)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Padding = New System.Windows.Forms.Padding(8, 2, 0, 2)
-        Me.MenuStrip1.Size = New System.Drawing.Size(778, 32)
+        Me.MenuStrip1.Size = New System.Drawing.Size(644, 27)
         Me.MenuStrip1.TabIndex = 213
         Me.MenuStrip1.Text = "MenuStrip1"
         '
         'AndonToolStripMenuItem4
         '
         Me.AndonToolStripMenuItem4.Name = "AndonToolStripMenuItem4"
-        Me.AndonToolStripMenuItem4.Size = New System.Drawing.Size(87, 28)
+        Me.AndonToolStripMenuItem4.Size = New System.Drawing.Size(73, 23)
         Me.AndonToolStripMenuItem4.Text = "Andon"
         '
         'WorkRecordToolStripMenuItem3
         '
         Me.WorkRecordToolStripMenuItem3.Name = "WorkRecordToolStripMenuItem3"
-        Me.WorkRecordToolStripMenuItem3.Size = New System.Drawing.Size(154, 28)
+        Me.WorkRecordToolStripMenuItem3.Size = New System.Drawing.Size(126, 23)
         Me.WorkRecordToolStripMenuItem3.Text = "Work Record"
         '
         'HelpToolStripMenuItem2
         '
         Me.HelpToolStripMenuItem2.Name = "HelpToolStripMenuItem2"
-        Me.HelpToolStripMenuItem2.Size = New System.Drawing.Size(68, 28)
+        Me.HelpToolStripMenuItem2.Size = New System.Drawing.Size(58, 23)
         Me.HelpToolStripMenuItem2.Text = "Help"
         '
         'BMRequestToolStripMenuItem3
         '
         Me.BMRequestToolStripMenuItem3.Name = "BMRequestToolStripMenuItem3"
-        Me.BMRequestToolStripMenuItem3.Size = New System.Drawing.Size(143, 28)
+        Me.BMRequestToolStripMenuItem3.Size = New System.Drawing.Size(118, 23)
         Me.BMRequestToolStripMenuItem3.Text = "BM Request"
         '
         'PMRepairingToolStripMenuItem3
         '
         Me.PMRepairingToolStripMenuItem3.Name = "PMRepairingToolStripMenuItem3"
-        Me.PMRepairingToolStripMenuItem3.Size = New System.Drawing.Size(158, 28)
+        Me.PMRepairingToolStripMenuItem3.Size = New System.Drawing.Size(130, 23)
         Me.PMRepairingToolStripMenuItem3.Text = "PM Repairing"
         '
         'SearchToolStripMenuItem3
         '
         Me.SearchToolStripMenuItem3.Name = "SearchToolStripMenuItem3"
-        Me.SearchToolStripMenuItem3.Size = New System.Drawing.Size(92, 28)
+        Me.SearchToolStripMenuItem3.Size = New System.Drawing.Size(76, 23)
         Me.SearchToolStripMenuItem3.Text = "Search"
         '
         'WIPToolStripMenuItem
         '
         Me.WIPToolStripMenuItem.Name = "WIPToolStripMenuItem"
-        Me.WIPToolStripMenuItem.Size = New System.Drawing.Size(66, 28)
+        Me.WIPToolStripMenuItem.Size = New System.Drawing.Size(55, 23)
         Me.WIPToolStripMenuItem.Text = "WIP"
         '
         'Label1
@@ -1240,10 +1181,9 @@ Partial Class frmMain
         Me.Label1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label1.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label1.Location = New System.Drawing.Point(133, 286)
-        Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label1.Location = New System.Drawing.Point(100, 232)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(164, 31)
+        Me.Label1.Size = New System.Drawing.Size(132, 27)
         Me.Label1.TabIndex = 214
         Me.Label1.Text = "IP Address  "
         '
@@ -1254,10 +1194,9 @@ Partial Class frmMain
         Me.Label2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label2.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label2.Location = New System.Drawing.Point(133, 346)
-        Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label2.Location = New System.Drawing.Point(100, 281)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(162, 31)
+        Me.Label2.Size = New System.Drawing.Size(129, 27)
         Me.Label2.TabIndex = 214
         Me.Label2.Text = "MC No        "
         '
@@ -1268,10 +1207,9 @@ Partial Class frmMain
         Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label3.Location = New System.Drawing.Point(133, 409)
-        Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label3.Location = New System.Drawing.Point(100, 332)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(167, 31)
+        Me.Label3.Size = New System.Drawing.Size(132, 27)
         Me.Label3.TabIndex = 214
         Me.Label3.Text = "OP No.        "
         '
@@ -1282,10 +1220,9 @@ Partial Class frmMain
         Me.Label4.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label4.Location = New System.Drawing.Point(133, 476)
-        Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label4.Location = New System.Drawing.Point(100, 387)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(167, 31)
+        Me.Label4.Size = New System.Drawing.Size(131, 27)
         Me.Label4.TabIndex = 214
         Me.Label4.Text = "Lot No.        "
         '
@@ -1296,10 +1233,9 @@ Partial Class frmMain
         Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label5.Location = New System.Drawing.Point(133, 548)
-        Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label5.Location = New System.Drawing.Point(100, 445)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(169, 31)
+        Me.Label5.Size = New System.Drawing.Size(134, 27)
         Me.Label5.TabIndex = 214
         Me.Label5.Text = "Package      "
         '
@@ -1310,10 +1246,9 @@ Partial Class frmMain
         Me.Label6.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label6.Location = New System.Drawing.Point(133, 615)
-        Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label6.Location = New System.Drawing.Point(100, 500)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(171, 31)
+        Me.Label6.Size = New System.Drawing.Size(134, 27)
         Me.Label6.TabIndex = 214
         Me.Label6.Text = "Device         "
         '
@@ -1324,10 +1259,9 @@ Partial Class frmMain
         Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label7.Location = New System.Drawing.Point(133, 686)
-        Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label7.Location = New System.Drawing.Point(100, 557)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(165, 31)
+        Me.Label7.Size = New System.Drawing.Size(132, 27)
         Me.Label7.TabIndex = 214
         Me.Label7.Text = "Input Qty     "
         '
@@ -1338,10 +1272,9 @@ Partial Class frmMain
         Me.Label8.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label8.Location = New System.Drawing.Point(133, 759)
-        Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label8.Location = New System.Drawing.Point(100, 617)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(162, 31)
+        Me.Label8.Size = New System.Drawing.Size(131, 27)
         Me.Label8.TabIndex = 214
         Me.Label8.Text = "Output Qty  "
         '
@@ -1352,10 +1285,9 @@ Partial Class frmMain
         Me.Label9.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label9.Location = New System.Drawing.Point(133, 830)
-        Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label9.Location = New System.Drawing.Point(100, 674)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(165, 31)
+        Me.Label9.Size = New System.Drawing.Size(132, 27)
         Me.Label9.TabIndex = 214
         Me.Label9.Text = "Magazine    "
         '
@@ -1366,10 +1298,9 @@ Partial Class frmMain
         Me.Label10.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label10.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label10.Location = New System.Drawing.Point(133, 906)
-        Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label10.Location = New System.Drawing.Point(100, 736)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(169, 31)
+        Me.Label10.Size = New System.Drawing.Size(135, 27)
         Me.Label10.TabIndex = 214
         Me.Label10.Text = "Group Name"
         '
@@ -1380,10 +1311,9 @@ Partial Class frmMain
         Me.Label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label11.Location = New System.Drawing.Point(133, 980)
-        Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label11.Location = New System.Drawing.Point(100, 796)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(166, 31)
+        Me.Label11.Size = New System.Drawing.Size(132, 27)
         Me.Label11.TabIndex = 214
         Me.Label11.Text = "Start Time   "
         '
@@ -1394,10 +1324,9 @@ Partial Class frmMain
         Me.Label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label12.Location = New System.Drawing.Point(133, 1055)
-        Me.Label12.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label12.Location = New System.Drawing.Point(100, 857)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(164, 31)
+        Me.Label12.Size = New System.Drawing.Size(130, 27)
         Me.Label12.TabIndex = 214
         Me.Label12.Text = "End Time    "
         '
@@ -1408,10 +1337,9 @@ Partial Class frmMain
         Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.Label13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label13.Location = New System.Drawing.Point(133, 1132)
-        Me.Label13.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label13.Location = New System.Drawing.Point(100, 920)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(162, 31)
+        Me.Label13.Size = New System.Drawing.Size(128, 27)
         Me.Label13.TabIndex = 214
         Me.Label13.Text = "Lot Info.      "
         '
@@ -1419,20 +1347,18 @@ Partial Class frmMain
         '
         Me.Label14.AutoSize = True
         Me.Label14.Font = New System.Drawing.Font("Microsoft Sans Serif", 35.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(177, Byte))
-        Me.Label14.Location = New System.Drawing.Point(83, 124)
-        Me.Label14.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.Label14.Location = New System.Drawing.Point(62, 101)
         Me.Label14.Name = "Label14"
-        Me.Label14.Size = New System.Drawing.Size(288, 67)
+        Me.Label14.Size = New System.Drawing.Size(230, 54)
         Me.Label14.TabIndex = 215
         Me.Label14.Text = "REFLOW"
         '
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
-        Me.PictureBox1.Location = New System.Drawing.Point(1541, 108)
-        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
+        Me.PictureBox1.Location = New System.Drawing.Point(1156, 88)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(119, 78)
+        Me.PictureBox1.Size = New System.Drawing.Size(89, 63)
         Me.PictureBox1.TabIndex = 216
         Me.PictureBox1.TabStop = False
         '
@@ -1451,10 +1377,9 @@ Partial Class frmMain
         'lbNetversion
         '
         Me.lbNetversion.AutoSize = True
-        Me.lbNetversion.Location = New System.Drawing.Point(1553, 1233)
-        Me.lbNetversion.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbNetversion.Location = New System.Drawing.Point(1165, 1002)
         Me.lbNetversion.Name = "lbNetversion"
-        Me.lbNetversion.Size = New System.Drawing.Size(59, 17)
+        Me.lbNetversion.Size = New System.Drawing.Size(45, 13)
         Me.lbNetversion.TabIndex = 217
         Me.lbNetversion.Text = "Label15"
         '
@@ -1464,19 +1389,18 @@ Partial Class frmMain
         Me.lbStatusMC.BackColor = System.Drawing.Color.Red
         Me.lbStatusMC.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
         Me.lbStatusMC.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStatusMC.Location = New System.Drawing.Point(1524, 210)
-        Me.lbStatusMC.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lbStatusMC.Location = New System.Drawing.Point(1143, 171)
         Me.lbStatusMC.Name = "lbStatusMC"
-        Me.lbStatusMC.Size = New System.Drawing.Size(121, 27)
+        Me.lbStatusMC.Size = New System.Drawing.Size(102, 22)
         Me.lbStatusMC.TabIndex = 212
         Me.lbStatusMC.Text = "Run Offline"
         '
         'frmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.WhiteSmoke
-        Me.ClientSize = New System.Drawing.Size(1707, 1094)
+        Me.ClientSize = New System.Drawing.Size(1280, 1026)
         Me.Controls.Add(Me.lbNetversion)
         Me.Controls.Add(Me.PictureBox1)
         Me.Controls.Add(Me.Label14)
@@ -1515,8 +1439,7 @@ Partial Class frmMain
         Me.Controls.Add(Me.MenuStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MainMenuStrip = Me.MenuStrip1
-        Me.Margin = New System.Windows.Forms.Padding(4, 4, 4, 4)
-        Me.MinimumSize = New System.Drawing.Size(1707, 1028)
+        Me.MinimumSize = New System.Drawing.Size(1280, 835)
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Self Controller"

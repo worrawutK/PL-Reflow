@@ -298,279 +298,7 @@ Public Class frmMain
         frmShowAlarmData.Show()
         frmShowAlarmData.lbAlarmMes.Text = Mes
     End Sub
-    Private Function GetInfoPro(MCNo As String, LotNo As String, OpNo As String) As UserInfo
 
-        log = New Logger("1.0", MCNo)
-        lotInfo = c_ApcsProService.GetLotInfo(LotNo)
-        If lotInfo Is Nothing Then
-            log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
-        End If
-        If machineInfo Is Nothing Then
-            machineInfo = c_ApcsProService.GetMachineInfo(MCNo)
-        End If
-        If machineInfo Is Nothing Then
-            log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
-        End If
-        userInfo = c_ApcsProService.GetUserInfo(OpNo)
-        If userInfo Is Nothing Then
-            log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", OpNo)
-        End If
-        c_ApcsPro.LotNo = LotNo
-        c_ApcsPro.MachineNo = MCNo
-        c_ApcsPro.UserCode = OpNo
-
-        XmlSave(c_ApcsPro)
-        Return userInfo
-    End Function
-#Region "APCS Pro Function"
-    Private Sub Reload(goodQty As Integer, ngQty As Integer, mcNo As String, opNo As String, lotNo As String)
-        Try
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.AbnormalLotEnd_BackToThe_BeforeProcess(lotInfo.Id, machineInfo.Id, userInfo.Id, False, goodQty, ngQty, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "Reload", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotEnd_BackToThe_BeforeProcess", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-                MsgBox(ResultApcsProService.ErrorMessage)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "Reload", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotEnd_BackToThe_BeforeProcess", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-        End Try
-    End Sub
-    Private Sub LotHold(mcNo As String, opNo As String, lotNo As String)
-        Try
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.AbnormalLotHold(lotInfo.Id, machineInfo.Id, userInfo.Id, 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "LotHold", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotHold", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-                MsgBox(ResultApcsProService.ErrorMessage)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "LotHold", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotHold", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-        End Try
-    End Sub
-    Private Sub LotCancel(mcNo As String, opNo As String, lotNo As String)
-        Try
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotCancel(lotInfo.Id, machineInfo.Id, userInfo.Id, 1, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "LotCancel", "OUT", "CellCon", "iLibrary", 0, "LotCancel", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-                MsgBox(ResultApcsProService.ErrorMessage)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "LotCancel", "OUT", "CellCon", "iLibrary", 0, "LotCancel", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-        End Try
-
-    End Sub
-    'Private Sub ReInput(goodQty As Integer, ngQty As Integer, mcNo As String, opNo As String, lotNo As String)
-    '    currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-    '    ResultApcsProService = c_ApcsProService.ReInput(lotInfo.Id, machineInfo.Id, userInfo.Id, goodQty, ngQty, 1, currentServerTime.Datetime, log)
-    '    If Not ResultApcsProService.IsOk Then
-    '        log.ConnectionLogger.Write(0, "ReInput", "OUT", "CellCon", "iLibrary", 0, "ReInput", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-    '        MsgBox(ResultApcsProService.ErrorMessage)
-    '    End If
-    'End Sub
-#End Region
-#Region "APCS Pro CheckPermission"
-    Private Function CheckPermissionApcsPro(MCNo As String, userInfo As iLibrary.UserInfo, functionName As String, logger As Logger, Optional appName As String = "CellController") As Boolean
-        currentServerTime = c_ApcsProService.Get_DateTimeInfo(logger)
-        Dim userPermission As CheckUserPermissionResult = c_ApcsProService.CheckUserPermission(userInfo, appName, functionName)
-        If Not userPermission.IsPass Then
-            MsgBox(userPermission.ErrorMessage)
-            Return False
-        End If
-        If Not c_ApcsProService.Check_PermissionMachinesByLMS(userInfo.Id, MCNo, logger) Then
-            MsgBox("รหัส : " & userInfo.Code & " ไม่ผ่านการตรวจสอบในระบบ Licenser กรุณาติดต่อ ETG (MCNo : " & MCNo & ")")
-            Return False
-        End If
-        If Not c_ApcsProService.Check_UserLotAutoMotive(userInfo, lotInfo, logger) Then
-            MsgBox("รหัส : " & userInfo.Code & " User ที่ไม่ใช่ Automotive ไม่สามารถรัน Lot Automotive ได้ กรุณาติดต่อ ETG (Lot Automotive : " & MCNo & ")")
-            Return False
-        End If
-        Return True
-    End Function
-#End Region
-
-#Region "APCS Pro LotStart"
-    Private Sub StartLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String)
-        Try
-            ' If packageEnable Then
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.LotStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, Recipe, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            End If
-            ResultApcsProService = c_ApcsProService.OnlineStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            End If
-            ' Else
-            'log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            'End If
-
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-        End Try
-    End Sub
-    Private Sub OnlineStartLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String)
-        Try
-            'If packageEnable Then
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.OnlineStart(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "OnlineStartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            End If
-            'Else
-            'log.ConnectionLogger.Write(0, "OnlineStartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            'End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "OnlineStartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-        End Try
-    End Sub
-#End Region
-#Region "APCS Pro LotEnd"
-    Private Sub EndLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String, good As Integer, ng As Integer)
-        Try
-            'If packageEnable Then
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-
-            ResultApcsProService = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, good, ng, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            End If
-
-            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, good, ng, 0, "", 1, currentServerTime.Datetime, log)
-            UpdateMachineState(machineInfo.Id, MachineProcessingState.Idle, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            End If
-
-            ' Else
-            'log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "CheckPackageEnable", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            ' End If
-
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-        End Try
-    End Sub
-    Private Sub OnlineEndLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String, good As Integer, ng As Integer)
-        Try
-            ' If packageEnable Then
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-            ResultApcsProService = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, good, ng, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "OnlineEndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", ResultApcsProService.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            End If
-            ' Else
-            ' log.ConnectionLogger.Write(0, "OnlineEndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-            'End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "OnlineEndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
-        End Try
-    End Sub
-#End Region
-#Region "Machine State and Machine OnlineState"
-    Enum MachineProcessingState
-        Idle = 1
-        Ready = 3
-        Execute = 4
-        Pause = 5
-        LotSetUp = 6
-    End Enum
-    Private Sub UpdateMachineState(machineID As Integer, runState As Integer, log As Logger, Optional userID As Integer = -1)
-        c_ApcsProService.Update_MachineState(machineID, runState, userID, log)
-    End Sub
-    Private Sub UpdateMachineOnlineState(machineID As Integer, onlineState As Integer, log As Logger, Optional userID As Integer = -1)
-        c_ApcsProService.Update_MachineOnlineState(machineID, onlineState, userID, log)
-    End Sub
-#End Region
-#Region "License"
-    Private Sub LicenseWarning(user As UserInfo)
-        Try
-            If user.License(0).Is_Warning Then
-                MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
-                'lbNotification.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "LicenseWarning", "OUT", "CellCon", "iLibrary", 0, "user.License(0)", "", "")
-        End Try
-
-    End Sub
-#End Region
-    Private XmlPathDataApcsPro As String = My.Application.Info.DirectoryPath & "\ApcsPro.xml"
-    Private Sub XmlSave(data As ApcsPro)
-        Try
-            Using fs As New System.IO.FileStream(XmlPathDataApcsPro, System.IO.FileMode.Create)
-                Dim bs = New XmlSerializer(data.GetType())
-                bs.Serialize(fs, data)
-            End Using
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "XmlSave", "OUT", "", "", 0, "XmlSave", ex.Message.ToString, "")
-        End Try
-
-    End Sub
-    Private Sub XmlLoad(ByRef data As ApcsPro, type As Type)
-        Try
-            If (File.Exists(XmlPathDataApcsPro)) Then
-                Using fs As New System.IO.FileStream(XmlPathDataApcsPro, System.IO.FileMode.Open)
-                    Dim bs = New XmlSerializer(type)
-                    data = CType(bs.Deserialize(fs), ApcsPro)
-                End Using
-                GetInfoPro(data.MachineNo, data.LotNo, data.UserCode)
-                Recipe = data.Recipe
-                UpdateMachineOnlineState(machineInfo.Id, 1, log)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "XmlLoad", "OUT", "", "", 0, "XmlLoad", ex.Message.ToString, "")
-        End Try
-
-    End Sub
-#Region "Apcs_Pro LotSetUp"
-    Private Function SetUpApcsPro(mcNo As String, lotNo As String, package As String, opNo As String, logger As Logger) As Boolean
-        'Auto Move TDC
-        Try
-            m_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
-            Dim userInf As UserInfo = GetInfoPro(mcNo, lotNo, opNo)
-
-            If CheckPermissionApcsPro(mcNo, userInf, "PL-SetupLot", logger) Then
-                LicenseWarning(userInf)
-                lotInfo = c_ApcsProService.GetLotInfo(lotNo)
-                If lotInfo Is Nothing Then
-                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", lotNo)
-                End If
-                If machineInfo Is Nothing Then
-                    machineInfo = c_ApcsProService.GetMachineInfo(mcNo)
-                End If
-                If machineInfo Is Nothing Then
-                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", mcNo)
-                End If
-                userInfo = c_ApcsProService.GetUserInfo(opNo)
-                If userInfo Is Nothing Then
-                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", opNo)
-                End If
-                currentServerTime = c_ApcsProService.Get_DateTimeInfo(logger)
-                ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-                UpdateMachineState(machineInfo.Id, MachineProcessingState.LotSetUp, log)
-                If Not ResultApcsProService.IsOk Then
-                    logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-                    MsgBox(ResultApcsProService.ErrorMessage)
-                    Return False
-                End If
-                Recipe = ResultApcsProService.Recipe1
-                c_ApcsPro.Recipe = Recipe
-                XmlSave(c_ApcsPro)
-                Return True
-                'Return SetupLotPro(mcNo, lotNo, opNo)
-            Else
-                Return False
-            End If
-        Catch ex As Exception
-            MsgBox("(SetUpApcsPro)" & ex.Message.ToString)
-            logger.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
-
-            Return False
-        End Try
-
-    End Function
-#End Region
     Private Sub GetCode(ByVal UserCtrlReflow As ReflowData)
 
         Dim strText() As String = m_SelfData.LotData.Split(CChar(","))
@@ -622,9 +350,10 @@ Public Class frmMain
                         SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
                         m_SelfData.LotInform = "Run Offline"
                     Else 'Run Online
-                        Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal)
+                        Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal, strOPNo)
                         If ApcsInfo.IsPass = False Then
                             SendTheMessage(m_SelfData.IPA, "LP01" & vbCr, m_SelfData.McNo)
+                            lbNotification.Text = ApcsInfo.ErrorMessage
                             Exit Sub
                         Else
                             m_SelfData.LotInform = ApcsInfo.ErrorMessage
@@ -686,7 +415,7 @@ Public Class frmMain
                 End Try
 
             Case "SA" 'SA
-                UpdateMachineState(machineInfo.Id, MachineProcessingState.Execute, log)
+
                 If m_SelfData.StartTime <> "" And m_SelfData.StopTime = "" Then
                     Try
                         Dim LotNo As String = m_SelfData.LotNo
@@ -701,14 +430,14 @@ Public Class frmMain
                 End If
 
             Case "SB" 'SB
-                UpdateMachineState(machineInfo.Id, MachineProcessingState.Idle, log)
+                UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Idle, c_Log)
                 If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
                     m_SelfData.LotStatus = _StatusLot.LotStop
                     UpdateDisplay()
                 End If
 
             Case "SC" 'SC,AlarmNo
-                UpdateMachineState(machineInfo.Id, MachineProcessingState.Pause, log)
+                UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
                 If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
                     Try
                         Dim AlarmNo As String = strText(1).Trim
@@ -1381,19 +1110,7 @@ Public Class frmMain
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
-#Region "Apcs_Pro Valiable"
-    Private c_ApcsProService As IApcsProService = New ApcsProService()
-    Private lotInfo As iLibrary.LotInfo
-    Private machineInfo As MachineInfo
-    Private userInfo As UserInfo
-    Private currentServerTime As DateTimeInfo
-    Private log As New Logger
-    Private packageEnable As Boolean = False
-    Private ResultApcsProService As LotUpdateInfo = Nothing
-    Private Recipe As String
-    '' Private functionName As String
-    Private c_ApcsPro As New ApcsPro
-#End Region
+
     '    Private Sub bgTDC_DoWork(ByVal sender As System.Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgTDC.DoWork
     '        Dim TmpData As String = ""
     '        Dim ArrayData As String()
@@ -1900,9 +1617,19 @@ Public Class frmMain
         End Try
     End Sub
 
-    Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType) As TDCInfo
+    Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType, OpNo As String) As TDCInfo
         Dim apcsInfo As New TDCInfo
         Dim mc As String = "RF-" & My.Settings.MCNo
+
+        UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.LotSetUp, c_Log)
+        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
+            If Not SetUpApcsPro(mc, LotNo, OpNo) Then
+                apcsInfo.ErrorMessage = c_LotUpdateInfo.ErrorMessage
+                apcsInfo.ErrorCode = c_LotUpdateInfo.ErrorNo.ToString()
+                apcsInfo.IsPass = False
+                Return apcsInfo
+            End If
+        End If
 
         Dim res As TdcLotRequestResponse = m_TdcService.LotRequest(mc, LotNo, rm)
 
@@ -1924,6 +1651,7 @@ Public Class frmMain
             apcsInfo.IsPass = True
             Return apcsInfo
         Else
+
             apcsInfo.ErrorMessage = "00 : Run Normal"
             apcsInfo.IsPass = True
             Return apcsInfo
@@ -1933,80 +1661,311 @@ Public Class frmMain
 
     Private Sub LotSetTdc(MCno As String, LotNo As String, StartTime As DateTime, OpNo As String)
         Dim res As TdcResponse = m_TdcService.LotSet(MCno, LotNo, StartTime, OpNo, RunModeType.Normal)
-
-#Region "Apcs_Pro LotSetUp"
-
-        Try
-
-            log = New Logger("1.0", MCno)
-            packageEnable = c_ApcsProService.CheckPackageEnable(m_SelfData.Package, log)
-            If Not packageEnable Then
-                Exit Sub
-            End If
-
-            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
-            If lotInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotSet LotNo", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
-            End If
-            machineInfo = c_ApcsProService.GetMachineInfo(MCno)
-            If machineInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotSet MC", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCno)
-            End If
-            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
-            If userInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotSet User", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
-            End If
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-
-            ResultApcsProService = c_ApcsProService.LotSetup(lotInfo.Id, machineInfo.Id, userInfo.Id, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotSet ApcsProService ", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & MCno & ",OPNo:" & m_SelfData.OpNo)
-            End If
-        Catch ex As Exception
-            'addErrLogfile("c_ApcsProService.LotSetup,LotStart:" & ex.ToString())
-            log.ConnectionLogger.Write(0, "APCS Pro LotSet Err", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & MCno & ",OPNo:" & m_SelfData.OpNo)
-
-        End Try
-#End Region
+        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
+            'OnlineStartLotPro(c_LotInfo, c_MachineInfo, OpNo)
+            StartLotPro(c_LotInfo, c_MachineInfo, OpNo)
+        End If
+        UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Execute, c_Log)
     End Sub
     Private Sub LotEndTdc(McNo As String, LotNo As String, EndTime As DateTime, Good As Integer, Ng As Integer, OpNo As String)
         Dim res As TdcResponse = m_TdcService.LotEnd(McNo, LotNo, EndTime, Good, Ng, EndModeType.Normal, OpNo)
-#Region "APCS Pro LotEnd"
-        Try
-            If Not packageEnable Then
-                Exit Sub
-            End If
-
-            lotInfo = c_ApcsProService.GetLotInfo(LotNo)
-            If lotInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotEnd LotNo", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
-            End If
-            machineInfo = c_ApcsProService.GetMachineInfo(McNo)
-            If machineInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotEnd MC", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", McNo)
-            End If
-            userInfo = c_ApcsProService.GetUserInfo(m_SelfData.OpNo)
-            If userInfo Is Nothing Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotEnd User", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", m_SelfData.OpNo)
-            End If
-
-            currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
-
-            ResultApcsProService = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, userInfo.Id, False, Good, Ng, 0, "", 1, currentServerTime.Datetime, log)
-            If Not ResultApcsProService.IsOk Then
-                log.ConnectionLogger.Write(0, "APCS Pro LotEnd", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ResultApcsProService.ErrorMessage, "LotNo:" & LotNo & ",MCNo:" & McNo & ",OPNo:" & OpNo)
-            End If
-        Catch ex As Exception
-            log.ConnectionLogger.Write(0, "APCS Pro LotEnd Err", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & LotNo & ",MCNo:" & McNo & ",OPNo:" & OpNo)
-        End Try
-#End Region
+        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
+            'OnlineEndLotPro(c_LotInfo, c_MachineInfo, OpNo, Good, Ng)
+            EndLotPro(c_LotInfo, c_MachineInfo, OpNo, Good, Ng)
+        End If
+        UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Idle, c_Log)
     End Sub
 
     Private Sub frmMain_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Try
-            UpdateMachineOnlineState(machineInfo.Id, 0, log)
+            UpdateMachineOnlineState(c_MachineInfo.Id, 0, c_Log)
         Catch ex As Exception
 
         End Try
     End Sub
+#Region "APCS Pro"
+
+#Region "Apcs_Pro LotSetUp"
+    Private Function SetUpApcsPro(mcNo As String, lotNo As String, opNo As String) As Boolean
+        'Auto Move TDC
+        Try
+            m_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
+            Dim userInf As UserInfo = GetInfoPro(mcNo, lotNo, opNo)
+
+            If CheckPermissionApcsPro(mcNo, userInf, "PL-SetupLot", c_Log) Then
+                LicenseWarning(userInf)
+                ' lotInfo = c_ApcsProService.GetLotInfo(lotNo)
+                If c_LotInfo Is Nothing Then
+                    c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", lotNo)
+                End If
+                If c_MachineInfo Is Nothing Then
+                    c_MachineInfo = c_ApcsProService.GetMachineInfo(mcNo)
+                End If
+                If c_MachineInfo Is Nothing Then
+                    c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", mcNo)
+                End If
+                c_UserInfo = c_ApcsProService.GetUserInfo(opNo)
+                If c_UserInfo Is Nothing Then
+                    c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", opNo)
+                End If
+                c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+                c_LotUpdateInfo = c_ApcsProService.LotSetup(c_LotInfo.Id, c_MachineInfo.Id, c_UserInfo.Id, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+                c_ApcsPro.Recipe = c_LotUpdateInfo.Recipe1
+                If Not c_LotUpdateInfo.IsOk Then
+                    c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                    'MsgBox(c_LotUpdateInfo.ErrorMessage)
+                    Return False
+                End If
+
+                XmlSave(c_ApcsPro)
+                Return True
+                'Return SetupLotPro(mcNo, lotNo, opNo)
+            Else
+                Return False
+            End If
+        Catch ex As Exception
+            MsgBox("(SetUpApcsPro)" & ex.Message.ToString)
+            c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", ex.Message.ToString, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+
+            Return False
+        End Try
+
+    End Function
+#Region "APCS Pro CheckPermission"
+    Private Function CheckPermissionApcsPro(MCNo As String, userInfo As iLibrary.UserInfo, functionName As String, logger As Logger, Optional appName As String = "CellController") As Boolean
+        c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(logger)
+        Dim userPermission As CheckUserPermissionResult = c_ApcsProService.CheckUserPermission(userInfo, appName, functionName)
+        If Not userPermission.IsPass Then
+            MsgBox(userPermission.ErrorMessage)
+            Return False
+        End If
+        If Not c_ApcsProService.Check_PermissionMachinesByLMS(userInfo.Id, MCNo, logger) Then
+            MsgBox("รหัส : " & userInfo.Code & " ไม่ผ่านการตรวจสอบในระบบ Licenser กรุณาติดต่อ ETG (MCNo : " & MCNo & ")")
+            Return False
+        End If
+        If Not c_ApcsProService.Check_UserLotAutoMotive(userInfo, c_LotInfo, logger) Then
+            MsgBox("รหัส : " & userInfo.Code & " User ที่ไม่ใช่ Automotive ไม่สามารถรัน Lot Automotive ได้ กรุณาติดต่อ ETG (Lot Automotive : " & MCNo & ")")
+            Return False
+        End If
+        Return True
+    End Function
+#End Region
+    Private Function GetInfoPro(MCNo As String, LotNo As String, OpNo As String) As UserInfo
+
+        'c_Log = New Logger("1.0", MCNo)
+        c_LotInfo = c_ApcsProService.GetLotInfo(LotNo)
+        If c_LotInfo Is Nothing Then
+            c_Log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
+        End If
+        If c_MachineInfo Is Nothing Then
+            c_MachineInfo = c_ApcsProService.GetMachineInfo(MCNo)
+        End If
+        If c_MachineInfo Is Nothing Then
+            c_Log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
+        End If
+        c_UserInfo = c_ApcsProService.GetUserInfo(OpNo)
+        If c_UserInfo Is Nothing Then
+            c_Log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", OpNo)
+        End If
+        c_ApcsPro.LotNo = LotNo
+        c_ApcsPro.MachineNo = MCNo
+        c_ApcsPro.UserCode = OpNo
+
+        XmlSave(c_ApcsPro)
+        Return c_UserInfo
+    End Function
+#End Region
+
+#Region "APCS Pro Function"
+    Private Sub Reload(goodQty As Integer, ngQty As Integer, mcNo As String, opNo As String, lotNo As String)
+        Try
+            c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+            c_LotUpdateInfo = c_ApcsProService.AbnormalLotEnd_BackToThe_BeforeProcess(c_LotInfo.Id, c_MachineInfo.Id, c_UserInfo.Id, False, goodQty, ngQty, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "Reload", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotEnd_BackToThe_BeforeProcess", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                MsgBox(c_LotUpdateInfo.ErrorMessage)
+            End If
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "Reload", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotEnd_BackToThe_BeforeProcess", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+        End Try
+    End Sub
+    Private Sub LotHold(mcNo As String, opNo As String, lotNo As String)
+        Try
+            c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+            c_LotUpdateInfo = c_ApcsProService.AbnormalLotHold(c_LotInfo.Id, c_MachineInfo.Id, c_UserInfo.Id, 1, c_DateTimeInfo.Datetime, c_Log)
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "LotHold", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotHold", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                MsgBox(c_LotUpdateInfo.ErrorMessage)
+            End If
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "LotHold", "OUT", "CellCon", "iLibrary", 0, "AbnormalLotHold", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+        End Try
+    End Sub
+    Private Sub LotCancel(mcNo As String, opNo As String, lotNo As String)
+        Try
+            c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+            c_LotUpdateInfo = c_ApcsProService.LotCancel(c_LotInfo.Id, c_MachineInfo.Id, c_UserInfo.Id, 1, c_Log)
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "LotCancel", "OUT", "CellCon", "iLibrary", 0, "LotCancel", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+                MsgBox(c_LotUpdateInfo.ErrorMessage)
+            End If
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "LotCancel", "OUT", "CellCon", "iLibrary", 0, "LotCancel", ex.Message, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+        End Try
+
+    End Sub
+    'Private Sub ReInput(goodQty As Integer, ngQty As Integer, mcNo As String, opNo As String, lotNo As String)
+    '    currentServerTime = c_ApcsProService.Get_DateTimeInfo(log)
+    '    ResultApcsProService = c_ApcsProService.ReInput(lotInfo.Id, machineInfo.Id, userInfo.Id, goodQty, ngQty, 1, currentServerTime.Datetime, log)
+    '    If Not ResultApcsProService.IsOk Then
+    '        log.ConnectionLogger.Write(0, "ReInput", "OUT", "CellCon", "iLibrary", 0, "ReInput", ResultApcsProService.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
+    '        MsgBox(ResultApcsProService.ErrorMessage)
+    '    End If
+    'End Sub
+#End Region
+
+
+#Region "APCS Pro LotStart"
+    Private Sub StartLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String)
+        Try
+            c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+
+            c_LotUpdateInfo = c_ApcsProService.OnlineStart(c_LotInfo.Id, machineInfo.Id, c_UserInfo.Id, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            End If
+            ' If packageEnable Then
+
+            c_LotUpdateInfo = c_ApcsProService.LotStart(c_LotInfo.Id, machineInfo.Id, c_UserInfo.Id, 0, "", 1, c_ApcsPro.Recipe, c_Log)
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", c_LotUpdateInfo.ErrorMessage, "LotNo:" & c_LotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            End If
+
+            ' Else
+            'log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            'End If
+
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+        End Try
+    End Sub
+
+#End Region
+#Region "APCS Pro LotEnd"
+    Private Sub EndLotPro(lotInfo As iLibrary.LotInfo, machineInfo As MachineInfo, opNo As String, good As Integer, ng As Integer)
+        Try
+            'If packageEnable Then
+            c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+
+            c_LotUpdateInfo = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, c_UserInfo.Id, False, good, ng, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            End If
+
+            c_LotUpdateInfo = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, c_UserInfo.Id, False, good, ng, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+
+            If Not c_LotUpdateInfo.IsOk Then
+                c_Log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            End If
+
+            ' Else
+            'log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "CheckPackageEnable", "CheckPackageEnable : " & packageEnable, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+            ' End If
+
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", ex.Message.ToString(), "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
+        End Try
+    End Sub
+
+#End Region
+#Region "Machine State and Machine OnlineState"
+    Enum MachineProcessingState
+        Idle = 1
+        Ready = 3
+        Execute = 4
+        Pause = 5
+        LotSetUp = 6
+    End Enum
+    Private Sub UpdateMachineState(machineID As Integer, runState As Integer, log As Logger, Optional userID As Integer = -1)
+        Try
+            c_ApcsProService.Update_MachineState(machineID, runState, userID, log)
+        Catch ex As Exception
+            lbNotification.Text = "Update_MachineState :" & ex.ToString()
+        End Try
+
+    End Sub
+    Private Sub UpdateMachineOnlineState(machineID As Integer, onlineState As Integer, log As Logger, Optional userID As Integer = -1)
+        Try
+            c_ApcsProService.Update_MachineOnlineState(machineID, onlineState, userID, log)
+        Catch ex As Exception
+            lbNotification.Text = "Update_MachineOnlineState :" & ex.ToString()
+        End Try
+
+    End Sub
+#End Region
+#Region "License"
+    Private Sub LicenseWarning(user As UserInfo)
+        Try
+            If user.License(0).Is_Warning Then
+                MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
+                'lbNotification.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
+            End If
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "LicenseWarning", "OUT", "CellCon", "iLibrary", 0, "user.License(0)", "", "")
+        End Try
+
+    End Sub
+#End Region
+    Private XmlPathDataApcsPro As String = My.Application.Info.DirectoryPath & "\ApcsPro.xml"
+    Private Sub XmlSave(data As ApcsPro)
+        Try
+            Using fs As New System.IO.FileStream(XmlPathDataApcsPro, System.IO.FileMode.Create)
+                Dim bs = New XmlSerializer(data.GetType())
+                bs.Serialize(fs, data)
+            End Using
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "XmlSave", "OUT", "", "", 0, "XmlSave", ex.Message.ToString, "")
+        End Try
+
+    End Sub
+    Private Sub XmlLoad(ByRef data As ApcsPro, type As Type)
+        Try
+            If (File.Exists(XmlPathDataApcsPro)) Then
+                Using fs As New System.IO.FileStream(XmlPathDataApcsPro, System.IO.FileMode.Open)
+                    Dim bs = New XmlSerializer(type)
+                    data = CType(bs.Deserialize(fs), ApcsPro)
+                End Using
+                GetInfoPro(data.MachineNo, data.LotNo, data.UserCode)
+                UpdateMachineOnlineState(c_MachineInfo.Id, 1, c_Log)
+            End If
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "XmlLoad", "OUT", "", "", 0, "XmlLoad", ex.Message.ToString, "")
+        End Try
+
+    End Sub
+
+#Region "Apcs_Pro Valiable"
+    ' Private ApcsProService As IApcsProService = New ApcsProService()
+    'Private lotInfo As iLibrary.LotInfo
+    'Private c_ApcsPro.machineInfo As MachineInfo
+    'Private c_UserInfo As UserInfo
+    'Private c_DateTimeInfo As DateTimeInfo
+    'Private c_ApcsPro.log As New Logger
+    'Private packageEnable As Boolean = False
+    'Private c_LotUpdateInfo As LotUpdateInfo = Nothing
+    'Private Recipe As String
+    '' Private functionName As String
+    Private c_MachineInfo As MachineInfo
+    Private c_LotInfo As iLibrary.LotInfo
+    Private c_ApcsProService As IApcsProService = New ApcsProService()
+    Private c_UserInfo As UserInfo
+    Private c_Log As Logger = New Logger("1.0", "RF-" & My.Settings.MCNo)
+    Private c_DateTimeInfo As DateTimeInfo
+    Private c_LotUpdateInfoSetUp As LotUpdateInfo
+    Private c_ApcsPro As New ApcsPro
+
+    Private c_LotUpdateInfo As LotUpdateInfo
+#End Region
+
+#End Region
 End Class
