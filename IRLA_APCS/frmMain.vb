@@ -116,7 +116,7 @@ Public Class frmMain
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lbNetversion.Text = "180612 APCS Pro." '"170109"
+        lbNetversion.Text = "180627 APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
 
@@ -134,7 +134,7 @@ Public Class frmMain
         m_SelfData.McNo = My.Settings.MCNo
         m_SelfData.IPA = My.Settings.IP
         UpdateDisplay()
-
+        UpdateMachineOnlineState("RF-" & My.Settings.MCNo, 1, c_Log)
         XmlLoad(c_ApcsPro, c_ApcsPro.GetType())
     End Sub
     Sub LoadPFAlarmTable()
@@ -1045,7 +1045,7 @@ Public Class frmMain
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
         Dim Ip As String = "10.1.1.50"
-        Dim Data As String = "LR,9999A0005V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
+        Dim Data As String = "LR,1825A2034V,SSOP-B28W ,BD3805F1234(BW)        ,002892,07D8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
@@ -1623,7 +1623,8 @@ Public Class frmMain
     Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType, OpNo As String) As TDCInfo
         Dim apcsInfo As New TDCInfo
         Dim mc As String = "RF-" & My.Settings.MCNo
-
+        Dim ap As New DBxDataSetTableAdapters.QueriesTableAdapter
+        m_SelfData.Package = ap.SearchPackage(LotNo)
         UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.LotSetUp, c_Log)
         If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
             If Not SetUpApcsPro(mc, LotNo, OpNo) Then
@@ -1681,7 +1682,8 @@ Public Class frmMain
 
     Private Sub frmMain_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Try
-            UpdateMachineOnlineState(c_MachineInfo.Id, 0, c_Log)
+
+            UpdateMachineOnlineState(c_MachineInfo.Name, 0, c_Log)
         Catch ex As Exception
 
         End Try
@@ -1692,7 +1694,7 @@ Public Class frmMain
     Private Function SetUpApcsPro(mcNo As String, lotNo As String, opNo As String) As Boolean
         'Auto Move TDC
         Try
-            m_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
+            'm_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
             Dim userInf As UserInfo = GetInfoPro(mcNo, lotNo, opNo)
 
             If CheckPermissionApcsPro(mcNo, userInf, "PL-SetupLot", c_Log) Then
@@ -1897,9 +1899,10 @@ Public Class frmMain
         End Try
 
     End Sub
-    Private Sub UpdateMachineOnlineState(machineID As Integer, onlineState As Integer, log As Logger, Optional userID As Integer = -1)
+    Private Sub UpdateMachineOnlineState(machineID As String, onlineState As Integer, log As Logger, Optional userID As Integer = -1)
         Try
-            c_ApcsProService.Update_MachineOnlineState(machineID, onlineState, userID, log)
+            c_MachineInfo = c_ApcsProService.GetMachineInfo(machineID)
+            c_ApcsProService.Update_MachineOnlineState(c_MachineInfo.Id, onlineState, userID, log)
         Catch ex As Exception
             lbNotification.Text = "Update_MachineOnlineState :" & ex.ToString()
         End Try
@@ -1957,7 +1960,7 @@ Public Class frmMain
                     data = CType(bs.Deserialize(fs), ApcsPro)
                 End Using
                 GetInfoPro(data.MachineNo, data.LotNo, data.UserCode)
-                UpdateMachineOnlineState(c_MachineInfo.Id, 1, c_Log)
+
             End If
         Catch ex As Exception
             c_Log.ConnectionLogger.Write(0, "XmlLoad", "OUT", "", "", 0, "XmlLoad", ex.Message.ToString, "")

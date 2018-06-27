@@ -2,14 +2,14 @@
 <xs:schema id="DBxDataSet" targetNamespace="http://tempuri.org/DBxDataSet.xsd" xmlns:mstns="http://tempuri.org/DBxDataSet.xsd" xmlns="http://tempuri.org/DBxDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
   <xs:annotation>
     <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
-      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" GeneratorFunctionsComponentClassName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" UserFunctionsComponentName="QueriesTableAdapter" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
         <Connections>
           <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="DBxConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBxConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.WindowsApplication1.My.MySettings.GlobalReference.Default.DBxConnectionString" Provider="System.Data.SqlClient" />
         </Connections>
         <Tables>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ReflowAlarmInfoTableAdapter" GeneratorDataComponentClassName="ReflowAlarmInfoTableAdapter" Name="ReflowAlarmInfo" UserDataComponentName="ReflowAlarmInfoTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.ReflowAlarmInfo" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.ReflowAlarmInfo" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [ReflowAlarmInfo] WHERE (([RecordTime] = @Original_RecordTime) AND ([MCNo] = @Original_MCNo) AND ((@IsNull_AlarmID = 1 AND [AlarmID] IS NULL) OR ([AlarmID] = @Original_AlarmID)) AND ((@IsNull_LotNo = 1 AND [LotNo] IS NULL) OR ([LotNo] = @Original_LotNo)) AND ((@IsNull_ClearTime = 1 AND [ClearTime] IS NULL) OR ([ClearTime] = @Original_ClearTime)))</CommandText>
@@ -79,7 +79,7 @@ SELECT RecordTime, MCNo, AlarmID, LotNo, ClearTime FROM ReflowAlarmInfo WHERE (M
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ReflowAlarmTableTableAdapter" GeneratorDataComponentClassName="ReflowAlarmTableTableAdapter" Name="ReflowAlarmTable" UserDataComponentName="ReflowAlarmTableTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.ReflowAlarmTable" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.ReflowAlarmTable" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [dbo].[ReflowAlarmTable] WHERE (([ID] = @Original_ID) AND ((@IsNull_AlarmNo = 1 AND [AlarmNo] IS NULL) OR ([AlarmNo] = @Original_AlarmNo)) AND ((@IsNull_MachineType = 1 AND [MachineType] IS NULL) OR ([MachineType] = @Original_MachineType)) AND ((@IsNull_AlarmType = 1 AND [AlarmType] IS NULL) OR ([AlarmType] = @Original_AlarmType)) AND ((@IsNull_AlarmMessage = 1 AND [AlarmMessage] IS NULL) OR ([AlarmMessage] = @Original_AlarmMessage)))</CommandText>
@@ -149,7 +149,7 @@ SELECT ID, AlarmNo, MachineType, AlarmType, AlarmMessage FROM ReflowAlarmTable W
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="ReflowDataTableAdapter" GeneratorDataComponentClassName="ReflowDataTableAdapter" Name="ReflowData" UserDataComponentName="ReflowDataTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.ReflowData" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.ReflowData" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <DeleteCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="false">
                     <CommandText>DELETE FROM [ReflowData] WHERE (([LotNo] = @Original_LotNo) AND ([MCNo] = @Original_MCNo) AND ([LotStartTime] = @Original_LotStartTime) AND ((@IsNull_OPNo = 1 AND [OPNo] IS NULL) OR ([OPNo] = @Original_OPNo)) AND ((@IsNull_LotEndTime = 1 AND [LotEndTime] IS NULL) OR ([LotEndTime] = @Original_LotEndTime)) AND ((@IsNull_MagazineNo = 1 AND [MagazineNo] IS NULL) OR ([MagazineNo] = @Original_MagazineNo)) AND ((@IsNull_TemperatureGroup = 1 AND [TemperatureGroup] IS NULL) OR ([TemperatureGroup] = @Original_TemperatureGroup)) AND ((@IsNull_AlarmTotal = 1 AND [AlarmTotal] IS NULL) OR ([AlarmTotal] = @Original_AlarmTotal)) AND ((@IsNull_InputQty = 1 AND [InputQty] IS NULL) OR ([InputQty] = @Original_InputQty)) AND ((@IsNull_OutputQty = 1 AND [OutputQty] IS NULL) OR ([OutputQty] = @Original_OutputQty)))</CommandText>
@@ -251,7 +251,7 @@ SELECT LotNo, MCNo, LotStartTime, OPNo, LotEndTime, MagazineNo, TemperatureGroup
               <Mapping SourceColumn="OutputQty" DataSetColumn="OutputQty" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT     TransactionData.Package, TransactionData.Device, ReflowData.LotNo, ReflowData.MCNo, ReflowData.LotStartTime, ReflowData.OPNo, 
@@ -269,7 +269,7 @@ ORDER BY ReflowData.LotStartTime DESC</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillLotNo" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetLotNoBy" GeneratorSourceName="FillLotNo" GetMethodModifier="Public" GetMethodName="GetLotNoBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLotNoBy" UserSourceName="FillLotNo">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillLotNo" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetLotNoBy" GeneratorSourceName="FillLotNo" GetMethodModifier="Public" GetMethodName="GetLotNoBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetLotNoBy" UserSourceName="FillLotNo">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT     TransactionData.Package, TransactionData.Device, ReflowData.LotNo, ReflowData.MCNo, ReflowData.LotStartTime, ReflowData.OPNo, 
@@ -288,7 +288,7 @@ WHERE     (ReflowData.LotNo = @LotNo)</CommandText>
           </TableAdapter>
           <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="SearchQueryTableAdapter" GeneratorDataComponentClassName="SearchQueryTableAdapter" Name="SearchQuery" UserDataComponentName="SearchQueryTableAdapter">
             <MainSource>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetData" UserSourceName="Fill">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT     TransactionData.Package, TransactionData.Device, ReflowData.*
@@ -315,7 +315,7 @@ FROM         ReflowData INNER JOIN
               <Mapping SourceColumn="AlarmTotal" DataSetColumn="AlarmTotal" />
             </Mappings>
             <Sources>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy" GeneratorSourceName="FillBy" GetMethodModifier="Public" GetMethodName="GetDataBy" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="FillBy">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT     TransactionData.Package, TransactionData.Device, ReflowData.LotNo, ReflowData.MCNo, ReflowData.LotStartTime, ReflowData.OPNo, 
@@ -333,7 +333,7 @@ ORDER BY ReflowData.LotStartTime DESC</CommandText>
                   </DbCommand>
                 </SelectCommand>
               </DbSource>
-              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy1" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy1" GeneratorSourceName="FillBy1" GetMethodModifier="Public" GetMethodName="GetDataBy1" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillBy1">
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="FillBy1" GenerateMethods="Both" GenerateShortCommands="true" GeneratorGetMethodName="GetDataBy1" GeneratorSourceName="FillBy1" GetMethodModifier="Public" GetMethodName="GetDataBy1" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy1" UserSourceName="FillBy1">
                 <SelectCommand>
                   <DbCommand CommandType="Text" ModifiedByUser="true">
                     <CommandText>SELECT     TransactionData.Package, TransactionData.Device, ReflowData.LotNo, ReflowData.MCNo, ReflowData.LotStartTime, ReflowData.OPNo, 
@@ -351,62 +351,75 @@ WHERE     (ReflowData.LotNo = @LotNo)</CommandText>
             </Sources>
           </TableAdapter>
         </Tables>
-        <Sources />
+        <Sources>
+          <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.TransactionData" DbObjectType="Table" GenerateShortCommands="true" GeneratorSourceName="SearchPackage" MethodsParameterType="CLR" Modifier="Public" Name="SearchPackage" QueryType="Scalar" ScalarCallRetval="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="true" UserGetMethodName="GetDataBy" UserSourceName="SearchPackage">
+            <SelectCommand>
+              <DbCommand CommandType="Text" ModifiedByUser="true">
+                <CommandText>SELECT Package
+FROM     TransactionData
+WHERE  (LotNo = @LotNo)</CommandText>
+                <Parameters>
+                  <Parameter AllowDbNull="false" AutogeneratedName="LotNo" ColumnName="LotNo" DataSourceName="DBx.dbo.TransactionData" DataTypeServer="varchar(10)" DbType="AnsiString" Direction="Input" ParameterName="@LotNo" Precision="0" ProviderType="VarChar" Scale="0" Size="10" SourceColumn="LotNo" SourceColumnNullMapping="false" SourceVersion="Current" />
+                </Parameters>
+              </DbCommand>
+            </SelectCommand>
+          </DbSource>
+        </Sources>
       </DataSource>
     </xs:appinfo>
   </xs:annotation>
-  <xs:element name="DBxDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:Generator_UserDSName="DBxDataSet" msprop:Generator_DataSetName="DBxDataSet" msprop:EnableTableAdapterManager="True">
+  <xs:element name="DBxDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="True" msprop:Generator_DataSetName="DBxDataSet" msprop:Generator_UserDSName="DBxDataSet">
     <xs:complexType>
       <xs:choice minOccurs="0" maxOccurs="unbounded">
-        <xs:element name="ReflowAlarmInfo" msprop:Generator_UserTableName="ReflowAlarmInfo" msprop:Generator_RowDeletedName="ReflowAlarmInfoRowDeleted" msprop:Generator_RowChangedName="ReflowAlarmInfoRowChanged" msprop:Generator_RowClassName="ReflowAlarmInfoRow" msprop:Generator_RowChangingName="ReflowAlarmInfoRowChanging" msprop:Generator_RowEvArgName="ReflowAlarmInfoRowChangeEvent" msprop:Generator_RowEvHandlerName="ReflowAlarmInfoRowChangeEventHandler" msprop:Generator_TableClassName="ReflowAlarmInfoDataTable" msprop:Generator_TableVarName="tableReflowAlarmInfo" msprop:Generator_RowDeletingName="ReflowAlarmInfoRowDeleting" msprop:Generator_TablePropName="ReflowAlarmInfo">
+        <xs:element name="ReflowAlarmInfo" msprop:Generator_UserTableName="ReflowAlarmInfo" msprop:Generator_RowEvArgName="ReflowAlarmInfoRowChangeEvent" msprop:Generator_TableVarName="tableReflowAlarmInfo" msprop:Generator_TablePropName="ReflowAlarmInfo" msprop:Generator_RowDeletingName="ReflowAlarmInfoRowDeleting" msprop:Generator_RowChangingName="ReflowAlarmInfoRowChanging" msprop:Generator_RowDeletedName="ReflowAlarmInfoRowDeleted" msprop:Generator_RowEvHandlerName="ReflowAlarmInfoRowChangeEventHandler" msprop:Generator_TableClassName="ReflowAlarmInfoDataTable" msprop:Generator_RowChangedName="ReflowAlarmInfoRowChanged" msprop:Generator_RowClassName="ReflowAlarmInfoRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="RecordTime" msprop:Generator_UserColumnName="RecordTime" msprop:Generator_ColumnPropNameInRow="RecordTime" msprop:Generator_ColumnVarNameInTable="columnRecordTime" msprop:Generator_ColumnPropNameInTable="RecordTimeColumn" type="xs:dateTime" />
-              <xs:element name="MCNo" msprop:Generator_UserColumnName="MCNo" msprop:Generator_ColumnPropNameInRow="MCNo" msprop:Generator_ColumnVarNameInTable="columnMCNo" msprop:Generator_ColumnPropNameInTable="MCNoColumn">
+              <xs:element name="RecordTime" msprop:Generator_ColumnVarNameInTable="columnRecordTime" msprop:Generator_ColumnPropNameInRow="RecordTime" msprop:Generator_ColumnPropNameInTable="RecordTimeColumn" msprop:Generator_UserColumnName="RecordTime" type="xs:dateTime" />
+              <xs:element name="MCNo" msprop:Generator_ColumnVarNameInTable="columnMCNo" msprop:Generator_ColumnPropNameInRow="MCNo" msprop:Generator_ColumnPropNameInTable="MCNoColumn" msprop:Generator_UserColumnName="MCNo">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="AlarmID" msprop:Generator_UserColumnName="AlarmID" msprop:Generator_ColumnPropNameInRow="AlarmID" msprop:Generator_ColumnVarNameInTable="columnAlarmID" msprop:Generator_ColumnPropNameInTable="AlarmIDColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="LotNo" msprop:Generator_UserColumnName="LotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn" minOccurs="0">
+              <xs:element name="AlarmID" msprop:Generator_ColumnVarNameInTable="columnAlarmID" msprop:Generator_ColumnPropNameInRow="AlarmID" msprop:Generator_ColumnPropNameInTable="AlarmIDColumn" msprop:Generator_UserColumnName="AlarmID" type="xs:int" minOccurs="0" />
+              <xs:element name="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn" msprop:Generator_UserColumnName="LotNo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="ClearTime" msprop:Generator_UserColumnName="ClearTime" msprop:Generator_ColumnVarNameInTable="columnClearTime" msprop:Generator_ColumnPropNameInRow="ClearTime" msprop:Generator_ColumnPropNameInTable="ClearTimeColumn" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="ClearTime" msprop:Generator_ColumnVarNameInTable="columnClearTime" msprop:Generator_ColumnPropNameInRow="ClearTime" msprop:Generator_ColumnPropNameInTable="ClearTimeColumn" msprop:Generator_UserColumnName="ClearTime" type="xs:dateTime" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ReflowAlarmTable" msprop:Generator_UserTableName="ReflowAlarmTable" msprop:Generator_RowDeletedName="ReflowAlarmTableRowDeleted" msprop:Generator_RowChangedName="ReflowAlarmTableRowChanged" msprop:Generator_RowClassName="ReflowAlarmTableRow" msprop:Generator_RowChangingName="ReflowAlarmTableRowChanging" msprop:Generator_RowEvArgName="ReflowAlarmTableRowChangeEvent" msprop:Generator_RowEvHandlerName="ReflowAlarmTableRowChangeEventHandler" msprop:Generator_TableClassName="ReflowAlarmTableDataTable" msprop:Generator_TableVarName="tableReflowAlarmTable" msprop:Generator_RowDeletingName="ReflowAlarmTableRowDeleting" msprop:Generator_TablePropName="ReflowAlarmTable">
+        <xs:element name="ReflowAlarmTable" msprop:Generator_UserTableName="ReflowAlarmTable" msprop:Generator_RowEvArgName="ReflowAlarmTableRowChangeEvent" msprop:Generator_TableVarName="tableReflowAlarmTable" msprop:Generator_TablePropName="ReflowAlarmTable" msprop:Generator_RowDeletingName="ReflowAlarmTableRowDeleting" msprop:Generator_RowChangingName="ReflowAlarmTableRowChanging" msprop:Generator_RowDeletedName="ReflowAlarmTableRowDeleted" msprop:Generator_RowEvHandlerName="ReflowAlarmTableRowChangeEventHandler" msprop:Generator_TableClassName="ReflowAlarmTableDataTable" msprop:Generator_RowChangedName="ReflowAlarmTableRowChanged" msprop:Generator_RowClassName="ReflowAlarmTableRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_UserColumnName="ID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInTable="IDColumn" type="xs:int" />
-              <xs:element name="AlarmNo" msprop:Generator_UserColumnName="AlarmNo" msprop:Generator_ColumnPropNameInRow="AlarmNo" msprop:Generator_ColumnVarNameInTable="columnAlarmNo" msprop:Generator_ColumnPropNameInTable="AlarmNoColumn" minOccurs="0">
+              <xs:element name="ID" msdata:ReadOnly="true" msdata:AutoIncrement="true" msdata:AutoIncrementSeed="-1" msdata:AutoIncrementStep="-1" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_UserColumnName="ID" type="xs:int" />
+              <xs:element name="AlarmNo" msprop:Generator_ColumnVarNameInTable="columnAlarmNo" msprop:Generator_ColumnPropNameInRow="AlarmNo" msprop:Generator_ColumnPropNameInTable="AlarmNoColumn" msprop:Generator_UserColumnName="AlarmNo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="3" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="MachineType" msprop:Generator_UserColumnName="MachineType" msprop:Generator_ColumnPropNameInRow="MachineType" msprop:Generator_ColumnVarNameInTable="columnMachineType" msprop:Generator_ColumnPropNameInTable="MachineTypeColumn" minOccurs="0">
+              <xs:element name="MachineType" msprop:Generator_ColumnVarNameInTable="columnMachineType" msprop:Generator_ColumnPropNameInRow="MachineType" msprop:Generator_ColumnPropNameInTable="MachineTypeColumn" msprop:Generator_UserColumnName="MachineType" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="AlarmType" msprop:Generator_UserColumnName="AlarmType" msprop:Generator_ColumnPropNameInRow="AlarmType" msprop:Generator_ColumnVarNameInTable="columnAlarmType" msprop:Generator_ColumnPropNameInTable="AlarmTypeColumn" minOccurs="0">
+              <xs:element name="AlarmType" msprop:Generator_ColumnVarNameInTable="columnAlarmType" msprop:Generator_ColumnPropNameInRow="AlarmType" msprop:Generator_ColumnPropNameInTable="AlarmTypeColumn" msprop:Generator_UserColumnName="AlarmType" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="AlarmMessage" msprop:Generator_UserColumnName="AlarmMessage" msprop:Generator_ColumnPropNameInRow="AlarmMessage" msprop:Generator_ColumnVarNameInTable="columnAlarmMessage" msprop:Generator_ColumnPropNameInTable="AlarmMessageColumn" minOccurs="0">
+              <xs:element name="AlarmMessage" msprop:Generator_ColumnVarNameInTable="columnAlarmMessage" msprop:Generator_ColumnPropNameInRow="AlarmMessage" msprop:Generator_ColumnPropNameInTable="AlarmMessageColumn" msprop:Generator_UserColumnName="AlarmMessage" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="255" />
@@ -416,123 +429,123 @@ WHERE     (ReflowData.LotNo = @LotNo)</CommandText>
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="ReflowData" msprop:Generator_UserTableName="ReflowData" msprop:Generator_RowDeletedName="ReflowDataRowDeleted" msprop:Generator_RowChangedName="ReflowDataRowChanged" msprop:Generator_RowClassName="ReflowDataRow" msprop:Generator_RowChangingName="ReflowDataRowChanging" msprop:Generator_RowEvArgName="ReflowDataRowChangeEvent" msprop:Generator_RowEvHandlerName="ReflowDataRowChangeEventHandler" msprop:Generator_TableClassName="ReflowDataDataTable" msprop:Generator_TableVarName="tableReflowData" msprop:Generator_RowDeletingName="ReflowDataRowDeleting" msprop:Generator_TablePropName="ReflowData">
+        <xs:element name="ReflowData" msprop:Generator_UserTableName="ReflowData" msprop:Generator_RowEvArgName="ReflowDataRowChangeEvent" msprop:Generator_TableVarName="tableReflowData" msprop:Generator_TablePropName="ReflowData" msprop:Generator_RowDeletingName="ReflowDataRowDeleting" msprop:Generator_RowChangingName="ReflowDataRowChanging" msprop:Generator_RowDeletedName="ReflowDataRowDeleted" msprop:Generator_RowEvHandlerName="ReflowDataRowChangeEventHandler" msprop:Generator_TableClassName="ReflowDataDataTable" msprop:Generator_RowChangedName="ReflowDataRowChanged" msprop:Generator_RowClassName="ReflowDataRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="LotNo" msprop:Generator_UserColumnName="LotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn">
+              <xs:element name="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn" msprop:Generator_UserColumnName="LotNo">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="MCNo" msprop:Generator_UserColumnName="MCNo" msprop:Generator_ColumnPropNameInRow="MCNo" msprop:Generator_ColumnVarNameInTable="columnMCNo" msprop:Generator_ColumnPropNameInTable="MCNoColumn">
+              <xs:element name="MCNo" msprop:Generator_ColumnVarNameInTable="columnMCNo" msprop:Generator_ColumnPropNameInRow="MCNo" msprop:Generator_ColumnPropNameInTable="MCNoColumn" msprop:Generator_UserColumnName="MCNo">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="LotStartTime" msprop:Generator_UserColumnName="LotStartTime" msprop:Generator_ColumnPropNameInRow="LotStartTime" msprop:Generator_ColumnVarNameInTable="columnLotStartTime" msprop:Generator_ColumnPropNameInTable="LotStartTimeColumn" type="xs:dateTime" />
-              <xs:element name="OPNo" msprop:Generator_UserColumnName="OPNo" msprop:Generator_ColumnPropNameInRow="OPNo" msprop:Generator_ColumnVarNameInTable="columnOPNo" msprop:Generator_ColumnPropNameInTable="OPNoColumn" minOccurs="0">
+              <xs:element name="LotStartTime" msprop:Generator_ColumnVarNameInTable="columnLotStartTime" msprop:Generator_ColumnPropNameInRow="LotStartTime" msprop:Generator_ColumnPropNameInTable="LotStartTimeColumn" msprop:Generator_UserColumnName="LotStartTime" type="xs:dateTime" />
+              <xs:element name="OPNo" msprop:Generator_ColumnVarNameInTable="columnOPNo" msprop:Generator_ColumnPropNameInRow="OPNo" msprop:Generator_ColumnPropNameInTable="OPNoColumn" msprop:Generator_UserColumnName="OPNo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="8" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="LotEndTime" msprop:Generator_UserColumnName="LotEndTime" msprop:Generator_ColumnPropNameInRow="LotEndTime" msprop:Generator_ColumnVarNameInTable="columnLotEndTime" msprop:Generator_ColumnPropNameInTable="LotEndTimeColumn" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="MagazineNo" msprop:Generator_UserColumnName="MagazineNo" msprop:Generator_ColumnPropNameInRow="MagazineNo" msprop:Generator_ColumnVarNameInTable="columnMagazineNo" msprop:Generator_ColumnPropNameInTable="MagazineNoColumn" minOccurs="0">
+              <xs:element name="LotEndTime" msprop:Generator_ColumnVarNameInTable="columnLotEndTime" msprop:Generator_ColumnPropNameInRow="LotEndTime" msprop:Generator_ColumnPropNameInTable="LotEndTimeColumn" msprop:Generator_UserColumnName="LotEndTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MagazineNo" msprop:Generator_ColumnVarNameInTable="columnMagazineNo" msprop:Generator_ColumnPropNameInRow="MagazineNo" msprop:Generator_ColumnPropNameInTable="MagazineNoColumn" msprop:Generator_UserColumnName="MagazineNo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="TemperatureGroup" msprop:Generator_UserColumnName="TemperatureGroup" msprop:Generator_ColumnPropNameInRow="TemperatureGroup" msprop:Generator_ColumnVarNameInTable="columnTemperatureGroup" msprop:Generator_ColumnPropNameInTable="TemperatureGroupColumn" minOccurs="0">
+              <xs:element name="TemperatureGroup" msprop:Generator_ColumnVarNameInTable="columnTemperatureGroup" msprop:Generator_ColumnPropNameInRow="TemperatureGroup" msprop:Generator_ColumnPropNameInTable="TemperatureGroupColumn" msprop:Generator_UserColumnName="TemperatureGroup" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Remark" msprop:Generator_UserColumnName="Remark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" minOccurs="0">
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="AlarmTotal" msprop:Generator_UserColumnName="AlarmTotal" msprop:Generator_ColumnVarNameInTable="columnAlarmTotal" msprop:Generator_ColumnPropNameInRow="AlarmTotal" msprop:Generator_ColumnPropNameInTable="AlarmTotalColumn" type="xs:short" minOccurs="0" />
-              <xs:element name="InputQty" msprop:Generator_UserColumnName="InputQty" msprop:Generator_ColumnPropNameInRow="InputQty" msprop:Generator_ColumnVarNameInTable="columnInputQty" msprop:Generator_ColumnPropNameInTable="InputQtyColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="OutputQty" msprop:Generator_UserColumnName="OutputQty" msprop:Generator_ColumnPropNameInRow="OutputQty" msprop:Generator_ColumnVarNameInTable="columnOutputQty" msprop:Generator_ColumnPropNameInTable="OutputQtyColumn" type="xs:int" minOccurs="0" />
+              <xs:element name="AlarmTotal" msprop:Generator_ColumnVarNameInTable="columnAlarmTotal" msprop:Generator_ColumnPropNameInRow="AlarmTotal" msprop:Generator_ColumnPropNameInTable="AlarmTotalColumn" msprop:Generator_UserColumnName="AlarmTotal" type="xs:short" minOccurs="0" />
+              <xs:element name="InputQty" msprop:Generator_ColumnVarNameInTable="columnInputQty" msprop:Generator_ColumnPropNameInRow="InputQty" msprop:Generator_ColumnPropNameInTable="InputQtyColumn" msprop:Generator_UserColumnName="InputQty" type="xs:int" minOccurs="0" />
+              <xs:element name="OutputQty" msprop:Generator_ColumnVarNameInTable="columnOutputQty" msprop:Generator_ColumnPropNameInRow="OutputQty" msprop:Generator_ColumnPropNameInTable="OutputQtyColumn" msprop:Generator_UserColumnName="OutputQty" type="xs:int" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
-        <xs:element name="SearchQuery" msprop:Generator_UserTableName="SearchQuery" msprop:Generator_RowDeletedName="SearchQueryRowDeleted" msprop:Generator_TableClassName="SearchQueryDataTable" msprop:Generator_RowChangedName="SearchQueryRowChanged" msprop:Generator_RowClassName="SearchQueryRow" msprop:Generator_RowChangingName="SearchQueryRowChanging" msprop:Generator_RowEvArgName="SearchQueryRowChangeEvent" msprop:Generator_RowEvHandlerName="SearchQueryRowChangeEventHandler" msprop:Generator_TablePropName="SearchQuery" msprop:Generator_TableVarName="tableSearchQuery" msprop:Generator_RowDeletingName="SearchQueryRowDeleting">
+        <xs:element name="SearchQuery" msprop:Generator_TableClassName="SearchQueryDataTable" msprop:Generator_RowEvArgName="SearchQueryRowChangeEvent" msprop:Generator_TablePropName="SearchQuery" msprop:Generator_TableVarName="tableSearchQuery" msprop:Generator_RowEvHandlerName="SearchQueryRowChangeEventHandler" msprop:Generator_RowDeletingName="SearchQueryRowDeleting" msprop:Generator_RowChangingName="SearchQueryRowChanging" msprop:Generator_RowDeletedName="SearchQueryRowDeleted" msprop:Generator_UserTableName="SearchQuery" msprop:Generator_RowChangedName="SearchQueryRowChanged" msprop:Generator_RowClassName="SearchQueryRow">
           <xs:complexType>
             <xs:sequence>
-              <xs:element name="Package" msprop:Generator_UserColumnName="Package" msprop:Generator_ColumnPropNameInRow="Package" msprop:Generator_ColumnVarNameInTable="columnPackage" msprop:Generator_ColumnPropNameInTable="PackageColumn" minOccurs="0">
+              <xs:element name="Package" msprop:Generator_ColumnVarNameInTable="columnPackage" msprop:Generator_ColumnPropNameInRow="Package" msprop:Generator_ColumnPropNameInTable="PackageColumn" msprop:Generator_UserColumnName="Package" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Device" msprop:Generator_UserColumnName="Device" msprop:Generator_ColumnPropNameInRow="Device" msprop:Generator_ColumnVarNameInTable="columnDevice" msprop:Generator_ColumnPropNameInTable="DeviceColumn" minOccurs="0">
+              <xs:element name="Device" msprop:Generator_ColumnVarNameInTable="columnDevice" msprop:Generator_ColumnPropNameInRow="Device" msprop:Generator_ColumnPropNameInTable="DeviceColumn" msprop:Generator_UserColumnName="Device" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="20" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="LotNo" msprop:Generator_UserColumnName="LotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn">
+              <xs:element name="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn" msprop:Generator_UserColumnName="LotNo">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="MCNo" msprop:Generator_UserColumnName="MCNo" msprop:Generator_ColumnPropNameInRow="MCNo" msprop:Generator_ColumnVarNameInTable="columnMCNo" msprop:Generator_ColumnPropNameInTable="MCNoColumn">
+              <xs:element name="MCNo" msprop:Generator_ColumnVarNameInTable="columnMCNo" msprop:Generator_ColumnPropNameInRow="MCNo" msprop:Generator_ColumnPropNameInTable="MCNoColumn" msprop:Generator_UserColumnName="MCNo">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="LotStartTime" msprop:Generator_UserColumnName="LotStartTime" msprop:Generator_ColumnPropNameInRow="LotStartTime" msprop:Generator_ColumnVarNameInTable="columnLotStartTime" msprop:Generator_ColumnPropNameInTable="LotStartTimeColumn" type="xs:dateTime" />
-              <xs:element name="OPNo" msprop:Generator_UserColumnName="OPNo" msprop:Generator_ColumnPropNameInRow="OPNo" msprop:Generator_ColumnVarNameInTable="columnOPNo" msprop:Generator_ColumnPropNameInTable="OPNoColumn" minOccurs="0">
+              <xs:element name="LotStartTime" msprop:Generator_ColumnVarNameInTable="columnLotStartTime" msprop:Generator_ColumnPropNameInRow="LotStartTime" msprop:Generator_ColumnPropNameInTable="LotStartTimeColumn" msprop:Generator_UserColumnName="LotStartTime" type="xs:dateTime" />
+              <xs:element name="OPNo" msprop:Generator_ColumnVarNameInTable="columnOPNo" msprop:Generator_ColumnPropNameInRow="OPNo" msprop:Generator_ColumnPropNameInTable="OPNoColumn" msprop:Generator_UserColumnName="OPNo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="8" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="InputQty" msprop:Generator_UserColumnName="InputQty" msprop:Generator_ColumnPropNameInRow="InputQty" msprop:Generator_ColumnVarNameInTable="columnInputQty" msprop:Generator_ColumnPropNameInTable="InputQtyColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="OutputQty" msprop:Generator_UserColumnName="OutputQty" msprop:Generator_ColumnPropNameInRow="OutputQty" msprop:Generator_ColumnVarNameInTable="columnOutputQty" msprop:Generator_ColumnPropNameInTable="OutputQtyColumn" type="xs:int" minOccurs="0" />
-              <xs:element name="LotEndTime" msprop:Generator_UserColumnName="LotEndTime" msprop:Generator_ColumnPropNameInRow="LotEndTime" msprop:Generator_ColumnVarNameInTable="columnLotEndTime" msprop:Generator_ColumnPropNameInTable="LotEndTimeColumn" type="xs:dateTime" minOccurs="0" />
-              <xs:element name="MagazineNo" msprop:Generator_UserColumnName="MagazineNo" msprop:Generator_ColumnPropNameInRow="MagazineNo" msprop:Generator_ColumnVarNameInTable="columnMagazineNo" msprop:Generator_ColumnPropNameInTable="MagazineNoColumn" minOccurs="0">
+              <xs:element name="InputQty" msprop:Generator_ColumnVarNameInTable="columnInputQty" msprop:Generator_ColumnPropNameInRow="InputQty" msprop:Generator_ColumnPropNameInTable="InputQtyColumn" msprop:Generator_UserColumnName="InputQty" type="xs:int" minOccurs="0" />
+              <xs:element name="OutputQty" msprop:Generator_ColumnVarNameInTable="columnOutputQty" msprop:Generator_ColumnPropNameInRow="OutputQty" msprop:Generator_ColumnPropNameInTable="OutputQtyColumn" msprop:Generator_UserColumnName="OutputQty" type="xs:int" minOccurs="0" />
+              <xs:element name="LotEndTime" msprop:Generator_ColumnVarNameInTable="columnLotEndTime" msprop:Generator_ColumnPropNameInRow="LotEndTime" msprop:Generator_ColumnPropNameInTable="LotEndTimeColumn" msprop:Generator_UserColumnName="LotEndTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="MagazineNo" msprop:Generator_ColumnVarNameInTable="columnMagazineNo" msprop:Generator_ColumnPropNameInRow="MagazineNo" msprop:Generator_ColumnPropNameInTable="MagazineNoColumn" msprop:Generator_UserColumnName="MagazineNo" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="10" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="TemperatureGroup" msprop:Generator_UserColumnName="TemperatureGroup" msprop:Generator_ColumnPropNameInRow="TemperatureGroup" msprop:Generator_ColumnVarNameInTable="columnTemperatureGroup" msprop:Generator_ColumnPropNameInTable="TemperatureGroupColumn" minOccurs="0">
+              <xs:element name="TemperatureGroup" msprop:Generator_ColumnVarNameInTable="columnTemperatureGroup" msprop:Generator_ColumnPropNameInRow="TemperatureGroup" msprop:Generator_ColumnPropNameInTable="TemperatureGroupColumn" msprop:Generator_UserColumnName="TemperatureGroup" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="1" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="Remark" msprop:Generator_UserColumnName="Remark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" minOccurs="0">
+              <xs:element name="Remark" msprop:Generator_ColumnVarNameInTable="columnRemark" msprop:Generator_ColumnPropNameInRow="Remark" msprop:Generator_ColumnPropNameInTable="RemarkColumn" msprop:Generator_UserColumnName="Remark" minOccurs="0">
                 <xs:simpleType>
                   <xs:restriction base="xs:string">
                     <xs:maxLength value="2147483647" />
                   </xs:restriction>
                 </xs:simpleType>
               </xs:element>
-              <xs:element name="AlarmTotal" msprop:Generator_UserColumnName="AlarmTotal" msprop:Generator_ColumnPropNameInRow="AlarmTotal" msprop:Generator_ColumnVarNameInTable="columnAlarmTotal" msprop:Generator_ColumnPropNameInTable="AlarmTotalColumn" type="xs:short" minOccurs="0" />
+              <xs:element name="AlarmTotal" msprop:Generator_ColumnVarNameInTable="columnAlarmTotal" msprop:Generator_ColumnPropNameInRow="AlarmTotal" msprop:Generator_ColumnPropNameInTable="AlarmTotalColumn" msprop:Generator_UserColumnName="AlarmTotal" type="xs:short" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>
