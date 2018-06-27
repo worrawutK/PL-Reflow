@@ -437,13 +437,16 @@ Public Class frmMain
                 End If
 
             Case "SC" 'SC,AlarmNo
-                UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
+
                 If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
                     Try
                         Dim AlarmNo As String = strText(1).Trim
                         Dim AlarmID As String = ""
                         Dim LotNo As String = m_SelfData.LotNo
                         Dim McNo As String = "RF-" & m_SelfData.McNo
+
+                        UpdateAlarm(LotNo, AlarmNo, m_SelfData.Package)
+                        UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
 
                         AlarmID = SearchAlarmID(AlarmNo)
                         If AlarmID <> "" Then
@@ -1042,7 +1045,7 @@ Public Class frmMain
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
         Dim Ip As String = "10.1.1.50"
-        Dim Data As String = "LR,9999A0006V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
+        Dim Data As String = "LR,9999A0005V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
@@ -1903,12 +1906,30 @@ Public Class frmMain
 
     End Sub
 #End Region
+#Region "ApcsPro Alarm"
+    Private Sub UpdateAlarm(lotNo As String, errorCode As String, package As String)
+        Try
+            If c_ApcsProService.CheckPackageEnable(package, c_Log) Then
+                If c_ApcsProService.CheckLotisExist(lotNo, c_Log) Then
+                    Dim lotId(0) As Integer
+                    lotId(0) = c_LotInfo.Id
+                    Dim DateInfo As DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
+                    Dim machineUpdateInfo As MachineUpdateInfo = c_ApcsProService.Update_ErrorHappenRecord(lotId, c_MachineInfo, c_UserInfo.Id, CInt(errorCode).ToString, DateInfo.Datetime, c_Log)
+
+                End If
+
+            End If
+        Catch ex As Exception
+            c_Log.ConnectionLogger.Write(0, "UpdateAlarm", "OUT", "CellCon", "iLibrary", 0, "Update_ErrorHappenRecord", ex.Message.ToString(), "")
+        End Try
+    End Sub
+#End Region
 #Region "License"
     Private Sub LicenseWarning(user As UserInfo)
         Try
             If user.License(0).Is_Warning Then
-                MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
-                'lbNotification.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
+                'MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
+                lbNotification.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
             End If
         Catch ex As Exception
             c_Log.ConnectionLogger.Write(0, "LicenseWarning", "OUT", "CellCon", "iLibrary", 0, "user.License(0)", "", "")
