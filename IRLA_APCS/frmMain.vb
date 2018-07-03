@@ -1045,7 +1045,7 @@ Public Class frmMain
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
         Dim Ip As String = "10.1.1.50"
-        Dim Data As String = "LR,9999A0005V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
+        Dim Data As String = "LR,9999A0001V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
@@ -1692,7 +1692,7 @@ Public Class frmMain
     Private Function SetUpApcsPro(mcNo As String, lotNo As String, opNo As String) As Boolean
         'Auto Move TDC
         Try
-            m_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
+            'm_TdcService.MoveLot(lotNo, mcNo, opNo, "0255")
             Dim userInf As UserInfo = GetInfoPro(mcNo, lotNo, opNo)
 
             If CheckPermissionApcsPro(mcNo, userInf, "PL-SetupLot", c_Log) Then
@@ -1713,13 +1713,12 @@ Public Class frmMain
                 End If
                 c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
                 c_LotUpdateInfo = c_ApcsProService.LotSetup(c_LotInfo.Id, c_MachineInfo.Id, c_UserInfo.Id, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
-                c_ApcsPro.Recipe = c_LotUpdateInfo.Recipe1
                 If Not c_LotUpdateInfo.IsOk Then
                     c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "LotSetup", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotNo & ",MCNo:" & mcNo & ",OPNo:" & opNo)
                     'MsgBox(c_LotUpdateInfo.ErrorMessage)
                     Return False
                 End If
-
+                c_ApcsPro.Recipe = c_LotUpdateInfo.Recipe1
                 XmlSave(c_ApcsPro)
                 Return True
                 'Return SetupLotPro(mcNo, lotNo, opNo)
@@ -1833,13 +1832,13 @@ Public Class frmMain
         Try
             c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
 
-            c_LotUpdateInfo = c_ApcsProService.OnlineStart(c_LotInfo.Id, machineInfo.Id, c_UserInfo.Id, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+            c_LotUpdateInfo = c_ApcsProService.OnlineStart(c_LotInfo.Id, machineInfo.Id, c_UserInfo.Id, 0, CreateTableToXml(lotInfo.Name), 1, c_DateTimeInfo.Datetime, c_Log)
             If Not c_LotUpdateInfo.IsOk Then
                 c_Log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineStart", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
             End If
             ' If packageEnable Then
 
-            c_LotUpdateInfo = c_ApcsProService.LotStart(c_LotInfo.Id, machineInfo.Id, c_UserInfo.Id, 0, "", 1, c_ApcsPro.Recipe, c_Log)
+            c_LotUpdateInfo = c_ApcsProService.LotStart(c_LotInfo.Id, machineInfo.Id, c_UserInfo.Id, 0, CreateTableToXml(lotInfo.Name), 1, c_ApcsPro.Recipe, c_Log)
             If Not c_LotUpdateInfo.IsOk Then
                 c_Log.ConnectionLogger.Write(0, "StartLotPro", "OUT", "CellCon", "iLibrary", 0, "LotStart", c_LotUpdateInfo.ErrorMessage, "LotNo:" & c_LotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
             End If
@@ -1860,12 +1859,12 @@ Public Class frmMain
             'If packageEnable Then
             c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
 
-            c_LotUpdateInfo = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, c_UserInfo.Id, False, good, ng, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+            c_LotUpdateInfo = c_ApcsProService.OnlineEnd(lotInfo.Id, machineInfo.Id, c_UserInfo.Id, False, good, ng, 0, CreateTableToXml(lotInfo.Name), 1, c_DateTimeInfo.Datetime, c_Log)
             If Not c_LotUpdateInfo.IsOk Then
                 c_Log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "OnlineEnd", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
             End If
 
-            c_LotUpdateInfo = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, c_UserInfo.Id, False, good, ng, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
+            c_LotUpdateInfo = c_ApcsProService.LotEnd(lotInfo.Id, machineInfo.Id, c_UserInfo.Id, False, good, ng, 0, CreateTableToXml(lotInfo.Name), 1, c_DateTimeInfo.Datetime, c_Log)
 
             If Not c_LotUpdateInfo.IsOk Then
                 c_Log.ConnectionLogger.Write(0, "EndLotPro", "OUT", "CellCon", "iLibrary", 0, "LotEnd", c_LotUpdateInfo.ErrorMessage, "LotNo:" & lotInfo.Name & ",MCNo:" & machineInfo.Name & ",OPNo:" & opNo)
@@ -1964,7 +1963,63 @@ Public Class frmMain
         End Try
 
     End Sub
+    Private Function CreateTableToXml(LotNo As String) As String
+        Try
+            Dim table As New DBxDataSet.ReflowDataDataTable
+            Dim newRow As DBxDataSet.ReflowDataRow = table.NewReflowDataRow
 
+            For Each row As DBxDataSet.ReflowDataRow In DBxDataSet.ReflowData
+                If row.LotNo = LotNo Then
+                    newRow.LotNo = row.LotNo
+                    newRow.LotStartTime = row.LotStartTime
+                    newRow.MCNo = row.MCNo
+                    If Not row.IsAlarmTotalNull Then
+                        newRow.AlarmTotal = row.AlarmTotal
+                    End If
+                    If Not row.IsInputQtyNull Then
+                        newRow.InputQty = row.InputQty
+                    End If
+
+                    If Not row.IsLotEndTimeNull Then
+                        newRow.LotEndTime = row.LotEndTime
+                    End If
+                    If Not row.IsMagazineNoNull Then
+                        newRow.MagazineNo = row.MagazineNo
+                    End If
+                    If Not row.IsOutputQtyNull Then
+                        newRow.OutputQty = row.OutputQty
+                    End If
+                    If Not row.IsOPNoNull Then
+                        newRow.OPNo = row.OPNo
+                    End If
+                    If Not row.IsRemarkNull Then
+                        newRow.Remark = row.Remark
+                    End If
+                    If Not row.IsTemperatureGroupNull Then
+                        newRow.TemperatureGroup = row.TemperatureGroup
+                    End If
+                    Exit For
+                End If
+            Next
+            table.Rows.Add(newRow)
+            Return ToXml(table)
+
+        Catch ex As Exception
+            Return ""
+        End Try
+
+    End Function
+    Private Function ToXml(source As Object) As String
+        Try
+            Dim xs As XmlSerializer = New XmlSerializer(source.GetType())
+            Dim writer As StringWriter = New StringWriter()
+            xs.Serialize(writer, source)
+            Return writer.ToString()
+        Catch ex As Exception
+            Return ""
+        End Try
+
+    End Function
 #Region "Apcs_Pro Valiable"
     ' Private ApcsProService As IApcsProService = New ApcsProService()
     'Private lotInfo As iLibrary.LotInfo
