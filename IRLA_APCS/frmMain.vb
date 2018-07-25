@@ -116,7 +116,7 @@ Public Class frmMain
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lbNetversion.Text = "180627 APCS Pro." '"170109"
+        lbNetversion.Text = "180716 APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
 
@@ -1045,7 +1045,7 @@ Public Class frmMain
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
         Dim Ip As String = "10.1.1.50"
-        Dim Data As String = "LR,9999A0001V,SSOP-B28W ,BD3805F1234(BW)        ,007567,07D8,0000000,001E,B." & vbCr
+        Dim Data As String = "LR,1827A4027V,SSOP-B28W ,BD3805F1234(BW)        ,007441,07D8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
