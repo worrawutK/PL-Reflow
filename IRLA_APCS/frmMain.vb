@@ -1688,6 +1688,7 @@ Public Class frmMain
 
         End Try
     End Sub
+
 #Region "APCS Pro"
 
 #Region "Apcs_Pro LotSetUp"
