@@ -17,11 +17,11 @@
             m_SelfData.CellConState = _SelfConMode.Offline
         End If
 
-        If m_SelfData.CellConState = _SelfConMode.Online Then 'Online
-            m_frmMain.lbStatusMC.BackColor = Color.Lime
-        Else 'Offline
-            m_frmMain.lbStatusMC.BackColor = Color.Red
-        End If
+        'If m_SelfData.CellConState = _SelfConMode.Online Then 'Online
+        '    m_frmMain.lbStatusMC.BackColor = Color.Lime
+        'Else 'Offline
+        '    m_frmMain.lbStatusMC.BackColor = Color.Red
+        'End If
 
         MsgBox("OK")
 

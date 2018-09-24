@@ -3926,7 +3926,7 @@ Namespace DBxDataSetTableAdapters
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0")>  _
         Private Sub InitCommandCollection()
-            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(2) {}
+            Me._commandCollection = New Global.System.Data.SqlClient.SqlCommand(3) {}
             Me._commandCollection(0) = New Global.System.Data.SqlClient.SqlCommand()
             Me._commandCollection(0).Connection = Me.Connection
             Me._commandCollection(0).CommandText = "SELECT LotNo, MCNo, LotStartTime, OPNo, LotEndTime, MagazineNo, TemperatureGroup,"& _ 
@@ -3957,6 +3957,16 @@ Namespace DBxDataSetTableAdapters
                 "Data.LotNo = @LotNo)"
             Me._commandCollection(2).CommandType = Global.System.Data.CommandType.Text
             Me._commandCollection(2).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LotNo", Global.System.Data.SqlDbType.[Char], 10, Global.System.Data.ParameterDirection.Input, 0, 0, "LotNo", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3) = New Global.System.Data.SqlClient.SqlCommand()
+            Me._commandCollection(3).Connection = Me.Connection
+            Me._commandCollection(3).CommandText = "SELECT        LotNo, MCNo, LotStartTime, OPNo, LotEndTime, MagazineNo, Temperatur"& _ 
+                "eGroup, Remark, AlarmTotal, InputQty, OutputQty"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"FROM            ReflowData"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"WHE"& _ 
+                "RE        (LotNo = @LotNo) AND (MCNo = @MCNo) AND (LotStartTime = @LotStartTime)"& _ 
+                ""
+            Me._commandCollection(3).CommandType = Global.System.Data.CommandType.Text
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LotNo", Global.System.Data.SqlDbType.[Char], 10, Global.System.Data.ParameterDirection.Input, 0, 0, "LotNo", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@MCNo", Global.System.Data.SqlDbType.VarChar, 10, Global.System.Data.ParameterDirection.Input, 0, 0, "MCNo", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
+            Me._commandCollection(3).Parameters.Add(New Global.System.Data.SqlClient.SqlParameter("@LotStartTime", Global.System.Data.SqlDbType.DateTime, 8, Global.System.Data.ParameterDirection.Input, 0, 0, "LotStartTime", Global.System.Data.DataRowVersion.Current, false, Nothing, "", "", ""))
         End Sub
         
         <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
@@ -4050,6 +4060,52 @@ Namespace DBxDataSetTableAdapters
             Else
                 Me.Adapter.SelectCommand.Parameters(0).Value = CType(LotNo,String)
             End If
+            Dim dataTable As DBxDataSet.ReflowDataDataTable = New DBxDataSet.ReflowDataDataTable()
+            Me.Adapter.Fill(dataTable)
+            Return dataTable
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.Fill, false)>  _
+        Public Overloads Overridable Function FillReflowData(ByVal dataTable As DBxDataSet.ReflowDataDataTable, ByVal LotNo As String, ByVal MCNo As String, ByVal LotStartTime As Date) As Integer
+            Me.Adapter.SelectCommand = Me.CommandCollection(3)
+            If (LotNo Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("LotNo")
+            Else
+                Me.Adapter.SelectCommand.Parameters(0).Value = CType(LotNo,String)
+            End If
+            If (MCNo Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("MCNo")
+            Else
+                Me.Adapter.SelectCommand.Parameters(1).Value = CType(MCNo,String)
+            End If
+            Me.Adapter.SelectCommand.Parameters(2).Value = CType(LotStartTime,Date)
+            If (Me.ClearBeforeFill = true) Then
+                dataTable.Clear
+            End If
+            Dim returnValue As Integer = Me.Adapter.Fill(dataTable)
+            Return returnValue
+        End Function
+        
+        <Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "15.0.0.0"),  _
+         Global.System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter"),  _
+         Global.System.ComponentModel.DataObjectMethodAttribute(Global.System.ComponentModel.DataObjectMethodType.[Select], false)>  _
+        Public Overloads Overridable Function GetReflowData(ByVal LotNo As String, ByVal MCNo As String, ByVal LotStartTime As Date) As DBxDataSet.ReflowDataDataTable
+            Me.Adapter.SelectCommand = Me.CommandCollection(3)
+            If (LotNo Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("LotNo")
+            Else
+                Me.Adapter.SelectCommand.Parameters(0).Value = CType(LotNo,String)
+            End If
+            If (MCNo Is Nothing) Then
+                Throw New Global.System.ArgumentNullException("MCNo")
+            Else
+                Me.Adapter.SelectCommand.Parameters(1).Value = CType(MCNo,String)
+            End If
+            Me.Adapter.SelectCommand.Parameters(2).Value = CType(LotStartTime,Date)
             Dim dataTable As DBxDataSet.ReflowDataDataTable = New DBxDataSet.ReflowDataDataTable()
             Me.Adapter.Fill(dataTable)
             Return dataTable

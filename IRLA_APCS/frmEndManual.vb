@@ -1,11 +1,11 @@
 ﻿Public Class frmEndManual
     Public intPcs As Integer
-
+    Private _inPut As Integer
     Private Sub Button12_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button12.Click
         If tbPcs.Text = "" OrElse CDbl(tbPcs.Text) = 0 OrElse IsNumeric(tbPcs.Text) = False Then
             MsgBox("กรอกข้อมูลไม่ถูกต้องกรุณาตรวจสอบ")
             Exit Sub
-        ElseIf CInt(tbPcs.Text) > m_SelfData.Input Then
+        ElseIf CInt(tbPcs.Text) > _inPut Then
             MsgBox("Output มากกว่า Input ข้อมูลไม่ถูกต้องกรุณาตรวจสอบ")
             Exit Sub
         End If
@@ -25,11 +25,12 @@
         End If
     End Sub
     Dim _frmmain As frmMain
-    Public Sub New(ByVal frmmain As frmMain)
+    Public Sub New(ByVal input As Integer)
 
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
-        _frmmain = frmmain
+        ' _frmmain = frmmain
+        _inPut = input
         ' Add any initialization after the InitializeComponent() call.
 
     End Sub

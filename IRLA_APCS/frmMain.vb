@@ -13,97 +13,17 @@ Public Class frmMain
     Dim DataSendTDC As String
     Dim SoftwareRevision As String = "Reflow SelfCon ver.161109"
     Dim buffer As String
-    Dim frmSeachData As frmSearch
+    'Dim frmSeachData As frmSearch
     Dim m_Locker As New Object
     Private m_LotSetQueue As Queue(Of String) = New Queue(Of String)
     Private m_LotEndQueue As Queue(Of String) = New Queue(Of String)
     Private m_LotReqQueue As Queue(Of String) = New Queue(Of String)
     Dim c_dlg As TdcAlarmMessageForm
-    'Private m_LotReqMesQueue As Queue(Of String) = New Queue(Of String)
 
-    'Sub SaveTDCConfig()
-    '    Using sw As StreamWriter = New StreamWriter(Path.Combine(My.Application.Info.DirectoryPath, "Config.txt"), False)
-    '        Dim TDCConfig As String
-    '        TDCConfig = "01 not found = " & m_01 & vbCrLf
-    '        TDCConfig &= "02 running = " & m_02 & vbCrLf
-    '        TDCConfig &= "03 not run= " & m_03 & vbCrLf
-    '        TDCConfig &= "04 machine not found = " & m_04 & vbCrLf
-    '        TDCConfig &= "05 error lot status= " & m_05 & vbCrLf
-    '        TDCConfig &= "06 error process = " & m_06 & vbCrLf
-    '        TDCConfig &= "70 error connect database = " & m_70 & vbCrLf
-    '        TDCConfig &= "71 error read data base = " & m_71 & vbCrLf
-    '        TDCConfig &= "72 error write data base = " & m_72 & vbCrLf
-    '        TDCConfig &= "99 other = " & m_99 & vbCrLf
-    '        TDCConfig &= "Run Off Line= " & m_Offline
-    '        sw.WriteLine(TDCConfig)
-    '    End Using
-    'End Sub
-
-    Sub LoadTDCConfig()
-        If m_SelfData.CellConState <> 0 Then
-            lbStatusMC.Text = "Run Offline"
-            lbStatusMC.BackColor = Color.Red
-        Else
-            lbStatusMC.Text = "Online"
-            lbStatusMC.BackColor = Color.Lime
-        End If
+    Private RFData As Dictionary(Of String, ReflowData) = New Dictionary(Of String, ReflowData)
+    Private ReFlowDataList As List(Of ReflowData)
 
 
-
-
-
-        'Using sr As StreamReader = New StreamReader(Path.Combine(My.Application.Info.DirectoryPath, "Config.txt"))
-        '    Dim strData As String = sr.ReadToEnd()
-        '    Dim strTmp As String() = strData.Split(CChar(vbCrLf))
-        '    Dim SplitDat As String()
-        '    For Each DataString As String In strTmp
-        '        If DataString.Contains("01") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_01 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("02") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_02 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("03") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_03 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("04") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_04 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("05") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_05 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("06") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_06 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("70") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_70 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("71") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_71 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("72") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_72 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("99") Then
-        '            SplitDat = DataString.Split(CChar("="))
-        '            m_99 = CBool(SplitDat(1).Trim)
-        '        ElseIf DataString.Contains("Run Offline") Then
-        '            SplitDat = DataString.Split(CChar("="))
-
-        '            If SplitDat(1).Trim <> "Online" Then
-        '                m_Offline = _SelfConMode.Offline
-        '                lbStatusMC.Text = "Run Offline"
-        '                lbStatusMC.BackColor = Color.Red
-        '            Else
-        '                m_Offline = _SelfConMode.Online
-        '                lbStatusMC.Text = "Online"
-        '                lbStatusMC.BackColor = Color.Lime
-        '            End If
-
-        '        End If
-        '    Next
-        'End Using
-    End Sub
 
 #Region "========================== Windows Form Designer generated code ==============================="
 
@@ -116,25 +36,37 @@ Public Class frmMain
 
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-        lbNetversion.Text = "180716 APCS Pro." '"170109"
+        lbMC.Text = My.Settings.MCNo
+        lbIp.Text = My.Settings.IP
+        lbNetversion.Text = "180920 Support APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
+        'LoadPFAlarmTable()
+        ' LoadAlarmInfoXml()
+        ' LoadReflowDataTableXml()
+        'LoadBackup()
+        If ReFlowDataList Is Nothing Then
+            ReFlowDataList = New List(Of ReflowData)
+        End If
+        ReFlowDataList = LoadBackupList()
+        ' LoadTDCConfig()
+        For Each data As ReflowData In ReFlowDataList
+            If Not data.StartTime Is Nothing Then
+                LoadDbx(data)
+            End If
 
-        LoadPFAlarmTable()
-        LoadAlarmInfoXml()
-        LoadReflowDataTableXml()
-        LoadBackup()
-        LoadTDCConfig()
+        Next
 
         InitialNetworkComponent()
         Me.StartSocketThread()
 
-        radNormalEnd.Checked = True
+        'radNormalEnd.Checked = True
 
-        m_SelfData.McNo = My.Settings.MCNo
-        m_SelfData.IPA = My.Settings.IP
-        UpdateDisplay()
-        UpdateMachineOnlineState("RF-" & My.Settings.MCNo, 1, c_Log)
+        'm_SelfData.McNo = My.Settings.MCNo
+        'm_SelfData.IPA = My.Settings.IP
+
+        UpdateDisplay(ReFlowDataList, False)
+        UpdateMachineOnlineState(My.Settings.MCNo, 1, c_Log)
         XmlLoad(c_ApcsPro, c_ApcsPro.GetType())
     End Sub
     Sub LoadPFAlarmTable()
@@ -190,14 +122,17 @@ Public Class frmMain
         End If
 
         Dim tmpTime As String = Format(Now, "yyyy/MM/dd HH:mm:ss")
-        If ComLog.Text.Length = 25000 Then ComLog.Text = ""
-        If cbSDGood.Checked = True And strData.Contains("SD,") = True Then Exit Sub
+        '     If ComLog.Text.Length = 25000 Then ComLog.Text = ""
+        '   If cbSDGood.Checked = True And strData.Contains("SD,") = True Then Exit Sub
         If strData.Contains("LP") = True Then
             strData = " Send :" & strData
         Else
             strData = " Rev :" & strData
         End If
-        CommLog.AppendText(tmpTime & " " & mcNo & " " & strData & vbCrLf)
+        If Not frmLog Is Nothing Then
+            frmLog.SendLog(tmpTime & " " & mcNo & " " & strData & vbCrLf)
+        End If
+        '     CommLog.AppendText(tmpTime & " " & mcNo & " " & strData & vbCrLf)
         CommunicatedLog(mcNo & strData)
     End Sub
 #End Region
@@ -269,7 +204,7 @@ Public Class frmMain
 
 #Region "======================================= Data Secon ============================================"
 
-    Private Sub GetDataFromIPAddress(ByVal ip As String, ByVal data As String)
+    Public Sub GetDataFromIPAddress(ByVal ip As String, ByVal data As String)
 
         m_SelfData.LotData &= data
         If m_SelfData.LotData.Contains(vbCr) = True Then
@@ -285,7 +220,8 @@ Public Class frmMain
             For Each cmd As String In cmdArray
                 If cmd <> "" Then
                     m_SelfData.LotData = cmd
-                    CommunicateLogDisplay(m_SelfData.LotData, m_SelfData.McNo)
+                    'CommunicateLogDisplay(m_SelfData.LotData, m_SelfData.McNo)
+                    CommunicateLogDisplay(m_SelfData.LotData, My.Settings.MCNo)
                     GetCode(m_SelfData)
                 End If
             Next
@@ -298,7 +234,31 @@ Public Class frmMain
         frmShowAlarmData.Show()
         frmShowAlarmData.lbAlarmMes.Text = Mes
     End Sub
+    Private Function SearchReflowData(LotNo As String) As ReflowData
+        For Each data As ReflowData In ReFlowDataList
+            If data.LotNo = LotNo Then
+                Return data
+            End If
+        Next
+        Return Nothing
+    End Function
+    Private Function AutoCancelReflowData(LotNo As String) As Boolean
+        For Each data As ReflowData In ReFlowDataList.ToArray
+            If data.StartTime = "" Then
+                ReFlowDataList.Remove(data)
+            End If
+        Next
 
+        Return False
+    End Function
+    Private Function RemoveReflowData(LotNo As String) As ReflowData
+        For Each data As ReflowData In ReFlowDataList
+            If data.LotNo = LotNo Then
+                Return data
+            End If
+        Next
+        Return Nothing
+    End Function
     Private Sub GetCode(ByVal UserCtrlReflow As ReflowData)
 
         Dim strText() As String = m_SelfData.LotData.Split(CChar(","))
@@ -317,307 +277,573 @@ Public Class frmMain
                     Dim strPCS_Frame As Integer = CInt(CLng("&H" & strText(7)))
                     Dim strGroup As String = Trim(strText(8)).Substring(0, 1)
 
+                    Dim data As ReflowData
+                    'If Not RFData.ContainsKey(strLotNo) Then
+                    data = New ReflowData With {
+                            .McNo = My.Settings.MCNo,
+                            .IPA = My.Settings.IP,
+                            .LotNo = strLotNo,
+                            .Package = strPackage,
+                            .Device = strDevice,
+                            .OpNo = strOPNo,
+                            .Input = intInputData,
+                            .Pcs_frm = strPCS_Frame,
+                            .Group = strGroup,
+                            .Output = 0,
+                            .AlarmTotal = 0,
+                            .Remark = "-",
+                            .LotStatus = _StatusLot.LotSetup,
+                            .LotSetOfSending = False
+                        }
+
+                    ' .StopTime = "",
+                    If (strMaga = "0000000000") Then
+                        data.MagazineNo = ""
+                    Else
+                        data.MagazineNo = strMaga
+                    End If
+                    ' End If
                     'เชค Data error
                     If strLotNo = "" Then      ' LOT
                         AlarmMessage("LotNo ไม่ถูกต้องกรุณากรุณาตรวจสอบ Input ใหม่อีกครั้ง")
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
                         Exit Sub
                     ElseIf strOPNo = "" Then  'OP
                         AlarmMessage("OPNo ไม่ถูกต้องกรุณาตรวจสอบและ Input ใหม่อีกครั้ง")
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
                         Exit Sub
                     ElseIf IsNumeric(strOPNo) = False Then
                         AlarmMessage("OPNo ไม่ถูกต้องกรุณาตรวจสอบและ Input ใหม่อีกครั้ง")
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
                         Exit Sub
                     ElseIf intInputData = 0 Then  'Input
                         AlarmMessage("Input ไม่ถูกต้องกรุณาตรวจสอบและ Input ใหม่อีกครั้ง")
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
                         Exit Sub
                     End If
-
-                    If frmShowAlarmData.Visible = True Then
-                        frmShowAlarmData.Close()
-                    End If
-                    If c_dlg IsNot Nothing Then
-                        If c_dlg.Visible = True Then
-                            c_dlg.Visible = False
-                        End If
-                    End If
-                    'กรณี Reply ของ LotReq แล้ว Timeout Online
-                    'If (m_Offline = _SelfConMode.Online AndAlso strLotNo = m_SelfData.LotNo) AndAlso m_SelfData.LeqLock = _EquipmentState.Unlock AndAlso m_SelfData.LotStatus <> _StatusLot.LotEnd Then
-                    '    SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                    '    Exit Sub
-                    'End If
-                    'TDC
-                    If m_SelfData.CellConState = _SelfConMode.Offline Then 'Run Offline
-                        SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                        m_SelfData.LotInform = "Run Offline"
-                    Else 'Run Online
-                        Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal, strOPNo)
-                        If ApcsInfo.IsPass = False Then
-                            SendTheMessage(m_SelfData.IPA, "LP01" & vbCr, m_SelfData.McNo)
-                            lbNotification.Text = ApcsInfo.ErrorMessage
-                            Exit Sub
-                        Else
-                            m_SelfData.LotInform = ApcsInfo.ErrorMessage
-                            SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                        End If
-                    End If
-
-
-
-                    m_SelfData.LotNo = strLotNo
-                    m_SelfData.Package = strPackage
-                    m_SelfData.Device = strDevice
-                    m_SelfData.OpNo = strOPNo
-                    If strMaga = "0000000" Then
-                        m_SelfData.MagazineNo = ""
+                    AutoCancelReflowData(strLotNo)
+                    ReFlowDataList.Add(data)
+                    Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal, strOPNo)
+                    If ApcsInfo.IsPass = False Then
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
+                        data.LotInform = ApcsInfo.ErrorMessage
+                        UpdateDisplay(ReFlowDataList, False)
+                        ReFlowDataList.Remove(data)
+                        ' lbNotification1.Text = ApcsInfo.ErrorMessage
+                        Exit Sub
                     Else
-                        m_SelfData.MagazineNo = strMaga
+                        data.LotInform = ApcsInfo.ErrorMessage
+                        SendTheMessage(data.IPA, "LP00" & vbCr, data.McNo)
                     End If
-                    m_SelfData.Pcs_frm = strPCS_Frame
-                    m_SelfData.Group = strGroup
-                    m_SelfData.Input = intInputData
-                    m_SelfData.StartTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
-                    m_SelfData.StopTime = ""
-                    m_SelfData.Output = 0
-                    m_SelfData.AlarmTotal = 0
-                    m_SelfData.Remark = "-"
-                    m_SelfData.LotStatus = _StatusLot.LotSetup
-
-                    m_SelfData.LotSetOfSending = False
-
-                    ' m_SelfData.LotStartMode = _TDCMode.NormalInput
-
-                    UpdateDisplay()
 
 
-                    'TDC
-                    'If m_Offline = _SelfConMode.Offline Then 'Run Offline
-                    '    SendTheMessage(m_SelfData.IPA, "LP00" & vbCr, m_SelfData.McNo)
-                    '    m_SelfData.LotInform = "Run Offline"
+                    UpdateDisplay(ReFlowDataList)
+                    SaveBackupList(ReFlowDataList)
 
-                    'Else 'Run Online
-                    '    SyncLock m_Locker
-                    '        Dim strLotReqData As String = m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.LotStartMode & "," & m_SelfData.IPA
-                    '        m_LotReqQueue.Enqueue(strLotReqData)
-                    '    End SyncLock
-
-                    '    If bgTDCLotReq.IsBusy = False Then
-                    '        lbLotReq.BackColor = Color.Lime
-                    '        bgTDCLotReq.RunWorkerAsync()
-                    '    End If
-
-                    'End If
-
-                    SaveLotStartToDbx()
-                    SaveReflowDataTableXml()
-                    SaveBackup()
                 Catch ex As Exception
                     addlogfile("LR : " & ex.Message)
                 End Try
+            Case "LS" 'Start
+                Try
+                    If strText.Length <> 2 Then
+                        Exit Sub
+                    End If
+                    SendTheMessage(My.Settings.IP, "ST" & vbCr, My.Settings.MCNo)
+                    Dim strLotNo As String = strText(1).Trim
+                    Dim data As ReflowData = SearchReflowData(strLotNo)
+                    If data Is Nothing Then
+                        MessageBox.Show("ไม่พบข้อมูล Lot " & strLotNo & "นี้")
+                        Exit Sub
+                    End If
+                    data.StartTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
+                    If data.LotStatus <> _StatusLot.LotStart Then
+                        data.LotStatus = _StatusLot.LotStart
+                    End If
+                    LotSetTdc(data.McNo, data.LotNo, CDate(data.StartTime), data.OpNo)
+                    UpdateDisplay(ReFlowDataList)
+                    SaveLotStartToDbx(data)
+                    ' SaveBackupList(ReFlowDataList)
+                    'If m_SelfData.LotSetOfSending = False Then
+                    '    m_SelfData.LotSetOfSending = True
+                    '    LotSetTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StartTime), m_SelfData.OpNo)
+                    '    'Send TDC
+                    '    'SyncLock m_Locker
+                    '    '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
+                    '    '    m_LotSetQueue.Enqueue(strLotSetData)
+                    '    'End SyncLock
+
+                    '    'If bgTDC.IsBusy = False Then
+                    '    '    lbLotSetEnd.BackColor = Color.Lime
+                    '    '    bgTDC.RunWorkerAsync()
+                    '    'End If
+
+                    '    SaveBackup()
+                    'End If
+                Catch ex As Exception
+
+                End Try
 
             Case "SA" 'SA
+                UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Execute, c_Log)
 
-                If m_SelfData.StartTime <> "" And m_SelfData.StopTime = "" Then
-                    Try
-                        Dim LotNo As String = m_SelfData.LotNo
-                        Dim MCNo As String = "RF-" & m_SelfData.McNo
-                        ClearAlarmInfoTable(LotNo, MCNo)
-                    Catch ex As Exception
-                        addlogfile("SA : " & ex.Message)
-                    End Try
+                For Each data As ReflowData In ReFlowDataList
+                    If data.StartTime <> "" And data.StopTime = "" Then
+                        Try
+                            ClearAlarmInfoTable(data.LotNo, data.McNo)
+                        Catch ex As Exception
+                            addlogfile("SA : " & ex.Message)
+                        End Try
+                        data.LotStatus = _StatusLot.LotStart
 
-                    m_SelfData.LotStatus = _StatusLot.LotStart
-                    UpdateDisplay()
-                End If
+                    End If
+                Next
+                UpdateDisplay(ReFlowDataList)
+                'If m_SelfData.StartTime <> "" And m_SelfData.StopTime = "" Then
+
+
+                '    m_SelfData.LotStatus = _StatusLot.LotStart
+                '    UpdateDisplay()
+                'End If
+
+                'If m_SelfData.StartTime <> "" And m_SelfData.StopTime = "" Then
+                '    Try
+                '        Dim LotNo As String = m_SelfData.LotNo
+                '        Dim MCNo As String = "RF-" & m_SelfData.McNo
+                '        ClearAlarmInfoTable(LotNo, MCNo)
+                '    Catch ex As Exception
+                '        addlogfile("SA : " & ex.Message)
+                '    End Try
+
+                '    m_SelfData.LotStatus = _StatusLot.LotStart
+                '    UpdateDisplay()
+                'End If
 
             Case "SB" 'SB
                 UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Idle, c_Log)
-                If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
-                    m_SelfData.LotStatus = _StatusLot.LotStop
-                    UpdateDisplay()
-                End If
+                For Each data As ReflowData In ReFlowDataList
+                    If data.StartTime <> "" And data.StopTime = "" Then
+                        data.LotStatus = _StatusLot.LotStop
+                    End If
+                Next
+                UpdateDisplay(ReFlowDataList)
+                'If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
+                '    m_SelfData.LotStatus = _StatusLot.LotStop
+                '    UpdateDisplay()
+                'End If
 
             Case "SC" 'SC,AlarmNo
+                For Each data As ReflowData In ReFlowDataList
+                    If data.StartTime <> "" And data.StopTime = "" Then
+                        Try
+                            Dim AlarmNo As String = strText(1).Trim
+                            Dim AlarmID As String = ""
 
-                If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
-                    Try
-                        Dim AlarmNo As String = strText(1).Trim
-                        Dim AlarmID As String = ""
-                        Dim LotNo As String = m_SelfData.LotNo
-                        Dim McNo As String = "RF-" & m_SelfData.McNo
+                            UpdateAlarm(data.LotNo, AlarmNo, data.Package)
+                            UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
 
-                        UpdateAlarm(LotNo, AlarmNo, m_SelfData.Package)
-                        UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
+                            AlarmID = SearchAlarmID(AlarmNo)
+                            If AlarmID <> "" Then
+                                AddAlarmInfoToTable(AlarmNo, data.LotNo, data.McNo)
+                                data.AlarmTotal += 1
+                            End If
 
-                        AlarmID = SearchAlarmID(AlarmNo)
-                        If AlarmID <> "" Then
-                            AddAlarmInfoToTable(AlarmNo, LotNo, McNo)
-                            m_SelfData.AlarmTotal += 1
-                        End If
+                            data.LotStatus = _StatusLot.LotAlarm
 
-                        m_SelfData.LotStatus = _StatusLot.LotAlarm
-                        UpdateDisplay()
-                    Catch ex As Exception
-                        addlogfile("SC : " & ex.Message)
-                    End Try
-                End If
-            Case "SD" 'SD,Good(frm)
-                If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
-                    Try
+                        Catch ex As Exception
+                            addlogfile("SC : " & ex.Message)
+                        End Try
+                    End If
+                Next
+                UpdateDisplay(ReFlowDataList)
 
-                        Dim Output As Integer = CInt(CLng("&H" & strText(1).Trim) * m_SelfData.Pcs_frm)
+                'If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
+                '    Try
+                '        Dim AlarmNo As String = strText(1).Trim
+                '        Dim AlarmID As String = ""
+                '        Dim LotNo As String = m_SelfData.LotNo
+                '        Dim McNo As String = "RF-" & m_SelfData.McNo
 
-                        m_SelfData.Output = Output
+                '        UpdateAlarm(LotNo, AlarmNo, m_SelfData.Package)
+                '        UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
 
-                        If m_SelfData.LotStatus <> _StatusLot.LotStart Then
-                            m_SelfData.LotStatus = _StatusLot.LotStart
-                        End If
+                '        AlarmID = SearchAlarmID(AlarmNo)
+                '        If AlarmID <> "" Then
+                '            AddAlarmInfoToTable(AlarmNo, LotNo, McNo)
+                '            m_SelfData.AlarmTotal += 1
+                '        End If
 
-                        If m_SelfData.LotSetOfSending = False Then
-                            m_SelfData.LotSetOfSending = True
-                            LotSetTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StartTime), m_SelfData.OpNo)
-                            'Send TDC
-                            'SyncLock m_Locker
-                            '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
-                            '    m_LotSetQueue.Enqueue(strLotSetData)
-                            'End SyncLock
+                '        m_SelfData.LotStatus = _StatusLot.LotAlarm
+                '        UpdateDisplay()
+                '    Catch ex As Exception
+                '        addlogfile("SC : " & ex.Message)
+                '    End Try
+                'End If
+            Case "SD" 'SD,LotNo,Good(frm)
+                For Each data As ReflowData In ReFlowDataList
+                    If data.StopTime = "" And data.StartTime <> "" And data.LotNo = strText(1).Trim Then
+                        Try
+                            Dim Output As Integer = CInt(CLng("&H" & strText(2).Trim) * data.Pcs_frm)
+                            data.Output = Output
 
-                            'If bgTDC.IsBusy = False Then
-                            '    lbLotSetEnd.BackColor = Color.Lime
-                            '    bgTDC.RunWorkerAsync()
+                            If data.LotStatus <> _StatusLot.LotStart Then
+                                data.LotStatus = _StatusLot.LotStart
+                            End If
+
+                            'If data.LotSetOfSending = False Then
+                            '    data.LotSetOfSending = True
+                            '    LotSetTdc(data.McNo, data.LotNo, CDate(data.StartTime), data.OpNo)
                             'End If
+                            ClearAlarmInfoTable(data.LotNo, data.McNo)
 
-                            SaveBackup()
-                        End If
+                        Catch ex As Exception
+                            addlogfile("SD : " & ex.Message)
+                        End Try
+                    End If
+                Next
+                UpdateDisplay(ReFlowDataList)
+                'If m_SelfData.StopTime = "" And m_SelfData.StartTime <> "" Then
+                '    Try
 
-                        ClearAlarmInfoTable(m_SelfData.LotNo, "RF-" & m_SelfData.McNo)
-                        UpdateDisplay()
+                '        Dim Output As Integer = CInt(CLng("&H" & strText(1).Trim) * m_SelfData.Pcs_frm)
 
-                    Catch ex As Exception
-                        addlogfile("SD : " & ex.Message)
-                    End Try
-                End If
+                '        m_SelfData.Output = Output
+
+                '        If m_SelfData.LotStatus <> _StatusLot.LotStart Then
+                '            m_SelfData.LotStatus = _StatusLot.LotStart
+                '        End If
+
+                '        If m_SelfData.LotSetOfSending = False Then
+                '            m_SelfData.LotSetOfSending = True
+                '            LotSetTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StartTime), m_SelfData.OpNo)
+                '            'Send TDC
+                '            'SyncLock m_Locker
+                '            '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
+                '            '    m_LotSetQueue.Enqueue(strLotSetData)
+                '            'End SyncLock
+
+                '            'If bgTDC.IsBusy = False Then
+                '            '    lbLotSetEnd.BackColor = Color.Lime
+                '            '    bgTDC.RunWorkerAsync()
+                '            'End If
+
+                '            SaveBackup()
+                '        End If
+
+                '        ClearAlarmInfoTable(m_SelfData.LotNo, "RF-" & m_SelfData.McNo)
+                '        UpdateDisplay()
+
+                '    Catch ex As Exception
+                '        addlogfile("SD : " & ex.Message)
+                '    End Try
+                'End If
 
 
-            Case "LE" 'LE,Good(frm),NORMAL or CONFIRM
+            Case "LE" 'LE,LotNo,Good(frm),NORMAL or CONFIRM
                 Try
-                    If m_SelfData.StopTime <> "" OrElse (m_SelfData.StartTime = "" AndAlso m_SelfData.StopTime = "") Then
+                    If strText.Length <> 4 OrElse strText(1).Trim.Length <> 10 Then
+                        Exit Sub
+                    End If
+                    SendTheMessage(My.Settings.IP, "CP" & vbCr, My.Settings.MCNo)
+                    If Not EndLot(strText(1), strText(2), True) Then
                         Exit Select
                     End If
 
-                    Dim GoodPCS As Integer = CInt(CLng("&H" & strText(1)) * CDbl(m_SelfData.Pcs_frm))
-                    'Dim LotEndStatus As String = strText(2)
+                    'Dim data As ReflowData = SearchReflowData(strText(1))
+                    'If data.StopTime <> "" OrElse (data.StartTime = "" AndAlso data.StopTime = "") Then
+                    '    Exit Select
+                    'End If
 
-                    If GoodPCS > m_SelfData.Input Then 'Output มาเกิน ทำให้มันค่าเท่ากับ Input
-                        GoodPCS = m_SelfData.Input
-                    End If
+                    'Dim GoodPCS As Integer = CInt(CLng("&H" & strText(2)) * CDbl(data.Pcs_frm))
+                    ''Dim LotEndStatus As String = strText(2)
 
-                    m_SelfData.Output = GoodPCS
-                    m_SelfData.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
-                    m_SelfData.LotStatus = _StatusLot.LotEnd
-                    m_SelfData.NGQty = CInt(m_SelfData.Input) - CInt(m_SelfData.Output)
+                    'If GoodPCS > data.Input Then 'Output มาเกิน ทำให้มันค่าเท่ากับ Input
+                    '    GoodPCS = data.Input
+                    'End If
 
-                    If CInt(m_SelfData.NGQty) < 0 Then
-                        m_SelfData.NGQty = 0
-                    ElseIf CInt(m_SelfData.NGQty) > CInt(m_SelfData.Input) Then
-                        m_SelfData.NGQty = 0
-                    End If
-                    UpdateDisplay()
+                    'data.Output = GoodPCS
+                    'data.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
+                    'data.LotStatus = _StatusLot.LotEnd
+                    'data.NGQty = CInt(data.Input) - CInt(data.Output)
 
-                    If m_SelfData.LotSetOfSending = False Then
-                        Try
-                            m_SelfData.LotSetOfSending = True
-                            LotSetTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StartTime), m_SelfData.OpNo)
+                    'If CInt(data.NGQty) < 0 Then
+                    '    data.NGQty = 0
+                    'ElseIf CInt(data.NGQty) > CInt(data.Input) Then
+                    '    data.NGQty = 0
+                    'End If
 
-                            ''Send TDC
-                            'SyncLock m_Locker
-                            '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
-                            '    m_LotSetQueue.Enqueue(strLotSetData)
-                            'End SyncLock
-                            'If bgTDC.IsBusy = False Then
-                            '    lbLotSetEnd.BackColor = Color.Lime
-                            '    bgTDC.RunWorkerAsync()
-                            'End If
+                    ''TDC เก็บข้อมูลแล้วส่ง TDC
+                    'Try
+                    '    LotEndTdc(data.McNo, data.LotNo, CDate(data.StopTime), data.Output, data.NGQty, data.OpNo)
+                    'Catch ex As Exception
+                    '    addlogfile("LE TDC LOTEND: " & ex.Message)
+                    'End Try
+                    'Try
+                    '    SaveLotEndToDbx(data)
+                    'Catch ex As Exception
+                    '    addlogfile("LE Dbx : " & ex.Message)
+                    'End Try
 
-                        Catch ex As Exception
-                            addlogfile("LE TDC LOTSET: " & ex.Message)
-                        End Try
-                    End If
+                    'Try
+                    '    SaveAlarmInfoToDbx(data)
+                    'Catch ex As Exception
+                    '    addlogfile("LE Alm : " & ex.Message)
+                    'End Try
 
-                    'TDC เก็บข้อมูลแล้วส่ง TDC
-                    Try
-                        'If radResetEnd.Checked Then
-                        '    m_SelfData.LotEndMode = _TDCMode.Reload
-                        'ElseIf radAccuEnd.Checked Then
-                        '    m_SelfData.LotEndMode = _TDCMode.ReInput
-                        'Else
-                        '    m_SelfData.LotEndMode = _TDCMode.NormalEnd
-                        'End If
-
-                        'Dim tmpData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & CDate(m_SelfData.StopTime) & "," & CInt(m_SelfData.Output) & "," & CInt(m_SelfData.NGQty) & "," & m_SelfData.OpNo & "," & m_SelfData.LotEndMode
-                        'SyncLock m_Locker
-                        '    m_LotEndQueue.Enqueue(tmpData)
-                        'End SyncLock
-
-                        'If bgTDC.IsBusy = False Then
-                        '    lbLotSetEnd.BackColor = Color.Lime
-                        '    bgTDC.RunWorkerAsync()
-                        'End If
-                        LotEndTdc("RF-" & m_SelfData.McNo, m_SelfData.LotNo, CDate(m_SelfData.StopTime), m_SelfData.Output, m_SelfData.NGQty, m_SelfData.OpNo)
-                    Catch ex As Exception
-                        addlogfile("LE TDC LOTEND: " & ex.Message)
-                    End Try
-
-                    'If Not radNormal.Checked Then radNormal.Checked = True '//783
-                    'If Not radNormalEnd.Checked Then radNormalEnd.Checked = True '//783
-
-                    'เซฟข้อมูลลงใน DBx
-                    SaveBackup()
-
-                    Try
-                        SaveLotEndToDbx()
-                        SaveReflowDataTableXml()
-                    Catch ex As Exception
-                        addlogfile("LE Dbx : " & ex.Message)
-                    End Try
-
-                    Try
-                        SaveAlarmInfoToDbx()
-                    Catch ex As Exception
-                        addlogfile("LE Alm : " & ex.Message)
-                    End Try
-
+                    'UpdateDisplay(ReFlowDataList, False)
+                    'ReFlowDataList.Remove(data)
+                    'SaveBackupList(ReFlowDataList)
                 Catch ex As Exception
                     addlogfile("LE : " & ex.Message)
                 End Try
+
         End Select
     End Sub
 
-    Public Sub UpdateDisplay()
+    Private Function EndLot(LotNo As String, good As String, Optional isHexadecimal As Boolean = False, Optional endMode As EndModeType = EndModeType.Normal) As Boolean
+        Dim data As ReflowData = SearchReflowData(LotNo)
+        If data Is Nothing Then
+            MessageBox.Show("ไม่พบข้อมูลของ LotNo:" & LotNo)
+            Return False
+        End If
+        If data.StopTime <> "" OrElse (data.StartTime = "" AndAlso data.StopTime = "") Then
+            Return False
+        End If
 
-        lbMC.Text = m_SelfData.McNo
-        lbIp.Text = m_SelfData.IPA
-        lbOp.Text = m_SelfData.OpNo
-        lbLotNo.Text = m_SelfData.LotNo
-        lbPackage.Text = m_SelfData.Package
-        lbDevice.Text = m_SelfData.Device
-        lbInput.Text = CStr(m_SelfData.Input)
-        lbOutput.Text = CStr(m_SelfData.Output)
-        lbStart.Text = m_SelfData.StartTime
-        lbStop.Text = m_SelfData.StopTime
-        lbNotification.Text = m_SelfData.LotInform
-        LbGroup.Text = m_SelfData.Group
-        LbMagazine.Text = m_SelfData.MagazineNo
+        Dim GoodPCS As Integer = CInt(CLng("&H" & good) * CDbl(data.Pcs_frm))
+        If isHexadecimal Then
+            GoodPCS = CInt(CLng("&H" & good) * CDbl(data.Pcs_frm))
+        Else
+            GoodPCS = CInt(good)
+        End If
 
-        Select Case m_SelfData.LotStatus
-            Case _StatusLot.LotSetup
-                lbStart.BackColor = Color.Transparent
-            Case _StatusLot.LotStart
-                lbStart.BackColor = Color.Lime
-            Case _StatusLot.LotAlarm
+        'Dim LotEndStatus As String = strText(2)
+
+        If GoodPCS > data.Input Then 'Output มาเกิน ทำให้มันค่าเท่ากับ Input
+            GoodPCS = data.Input
+        End If
+
+        data.Output = GoodPCS
+        data.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
+        data.LotStatus = _StatusLot.LotEnd
+        data.NGQty = CInt(data.Input) - CInt(data.Output)
+
+        If CInt(data.NGQty) < 0 Then
+            data.NGQty = 0
+        ElseIf CInt(data.NGQty) > CInt(data.Input) Then
+            data.NGQty = 0
+        End If
+
+
+        'If data.LotSetOfSending = False Then
+        '    Try
+        '        data.LotSetOfSending = True
+        '        LotSetTdc(data.McNo, data.LotNo, CDate(data.StartTime), data.OpNo)
+
+        '        ''Send TDC
+        '        'SyncLock m_Locker
+        '        '    Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
+        '        '    m_LotSetQueue.Enqueue(strLotSetData)
+        '        'End SyncLock
+        '        'If bgTDC.IsBusy = False Then
+        '        '    lbLotSetEnd.BackColor = Color.Lime
+        '        '    bgTDC.RunWorkerAsync()
+        '        'End If
+
+        '    Catch ex As Exception
+        '        addlogfile("LE TDC LOTSET: " & ex.Message)
+        '    End Try
+        'End If
+
+        'TDC เก็บข้อมูลแล้วส่ง TDC
+        Try
+            LotEndTdc(data.McNo, data.LotNo, CDate(data.StopTime), data.Output, data.NGQty, data.OpNo, endMode)
+
+        Catch ex As Exception
+            addlogfile("LE TDC LOTEND: " & ex.Message)
+        End Try
+        'เซฟข้อมูลลงใน DBx
+        ' SaveBackup()
+
+        Try
+            SaveLotEndToDbx(data)
+            'SaveReflowDataTableXml()
+        Catch ex As Exception
+            addlogfile("LE Dbx : " & ex.Message)
+        End Try
+
+        Try
+            SaveAlarmInfoToDbx(data)
+        Catch ex As Exception
+            addlogfile("LE Alm : " & ex.Message)
+        End Try
+
+        UpdateDisplay(ReFlowDataList, False)
+        ReFlowDataList.Remove(data)
+        SaveBackupList(ReFlowDataList)
+        Return True
+    End Function
+    Enum StatusLot
+        None
+        Load
+        Remove
+    End Enum
+
+    Public Sub UpdateDisplay(dataList As List(Of ReflowData), Optional backup As Boolean = True)
+        'lbMC.Text = My.Settings.MCNo 'data.McNo
+        'lbIp.Text = My.Settings.IP ' data.IPA
+        If dataList Is Nothing Then
+            Exit Sub
+        End If
+        LabelNextLot.Text = "-"
+        TextBoxNotificationNextLot.Text = "-"
+        PanelNextLot.BackColor = Color.Silver
+        For Each data As ReflowData In dataList
+
+            'lbMC.Text = My.Settings.MCNo 'data.McNo
+            'lbIp.Text = My.Settings.IP ' data.IPA
+            If (data.StartTime Is Nothing) Then
+                LabelNextLot.Text = data.LotNo
+                If Not data.LotInform Is Nothing Then
+                    TextBoxNotificationNextLot.Text = data.LotInform
+                Else
+                    TextBoxNotificationNextLot.Text = "-"
+                End If
+                PanelNextLot.BackColor = Color.LawnGreen
+            ElseIf (lbLotNo1.Text = "-" OrElse lbStop1.Text <> "-" Or lbLotNo1.Text = data.LotNo) And lbLotNo2.Text <> data.LotNo Then
+                If Not data.OpNo Is Nothing Then
+                    lbOpNo1.Text = data.OpNo
+                End If
+                If Not data.LotNo Is Nothing Then
+                    lbLotNo1.Text = data.LotNo
+                End If
+                If Not data.Package Is Nothing Then
+                    lbPackage1.Text = data.Package
+                Else
+                    lbPackage1.Text = "-"
+                End If
+                If Not data.Device Is Nothing Then
+                    lbDevice1.Text = data.Device
+                Else
+                    lbDevice1.Text = "-"
+                End If
+
+                lbInput1.Text = CStr(data.Input)
+                If (data.Output > 0) Then
+                    PanelLot1.BackColor = Color.LawnGreen
+                End If
+                lbOutput1.Text = CStr(data.Output)
+
+                If Not data.StartTime Is Nothing Then
+                    lbStart1.Text = data.StartTime
+                Else
+                    lbStart1.Text = "-"
+                End If
+                If Not data.StopTime Is Nothing Then
+                    lbStop1.Text = data.StopTime
+                    PanelLot1.BackColor = Color.Silver
+                Else
+                    lbStop1.Text = "-"
+                End If
+                If Not data.LotInform Is Nothing Then
+                    TextBoxNotification1.Text = data.LotInform
+                Else
+                    TextBoxNotification1.Text = "-"
+                End If
+                If Not data.Group Is Nothing Then
+                    LbGroup1.Text = data.Group
+                Else
+                    LbGroup1.Text = "-"
+                End If
+                If Not data.MagazineNo Is Nothing Then
+                    LbMagazine1.Text = data.MagazineNo
+                Else
+                    LbMagazine1.Text = "-"
+                End If
+
+
+
+                Select Case data.LotStatus
+                    Case _StatusLot.LotSetup
+                        lbStart1.BackColor = Color.Transparent
+                    Case _StatusLot.LotStart
+                        lbStart1.BackColor = Color.Lime
+                    Case _StatusLot.LotAlarm
                 'lbStart.BackColor = Color.Red
-            Case _StatusLot.LotEnd
-                lbStart.BackColor = Color.Transparent
-        End Select
+                    Case _StatusLot.LotEnd
+                        lbStart1.BackColor = Color.Transparent
+                End Select
+            Else
+                If Not data.OpNo Is Nothing Then
+                    lbOpNo2.Text = data.OpNo
+                Else
+                    lbOpNo2.Text = "-"
+                End If
+                If Not data.LotNo Is Nothing Then
+                    lbLotNo2.Text = data.LotNo
+                Else
+                    lbLotNo2.Text = "-"
+                End If
+                If Not data.Package Is Nothing Then
+                    lbPackage2.Text = data.Package
+                Else
+                    lbPackage2.Text = "-"
+                End If
+                If Not data.Device Is Nothing Then
+                    lbDevice2.Text = data.Device
+                Else
+                    lbDevice2.Text = "-"
+                End If
+
+                lbInput2.Text = CStr(data.Input)
+                If (data.Output > 0) Then
+                    PanelLot2.BackColor = Color.LawnGreen
+                End If
+                lbOutput2.Text = CStr(data.Output)
+
+                If Not data.StartTime Is Nothing Then
+                    lbStart2.Text = data.StartTime
+                Else
+                    lbStart2.Text = "-"
+                End If
+                If Not data.StopTime Is Nothing Then
+                    lbStop2.Text = data.StopTime
+                    PanelLot2.BackColor = Color.Silver
+                Else
+                    lbStop2.Text = "-"
+                End If
+                If Not data.LotInform Is Nothing Then
+                    TextBoxNotification2.Text = data.LotInform
+                Else
+                    TextBoxNotification2.Text = "-"
+                End If
+                If Not data.Group Is Nothing Then
+                    LbGroup2.Text = data.Group
+                Else
+                    LbGroup2.Text = "-"
+                End If
+                If Not data.MagazineNo Is Nothing Then
+                    LbMagazine2.Text = data.MagazineNo
+                Else
+                    LbMagazine2.Text = "-"
+                End If
+
+                Select Case data.LotStatus
+                    Case _StatusLot.LotSetup
+                        lbStart2.BackColor = Color.Transparent
+                    Case _StatusLot.LotStart
+                        lbStart2.BackColor = Color.Lime
+                    Case _StatusLot.LotAlarm
+            'lbStart.BackColor = Color.Red
+                    Case _StatusLot.LotEnd
+                        lbStart2.BackColor = Color.Transparent
+                End Select
+            End If
+
+        Next
+        If backup = True Then
+            SaveBackupList(dataList)
+        End If
+
 
     End Sub
 
@@ -625,17 +851,15 @@ Public Class frmMain
 
 #Region "==========================================Button==============================================="
 
-    Private Sub BtEndLot_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles BtEndLot.MouseDown
-        BtEndLot.BackColor = Color.Lime
-    End Sub
+    'Private Sub BtEndLot_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles BtEndLot.MouseDown
+    '    BtEndLot.BackColor = Color.Lime
+    'End Sub
 
-    Private Sub BtEndLot_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles BtEndLot.MouseUp
-        BtEndLot.BackColor = System.Drawing.SystemColors.Control
-    End Sub
+    'Private Sub BtEndLot_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles BtEndLot.MouseUp
+    '    BtEndLot.BackColor = System.Drawing.SystemColors.Control
+    'End Sub
 
-    Private Sub BtClearLog_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtClearLog.Click
-        CommLog.Text = ""
-    End Sub
+
 
 #End Region
 
@@ -697,26 +921,26 @@ Public Class frmMain
 
     Private Sub Button1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button1.Click
         UpdateDataReflow()
-        CountRowData()
+        'CountRowData()
     End Sub
 
     Private Sub TPMaintenance_Enter(ByVal sender As Object, ByVal e As System.EventArgs) Handles TPMaintenance.Enter
-        CountRowData()
+        ' CountRowData()
     End Sub
 
-    Sub CountRowData()
-        Try
-            Dim countRow As Integer = 0
-            For Each row As DBxDataSet.ReflowDataRow In DBxDataSet.ReflowData.Rows
-                If row.IsLotEndTimeNull = False Then
-                    countRow += 1
-                End If
-            Next
-            LbCounterFile.Text = CStr(countRow)
-        Catch ex As Exception
-            MsgBox(ex.Message.ToString)
-        End Try
-    End Sub
+    'Sub CountRowData()
+    '    Try
+    '        Dim countRow As Integer = 0
+    '        For Each row As DBxDataSet.ReflowDataRow In DBxDataSet.ReflowData.Rows
+    '            If row.IsLotEndTimeNull = False Then
+    '                countRow += 1
+    '            End If
+    '        Next
+    '        LbCounterFile.Text = CStr(countRow)
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message.ToString)
+    '    End Try
+    'End Sub
 
 
 
@@ -730,12 +954,23 @@ Public Class frmMain
         End If
     End Sub
 
-    Private Sub BtEndLot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtEndLot.Click
+    Private Sub BtEndLot2_Click(sender As Object, e As EventArgs) Handles BtEndLot2.Click
 
-        If lbStart.Text <> "" And lbStop.Text = "" Then
+        'If lbLotNo2.Text.Length <> 10 Then
+        '    Exit Sub
+        'End If
+        'EndLot(lbLotNo2.Text, lbOutput2.Text)
+        Try
+            If lbLotNo2.Text.Length <> 10 Then
+                Exit Sub
+            End If
+            If Not IsNumeric(lbInput2.Text) Then
+                Exit Sub
+            End If
+
             If MessageBox.Show("คุณต้องการ Manual End ", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
 
-                Dim _frmEndMan As frmEndManual = New frmEndManual(Me)
+                Dim _frmEndMan As frmEndManual = New frmEndManual(CInt(lbInput2.Text))
                 Dim InputGoodTotal As String
                 If _frmEndMan.ShowDialog = Windows.Forms.DialogResult.OK Then
                     InputGoodTotal = _frmEndMan.tbPcs.Text
@@ -747,81 +982,140 @@ Public Class frmMain
                     AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
                     Exit Sub
                 End If
-
-
-                Try
-                    m_SelfData.Output = CInt(InputGoodTotal)
-                    m_SelfData.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
-                    m_SelfData.LotStatus = _StatusLot.LotEnd
-                    UpdateDisplay()
-                    SaveBackup()
-
-                    If m_SelfData.LotSetOfSending = False Then
-                        Try
-                            m_SelfData.LotSetOfSending = True
-                            'Send TDC
-                            SyncLock m_Locker
-                                Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
-                                m_LotSetQueue.Enqueue(strLotSetData)
-                            End SyncLock
-                            If bgTDC.IsBusy = False Then
-                                lbLotSetEnd.BackColor = Color.Lime
-                                bgTDC.RunWorkerAsync()
-                            End If
-                        Catch ex As Exception
-                            addlogfile("BtEndLot TDC LOTSET: " & ex.Message)
-                        End Try
-                    End If
-
-                    'TDC เก็บข้อมูลแล้วส่ง TDC
-                    Try
-                        If radResetEnd.Checked Then
-                            m_SelfData.LotEndMode = _TDCMode.Reload
-                        ElseIf radAccuEnd.Checked Then
-                            m_SelfData.LotEndMode = _TDCMode.ReInput
-                        Else
-                            m_SelfData.LotEndMode = _TDCMode.NormalEnd
-                        End If
-
-                        Dim tmpData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & CDate(m_SelfData.StopTime) & "," & CInt(m_SelfData.Output) & "," & m_SelfData.NGQty & "," & m_SelfData.OpNo & "," & m_SelfData.LotEndMode
-                        SyncLock m_Locker
-                            m_LotEndQueue.Enqueue(tmpData)
-                        End SyncLock
-
-                        If bgTDC.IsBusy = False Then
-                            bgTDC.RunWorkerAsync()
-                        End If
-
-                    Catch ex As Exception
-                        addlogfile("BtEndLot TDC : " & ex.Message)
-                    End Try
-                    'คืนค่าโหมดของ TDC
-                    'If Not radNormal.Checked Then radNormal.Checked = True '//783
-                    If Not radNormalEnd.Checked Then radNormalEnd.Checked = True '//783
-                    'เซฟข้อมูลลง Dbx
-
-                    Try
-                        SaveLotEndToDbx()
-                        SaveReflowDataTableXml()
-                    Catch ex As Exception
-                        addlogfile("LE Dbx : " & ex.Message)
-                    End Try
-                    'เซฟ Alarm ลง DBx
-                    Try
-                        SaveAlarmInfoToDbx()
-                    Catch ex As Exception
-                        addlogfile("LE Alm : " & ex.Message)
-                    End Try
-
-                Catch ex As Exception
-                    addlogfile("BtEndLot : " & ex.Message)
-                End Try
-
-
+                EndLot(lbLotNo2.Text, InputGoodTotal)
             End If
-        Else
-            MsgBox("MCNo " & lbMC.Text & " ไม่สามารถ End Manual ได้")
-        End If
+        Catch ex As Exception
+            MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
+        End Try
+
+    End Sub
+    Private Sub BtEndLot_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BtEndLot.Click
+        'Dim tmpTime As String = Format(Now, "yyyy/MM/dd HH:mm:ss")
+
+
+        'Dim strData As String = " Rev :" & "000xxx00x"
+        'If Not frmLog Is Nothing Then
+        '    frmLog.SendLog(tmpTime & " " & "RF-00" & " " & strData & vbCrLf)
+        'End If
+        Try
+            If lbLotNo1.Text.Length <> 10 Then
+                Exit Sub
+            End If
+            If Not IsNumeric(lbInput1.Text) Then
+                Exit Sub
+            End If
+
+            If MessageBox.Show("คุณต้องการ Manual End ", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+
+                Dim _frmEndMan As frmEndManual = New frmEndManual(CInt(lbInput1.Text))
+                Dim InputGoodTotal As String
+                If _frmEndMan.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    InputGoodTotal = _frmEndMan.tbPcs.Text
+                Else
+                    Exit Sub
+                End If
+
+                If InputGoodTotal = "" Or IsNumeric(InputGoodTotal) = False Or InputGoodTotal = "0" Then
+                    AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
+                    Exit Sub
+                End If
+                EndLot(lbLotNo1.Text, InputGoodTotal)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
+        End Try
+
+
+        'If lbStart.Text <> "" And lbStop.Text = "" Then
+        '    If MessageBox.Show("คุณต้องการ Manual End ", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+
+        '        Dim _frmEndMan As frmEndManual = New frmEndManual(Me)
+        '        Dim InputGoodTotal As String
+        '        If _frmEndMan.ShowDialog = Windows.Forms.DialogResult.OK Then
+        '            InputGoodTotal = _frmEndMan.tbPcs.Text
+        '        Else
+        '            Exit Sub
+        '        End If
+
+        '        If InputGoodTotal = "" Or IsNumeric(InputGoodTotal) = False Or InputGoodTotal = "0" Then
+        '            AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
+        '            Exit Sub
+        '        End If
+
+
+        '        Try
+        '            m_SelfData.Output = CInt(InputGoodTotal)
+        '            m_SelfData.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
+        '            m_SelfData.LotStatus = _StatusLot.LotEnd
+        '            UpdateDisplay()
+        '            SaveBackup()
+
+        '            If m_SelfData.LotSetOfSending = False Then
+        '                Try
+        '                    m_SelfData.LotSetOfSending = True
+        '                    'Send TDC
+        '                    SyncLock m_Locker
+        '                        Dim strLotSetData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & m_SelfData.StartTime & "," & m_SelfData.OpNo & "," & m_SelfData.LotStartMode
+        '                        m_LotSetQueue.Enqueue(strLotSetData)
+        '                    End SyncLock
+        '                    If bgTDC.IsBusy = False Then
+        '                        lbLotSetEnd.BackColor = Color.Lime
+        '                        bgTDC.RunWorkerAsync()
+        '                    End If
+        '                Catch ex As Exception
+        '                    addlogfile("BtEndLot TDC LOTSET: " & ex.Message)
+        '                End Try
+        '            End If
+
+        '            'TDC เก็บข้อมูลแล้วส่ง TDC
+        '            Try
+        '                If radResetEnd.Checked Then
+        '                    m_SelfData.LotEndMode = _TDCMode.Reload
+        '                ElseIf radAccuEnd.Checked Then
+        '                    m_SelfData.LotEndMode = _TDCMode.ReInput
+        '                Else
+        '                    m_SelfData.LotEndMode = _TDCMode.NormalEnd
+        '                End If
+
+        '                Dim tmpData As String = "RF-" & m_SelfData.McNo & "," & m_SelfData.LotNo & "," & CDate(m_SelfData.StopTime) & "," & CInt(m_SelfData.Output) & "," & m_SelfData.NGQty & "," & m_SelfData.OpNo & "," & m_SelfData.LotEndMode
+        '                SyncLock m_Locker
+        '                    m_LotEndQueue.Enqueue(tmpData)
+        '                End SyncLock
+
+        '                If bgTDC.IsBusy = False Then
+        '                    bgTDC.RunWorkerAsync()
+        '                End If
+
+        '            Catch ex As Exception
+        '                addlogfile("BtEndLot TDC : " & ex.Message)
+        '            End Try
+        '            'คืนค่าโหมดของ TDC
+        '            'If Not radNormal.Checked Then radNormal.Checked = True '//783
+        '            If Not radNormalEnd.Checked Then radNormalEnd.Checked = True '//783
+        '            'เซฟข้อมูลลง Dbx
+
+        '            Try
+        '                SaveLotEndToDbx()
+        '                SaveReflowDataTableXml()
+        '            Catch ex As Exception
+        '                addlogfile("LE Dbx : " & ex.Message)
+        '            End Try
+        '            'เซฟ Alarm ลง DBx
+        '            Try
+        '                SaveAlarmInfoToDbx()
+        '            Catch ex As Exception
+        '                addlogfile("LE Alm : " & ex.Message)
+        '            End Try
+
+        '        Catch ex As Exception
+        '            addlogfile("BtEndLot : " & ex.Message)
+        '        End Try
+
+
+        '    End If
+        'Else
+        '    MsgBox("MCNo " & lbMC.Text & " ไม่สามารถ End Manual ได้")
+        'End If
     End Sub
 
     Function SearchAlarmID(ByVal AlarmNo As String) As String
@@ -864,7 +1158,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub SaveAlarmInfoToDbx()
+    Private Sub SaveAlarmInfoToDbx(data As ReflowData)
         If My.Computer.Network.Ping("172.16.0.102") = False Then
             Exit Sub
         End If
@@ -872,7 +1166,7 @@ Public Class frmMain
         Dim removeList As List(Of DataRow) = New List(Of DataRow)
         For Each DataRow As DBxDataSet.ReflowAlarmInfoRow In DBxDataSet.ReflowAlarmInfo.Rows
             Try
-                If DataRow.MCNo = "RF-" & m_SelfData.McNo AndAlso DataRow.IsClearTimeNull = False Then
+                If DataRow.MCNo = data.McNo AndAlso DataRow.IsClearTimeNull = False Then
                     ReflowAlarmInfoTableAdapter.Update(DataRow)
                     removeList.Add(DataRow)
                 End If
@@ -950,7 +1244,59 @@ Public Class frmMain
             bs.Serialize(fw, m_SelfData)
         End Using
     End Sub
+    Private Sub SaveBackupList(RfDataList As List(Of ReflowData))
+        If RfDataList Is Nothing Then
+            Exit Sub
+        End If
+        'Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflowList.xml"
+        'Using fw As New IO.FileStream(pathData, FileMode.Create)
+        '    Dim bs As New SoapFormatter
+        '    bs.Serialize(fw, RfDataList)
+        'End Using
 
+        Try
+            Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflowList.xml"
+            Using fs As New System.IO.FileStream(pathData, System.IO.FileMode.Create)
+                Dim bs = New XmlSerializer(RfDataList.GetType())
+                bs.Serialize(fs, RfDataList)
+            End Using
+        Catch ex As Exception
+            ' c_Log.ConnectionLogger.Write(0, "XmlSave", "OUT", "", "", 0, "XmlSave", ex.Message.ToString, "")
+        End Try
+
+    End Sub
+    Private Function LoadBackupList() As List(Of ReflowData)
+        Try
+            Dim RfDataList As New List(Of ReflowData)
+            Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflowList.xml"
+            If (File.Exists(pathData)) Then
+                Using fs As New System.IO.FileStream(pathData, System.IO.FileMode.Open)
+                    Dim bs = New XmlSerializer(RfDataList.GetType())
+                    RfDataList = CType(bs.Deserialize(fs), List(Of ReflowData))
+                End Using
+                ' GetInfoPro(Data.MachineNo, Data.LotNo, Data.UserCode)
+
+            End If
+            Return RfDataList
+        Catch ex As Exception
+            Return Nothing
+            ' c_Log.ConnectionLogger.Write(0, "XmlLoad", "OUT", "", "", 0, "XmlLoad", ex.Message.ToString, "")
+        End Try
+
+    End Function
+    'Private Function LoadBackupList(RfDataList As List(Of ReflowData)) As List(Of ReflowData)
+    '    Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflowList.xml"
+    '    If File.Exists(pathData) = False Then
+    '        MsgBox("ไม่มีไฟล์ ParameterReflowList.xml")
+    '        Return Nothing
+    '    End If
+
+    '    Using fr As New IO.FileStream(pathData, FileMode.Open)
+    '        Dim bs As New SoapFormatter
+    '        RfDataList = CType(bs.Deserialize(fr), List(Of ReflowData))
+    '    End Using
+    '    Return RfDataList
+    'End Function
     Private Sub LoadBackup()
         Dim pathData As String = My.Application.Info.DirectoryPath & "\ParameterReflow.xml"
         If File.Exists(pathData) = False Then
@@ -964,23 +1310,29 @@ Public Class frmMain
         End Using
 
     End Sub
+    Private Sub LoadDbx(data As ReflowData)
+        Dim ReflowAdapter As DBxDataSetTableAdapters.ReflowDataTableAdapter = New DBxDataSetTableAdapters.ReflowDataTableAdapter
+        'dbx.ReflowData = ReflowAdapter.GetReflowData(data.LotNo, data.McNo, CDate(data.StartTime))
+        ReflowDataTableAdapter.FillReflowData(DBxDataSet.ReflowData, data.LotNo, data.McNo, CDate(data.StartTime))
 
-    Private Sub SaveLotStartToDbx()
+    End Sub
+    Private Sub SaveLotStartToDbx(data As ReflowData)
         Try
+
             Dim strDataRow As DBxDataSet.ReflowDataRow = DBxDataSet.ReflowData.NewReflowDataRow
-            strDataRow.LotNo = m_SelfData.LotNo
-            strDataRow.MCNo = "RF-" & m_SelfData.McNo
-            strDataRow.LotStartTime = CDate(m_SelfData.StartTime)
-            strDataRow.OPNo = m_SelfData.OpNo
-            strDataRow.InputQty = m_SelfData.Input    '130807   Change data type of dataset
-            strDataRow.MagazineNo = m_SelfData.MagazineNo
-            strDataRow.TemperatureGroup = m_SelfData.Group
+            strDataRow.LotNo = data.LotNo
+            strDataRow.MCNo = data.McNo
+            strDataRow.LotStartTime = CDate(data.StartTime)
+            strDataRow.OPNo = data.OpNo
+            strDataRow.InputQty = data.Input    '130807   Change data type of dataset
+            strDataRow.MagazineNo = data.MagazineNo
+            strDataRow.TemperatureGroup = data.Group
             DBxDataSet.ReflowData.Rows.Add(strDataRow)
 
             Dim RemoveList As List(Of DataRow) = New List(Of DataRow)
             For Each StartRow As DBxDataSet.ReflowDataRow In DBxDataSet.ReflowData.Rows
                 Try
-                    If strDataRow.LotNo = m_SelfData.LotNo AndAlso StartRow.IsLotEndTimeNull = True Then
+                    If strDataRow.LotNo = data.LotNo AndAlso StartRow.IsLotEndTimeNull = True Then
                         ReflowDataTableAdapter.Update(StartRow)
                     End If
                 Catch ex As Exception
@@ -991,15 +1343,40 @@ Public Class frmMain
         Catch ex As Exception
             addlogfile("SaveLotStartToDbx :" & ex.Message.ToString)
         End Try
+        'Try
+        '    Dim strDataRow As DBxDataSet.ReflowDataRow = DBxDataSet.ReflowData.NewReflowDataRow
+        '    strDataRow.LotNo = m_SelfData.LotNo
+        '    strDataRow.MCNo = "RF-" & m_SelfData.McNo
+        '    strDataRow.LotStartTime = CDate(m_SelfData.StartTime)
+        '    strDataRow.OPNo = m_SelfData.OpNo
+        '    strDataRow.InputQty = m_SelfData.Input    '130807   Change data type of dataset
+        '    strDataRow.MagazineNo = m_SelfData.MagazineNo
+        '    strDataRow.TemperatureGroup = m_SelfData.Group
+        '    DBxDataSet.ReflowData.Rows.Add(strDataRow)
+
+        '    Dim RemoveList As List(Of DataRow) = New List(Of DataRow)
+        '    For Each StartRow As DBxDataSet.ReflowDataRow In DBxDataSet.ReflowData.Rows
+        '        Try
+        '            If strDataRow.LotNo = m_SelfData.LotNo AndAlso StartRow.IsLotEndTimeNull = True Then
+        '                ReflowDataTableAdapter.Update(StartRow)
+        '            End If
+        '        Catch ex As Exception
+        '            addlogfile("SaveLotStartToDbx StartRow:" & strDataRow.LotNo & " " & ex.Message.ToString)
+        '        End Try
+        '    Next
+
+        'Catch ex As Exception
+        '    addlogfile("SaveLotStartToDbx :" & ex.Message.ToString)
+        'End Try
     End Sub
-    Private Sub SaveLotEndToDbx()
+    Private Sub SaveLotEndToDbx(data As ReflowData)
         Dim removeList As List(Of DataRow) = New List(Of DataRow)
         For Each tmpDataRow As DBxDataSet.ReflowDataRow In DBxDataSet.ReflowData.Rows
-            If tmpDataRow.LotNo = m_SelfData.LotNo AndAlso tmpDataRow.LotStartTime = CDate(m_SelfData.StartTime) Then
-                tmpDataRow.OutputQty = m_SelfData.Output
-                tmpDataRow.LotEndTime = CDate(m_SelfData.StopTime)
-                tmpDataRow.AlarmTotal = CShort(m_SelfData.AlarmTotal)
-                tmpDataRow.Remark = m_SelfData.Remark
+            If tmpDataRow.LotNo = data.LotNo AndAlso tmpDataRow.LotStartTime = CDate(data.StartTime) Then
+                tmpDataRow.OutputQty = data.Output
+                tmpDataRow.LotEndTime = CDate(data.StopTime)
+                tmpDataRow.AlarmTotal = CShort(data.AlarmTotal)
+                tmpDataRow.Remark = data.Remark
 
                 Try
                     ReflowDataTableAdapter.Update(tmpDataRow)
@@ -1045,7 +1422,7 @@ Public Class frmMain
 
     Private Sub Button10_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Button10.Click
         Dim Ip As String = "10.1.1.50"
-        Dim Data As String = "LR,1827A4027V,SSOP-B28W ,BD3805F1234(BW)        ,007441,07D8,0000000,001E,B." & vbCr
+        Dim Data As String = "LR,9999A0005V,SSOP-B28W ,BD3805F1234(BW)        ,007441,07D8,0000000,001E,B." & vbCr
         GetDataFromIPAddress(Ip, Data)
     End Sub
 
@@ -1451,7 +1828,7 @@ Public Class frmMain
 
 
     Private Sub bgTDC_RunWorkerCompleted(ByVal sender As System.Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgTDC.RunWorkerCompleted
-        lbLotSetEnd.BackColor = Color.Tomato
+        ' lbLotSetEnd.BackColor = Color.Tomato
     End Sub
 
 
@@ -1478,9 +1855,9 @@ Public Class frmMain
 
     Private Sub BMRequestToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles BMRequestToolStripMenuItem3.Click
         Dim tmpStr As String
-        tmpStr = "MCNo=" & "RF-" & My.Settings.MCNo
-        tmpStr = tmpStr & "&LotNo=" & lbLotNo.Text
-        If lbStart.Text <> "" AndAlso lbStop.Text = "" Then
+        tmpStr = "MCNo=" & My.Settings.MCNo
+        tmpStr = tmpStr & "&LotNo=" & lbLotNo1.Text
+        If lbStart1.Text <> "" AndAlso lbStop1.Text = "" Then
             tmpStr = tmpStr & "&MCStatus=Running"
         Else
             tmpStr = tmpStr & "&MCStatus=Stop"
@@ -1501,16 +1878,16 @@ Public Class frmMain
 
     Private Sub PMRepairingToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PMRepairingToolStripMenuItem3.Click
         Process.Start("C:\WINDOWS\system32\osk.exe")
-        Call Shell("C:\Program Files\Internet Explorer\iexplore.exe http://webserv.thematrix.net/LsiPETE/LSI_Prog/Maintenance/MainPMlogin.asp?" & "MCNo=" & "RF-" & lbMC.Text, vbNormalFocus)
+        Call Shell("C:\Program Files\Internet Explorer\iexplore.exe http://webserv.thematrix.net/LsiPETE/LSI_Prog/Maintenance/MainPMlogin.asp?" & "MCNo=" & lbMC.Text, vbNormalFocus)
 
     End Sub
 
     Private Sub SearchToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SearchToolStripMenuItem3.Click
-        If frmSeachData Is Nothing OrElse frmSeachData.Visible = False Then
-            frmSeachData = New frmSearch(Me)
-        End If
-        frmSeachData.Show()
-        frmSeachData.Focus()
+        'If frmSeachData Is Nothing OrElse frmSeachData.Visible = False Then
+        '    frmSeachData = New frmSearch(Me)
+        'End If
+        'frmSeachData.Show()
+        'frmSeachData.Focus()
     End Sub
 
     Private Sub frmMain_Paint(ByVal sender As Object, ByVal e As System.Windows.Forms.PaintEventArgs) Handles Me.Paint
@@ -1609,7 +1986,7 @@ Public Class frmMain
 
 
     Private Sub bgTDCLotReq_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgTDCLotReq.RunWorkerCompleted
-        lbLotReq.BackColor = Color.Tomato
+        '   lbLotReq.BackColor = Color.Tomato
     End Sub
 
     Private Sub WIPToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles WIPToolStripMenuItem.Click
@@ -1622,11 +1999,12 @@ Public Class frmMain
 
     Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType, OpNo As String) As TDCInfo
         Dim apcsInfo As New TDCInfo
-        Dim mc As String = "RF-" & My.Settings.MCNo
+        Dim mc As String = My.Settings.MCNo
         Dim ap As New DBxDataSetTableAdapters.QueriesTableAdapter
-        m_SelfData.Package = ap.SearchPackage(LotNo)
+        ' m_SelfData.Package = ap.SearchPackage(LotNo)
+        Dim data As ReflowData = SearchReflowData(LotNo)
         UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.LotSetUp, c_Log)
-        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
+        If c_ApcsProService.CheckPackageEnable(data.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
             If Not SetUpApcsPro(mc, LotNo, OpNo) Then
                 apcsInfo.ErrorMessage = c_LotUpdateInfo.ErrorMessage
                 apcsInfo.ErrorCode = c_LotUpdateInfo.ErrorNo.ToString()
@@ -1665,15 +2043,19 @@ Public Class frmMain
 
     Private Sub LotSetTdc(MCno As String, LotNo As String, StartTime As DateTime, OpNo As String)
         Dim res As TdcResponse = m_TdcService.LotSet(MCno, LotNo, StartTime, OpNo, RunModeType.Normal)
-        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
+        Dim data As ReflowData = SearchReflowData(LotNo)
+        GetInfoPro(MCno, LotNo, OpNo)
+        If c_ApcsProService.CheckPackageEnable(data.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
             'OnlineStartLotPro(c_LotInfo, c_MachineInfo, OpNo)
             StartLotPro(c_LotInfo, c_MachineInfo, OpNo)
         End If
         UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Execute, c_Log)
     End Sub
-    Private Sub LotEndTdc(McNo As String, LotNo As String, EndTime As DateTime, Good As Integer, Ng As Integer, OpNo As String)
-        Dim res As TdcResponse = m_TdcService.LotEnd(McNo, LotNo, EndTime, Good, Ng, EndModeType.Normal, OpNo)
-        If c_ApcsProService.CheckPackageEnable(m_SelfData.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
+    Private Sub LotEndTdc(McNo As String, LotNo As String, EndTime As DateTime, Good As Integer, Ng As Integer, OpNo As String, mode As EndModeType)
+        Dim res As TdcResponse = m_TdcService.LotEnd(McNo, LotNo, EndTime, Good, Ng, mode, OpNo)
+        Dim data As ReflowData = SearchReflowData(LotNo)
+        GetInfoPro(McNo, LotNo, OpNo)
+        If c_ApcsProService.CheckPackageEnable(data.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
             'OnlineEndLotPro(c_LotInfo, c_MachineInfo, OpNo, Good, Ng)
             EndLotPro(c_LotInfo, c_MachineInfo, OpNo, Good, Ng)
         End If
@@ -1686,6 +2068,65 @@ Public Class frmMain
             UpdateMachineOnlineState(c_MachineInfo.Name, 0, c_Log)
         Catch ex As Exception
 
+        End Try
+    End Sub
+    Private Sub ButtonReload_Click(sender As Object, e As EventArgs) Handles ButtonReload.Click
+        Try
+            If lbLotNo1.Text.Length <> 10 Then
+                Exit Sub
+            End If
+            If Not IsNumeric(lbInput1.Text) Then
+                Exit Sub
+            End If
+
+            If MessageBox.Show("คุณต้องการ Reload ?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+
+                Dim _frmEndMan As frmEndManual = New frmEndManual(CInt(lbInput1.Text))
+                Dim InputGoodTotal As String
+                If _frmEndMan.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    InputGoodTotal = _frmEndMan.tbPcs.Text
+                Else
+                    Exit Sub
+                End If
+
+                If InputGoodTotal = "" Or IsNumeric(InputGoodTotal) = False Or InputGoodTotal = "0" Then
+                    AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
+                    Exit Sub
+                End If
+                EndLot(lbLotNo1.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
+        End Try
+    End Sub
+
+    Private Sub ButtonReload2_Click(sender As Object, e As EventArgs) Handles ButtonReload2.Click
+        Try
+            If lbLotNo2.Text.Length <> 10 Then
+                Exit Sub
+            End If
+            If Not IsNumeric(lbInput2.Text) Then
+                Exit Sub
+            End If
+
+            If MessageBox.Show("คุณต้องการ Reload ?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
+
+                Dim _frmEndMan As frmEndManual = New frmEndManual(CInt(lbInput2.Text))
+                Dim InputGoodTotal As String
+                If _frmEndMan.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    InputGoodTotal = _frmEndMan.tbPcs.Text
+                Else
+                    Exit Sub
+                End If
+
+                If InputGoodTotal = "" Or IsNumeric(InputGoodTotal) = False Or InputGoodTotal = "0" Then
+                    AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
+                    Exit Sub
+                End If
+                EndLot(lbLotNo1.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+            End If
+        Catch ex As Exception
+            MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
         End Try
     End Sub
 #Region "APCS Pro"
@@ -1709,10 +2150,10 @@ Public Class frmMain
                 If c_MachineInfo Is Nothing Then
                     c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", mcNo)
                 End If
-                c_UserInfo = c_ApcsProService.GetUserInfo(opNo)
-                If c_UserInfo Is Nothing Then
-                    c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", opNo)
-                End If
+                'c_UserInfo = c_ApcsProService.GetUserInfo(opNo)
+                'If c_UserInfo Is Nothing Then
+                '    c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", opNo)
+                'End If
                 c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(c_Log)
                 c_LotUpdateInfo = c_ApcsProService.LotSetup(c_LotInfo.Id, c_MachineInfo.Id, c_UserInfo.Id, 0, "", 1, c_DateTimeInfo.Datetime, c_Log)
                 If Not c_LotUpdateInfo.IsOk Then
@@ -1894,7 +2335,7 @@ Public Class frmMain
         Try
             c_ApcsProService.Update_MachineState(machineID, runState, userID, log)
         Catch ex As Exception
-            lbNotification.Text = "Update_MachineState :" & ex.ToString()
+            TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
         End Try
 
     End Sub
@@ -1903,7 +2344,7 @@ Public Class frmMain
             c_MachineInfo = c_ApcsProService.GetMachineInfo(machineID)
             c_ApcsProService.Update_MachineOnlineState(c_MachineInfo.Id, onlineState, userID, log)
         Catch ex As Exception
-            lbNotification.Text = "Update_MachineOnlineState :" & ex.ToString()
+            TextBoxNotification1.Text = "Update_MachineOnlineState :" & ex.ToString()
         End Try
 
     End Sub
@@ -1930,8 +2371,8 @@ Public Class frmMain
     Private Sub LicenseWarning(user As UserInfo)
         Try
             If user.License(0).Is_Warning Then
-                'MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
-                lbNotification.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
+                MsgBox("แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd"))
+                'TextBoxNotification1.Text = "แจ้งเตือน!! รหัส :" & user.Code + Environment.NewLine + "License " & user.License(0).Name & Environment.NewLine & " ใกล้หมดอายุ กรุณาต่ออายุ License ที่ ETG " & Environment.NewLine & "วันหมดอายุ " & user.License(0).ExpireDate.ToString("yyyy/MM/dd")
             End If
         Catch ex As Exception
             c_Log.ConnectionLogger.Write(0, "LicenseWarning", "OUT", "CellCon", "iLibrary", 0, "user.License(0)", "", "")
@@ -2038,12 +2479,25 @@ Public Class frmMain
     Private c_LotInfo As iLibrary.LotInfo
     Private c_ApcsProService As IApcsProService = New ApcsProService()
     Private c_UserInfo As UserInfo
-    Private c_Log As Logger = New Logger("1.0", "RF-" & My.Settings.MCNo)
+    Private c_Log As Logger = New Logger("1.0", My.Settings.MCNo)
     Private c_DateTimeInfo As DateTimeInfo
     Private c_LotUpdateInfoSetUp As LotUpdateInfo
     Private c_ApcsPro As New ApcsPro
 
     Private c_LotUpdateInfo As LotUpdateInfo
+    Private frmLog As frmCommLog
+    Private Sub LogToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles LogToolStripMenuItem.Click
+        frmLog = New frmCommLog()
+        frmLog.Show()
+    End Sub
+    Private frmTestFunction As frmTestFunction
+    Private Sub TestFuToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TestFuToolStripMenuItem.Click
+        frmTestFunction = New frmTestFunction(Me)
+        frmTestFunction.Show()
+
+    End Sub
+
+
 #End Region
 
 #End Region
