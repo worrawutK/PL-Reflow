@@ -91,8 +91,10 @@ Partial Class frmMain
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.LogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestFuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ButtonReload = New System.Windows.Forms.Button()
         Me.TextBoxNotification1 = New System.Windows.Forms.TextBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
+        Me.ButtonReload2 = New System.Windows.Forms.Button()
         Me.TextBoxNotification2 = New System.Windows.Forms.TextBox()
         Me.BtEndLot2 = New System.Windows.Forms.Button()
         Me.lbOpNo2 = New System.Windows.Forms.Label()
@@ -193,8 +195,7 @@ Partial Class frmMain
         Me.MachineTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ButtonReload = New System.Windows.Forms.Button()
-        Me.ButtonReload2 = New System.Windows.Forms.Button()
+        Me.RemoveLotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -387,7 +388,7 @@ Partial Class frmMain
         Me.LbVersion.Name = "LbVersion"
         Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
-        Me.LbVersion.Text = "Reflow APCS Software Version 4.01"
+        Me.LbVersion.Text = "Reflow APCS Software Version 4.02"
         '
         'Lbtime
         '
@@ -798,9 +799,9 @@ Partial Class frmMain
         '
         'ContextMenuStrip1
         '
-        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LogToolStripMenuItem, Me.TestFuToolStripMenuItem})
+        Me.ContextMenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.LogToolStripMenuItem, Me.TestFuToolStripMenuItem, Me.RemoveLotToolStripMenuItem})
         Me.ContextMenuStrip1.Name = "ContextMenuStrip1"
-        Me.ContextMenuStrip1.Size = New System.Drawing.Size(146, 48)
+        Me.ContextMenuStrip1.Size = New System.Drawing.Size(146, 70)
         '
         'LogToolStripMenuItem
         '
@@ -813,6 +814,19 @@ Partial Class frmMain
         Me.TestFuToolStripMenuItem.Name = "TestFuToolStripMenuItem"
         Me.TestFuToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.TestFuToolStripMenuItem.Text = "Test Function"
+        '
+        'ButtonReload
+        '
+        Me.ButtonReload.BackColor = System.Drawing.SystemColors.Control
+        Me.ButtonReload.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonReload.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonReload.ForeColor = System.Drawing.Color.Black
+        Me.ButtonReload.Location = New System.Drawing.Point(21, 574)
+        Me.ButtonReload.Name = "ButtonReload"
+        Me.ButtonReload.Size = New System.Drawing.Size(269, 62)
+        Me.ButtonReload.TabIndex = 216
+        Me.ButtonReload.Text = "Reload"
+        Me.ButtonReload.UseVisualStyleBackColor = False
         '
         'TextBoxNotification1
         '
@@ -861,6 +875,19 @@ Partial Class frmMain
         Me.Panel2.Name = "Panel2"
         Me.Panel2.Size = New System.Drawing.Size(600, 643)
         Me.Panel2.TabIndex = 221
+        '
+        'ButtonReload2
+        '
+        Me.ButtonReload2.BackColor = System.Drawing.SystemColors.Control
+        Me.ButtonReload2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.ButtonReload2.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ButtonReload2.ForeColor = System.Drawing.Color.Black
+        Me.ButtonReload2.Location = New System.Drawing.Point(16, 575)
+        Me.ButtonReload2.Name = "ButtonReload2"
+        Me.ButtonReload2.Size = New System.Drawing.Size(269, 62)
+        Me.ButtonReload2.TabIndex = 216
+        Me.ButtonReload2.Text = "Reload"
+        Me.ButtonReload2.UseVisualStyleBackColor = False
         '
         'TextBoxNotification2
         '
@@ -1898,31 +1925,11 @@ Partial Class frmMain
         Me.AlarmMessageDataGridViewTextBoxColumn.Name = "AlarmMessageDataGridViewTextBoxColumn"
         Me.AlarmMessageDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'ButtonReload
+        'RemoveLotToolStripMenuItem
         '
-        Me.ButtonReload.BackColor = System.Drawing.SystemColors.Control
-        Me.ButtonReload.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.ButtonReload.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonReload.ForeColor = System.Drawing.Color.Black
-        Me.ButtonReload.Location = New System.Drawing.Point(21, 574)
-        Me.ButtonReload.Name = "ButtonReload"
-        Me.ButtonReload.Size = New System.Drawing.Size(269, 62)
-        Me.ButtonReload.TabIndex = 216
-        Me.ButtonReload.Text = "Reload"
-        Me.ButtonReload.UseVisualStyleBackColor = False
-        '
-        'ButtonReload2
-        '
-        Me.ButtonReload2.BackColor = System.Drawing.SystemColors.Control
-        Me.ButtonReload2.FlatStyle = System.Windows.Forms.FlatStyle.Popup
-        Me.ButtonReload2.Font = New System.Drawing.Font("Tahoma", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ButtonReload2.ForeColor = System.Drawing.Color.Black
-        Me.ButtonReload2.Location = New System.Drawing.Point(16, 575)
-        Me.ButtonReload2.Name = "ButtonReload2"
-        Me.ButtonReload2.Size = New System.Drawing.Size(269, 62)
-        Me.ButtonReload2.TabIndex = 216
-        Me.ButtonReload2.Text = "Reload"
-        Me.ButtonReload2.UseVisualStyleBackColor = False
+        Me.RemoveLotToolStripMenuItem.Name = "RemoveLotToolStripMenuItem"
+        Me.RemoveLotToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
+        Me.RemoveLotToolStripMenuItem.Text = "RemoveLot"
         '
         'frmMain
         '
@@ -2152,4 +2159,5 @@ Partial Class frmMain
     Friend WithEvents Label15 As Label
     Friend WithEvents ButtonReload As Button
     Friend WithEvents ButtonReload2 As Button
+    Friend WithEvents RemoveLotToolStripMenuItem As ToolStripMenuItem
 End Class

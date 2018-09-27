@@ -7,6 +7,7 @@ Imports iLibrary
 Imports Rohm.Common.Logging
 Imports WindowsApplication1.ServiceReference1
 Imports System.Xml.Serialization
+Imports System.Text.RegularExpressions
 
 Public Class frmMain
     Private m_TdcService As TdcService
@@ -38,7 +39,7 @@ Public Class frmMain
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "180920 Support APCS Pro." '"170109"
+        lbNetversion.Text = "180927 Support APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
         'LoadPFAlarmTable()
@@ -540,7 +541,15 @@ Public Class frmMain
 
             Case "LE" 'LE,LotNo,Good(frm),NORMAL or CONFIRM
                 Try
-                    If strText.Length <> 4 OrElse strText(1).Trim.Length <> 10 Then
+                    'RegularExpressions
+                    'Dim text As String = "sdsadd@sflA.net"
+                    'Dim reg As Regex = New Regex("[abc]{2}[@]{1}")
+                    'Dim match As Match = reg.Match(text)
+                    'If match.Success Then
+
+                    'End If
+
+                    If strText.Length <> 4 OrElse strText(1).Trim.Length <> 10 OrElse strText(1).Contains(Chr(0)) Then
                         Exit Sub
                     End If
                     SendTheMessage(My.Settings.IP, "CP" & vbCr, My.Settings.MCNo)
@@ -687,7 +696,40 @@ Public Class frmMain
         Load
         Remove
     End Enum
+    Private Sub ClearText()
+        LabelNextLot.Text = "-"
+        TextBoxNotificationNextLot.Text = "-"
+        PanelNextLot.BackColor = Color.Silver
 
+        lbOpNo1.Text = "-"
+        lbLotNo1.Text = "-"
+        lbPackage1.Text = "-"
+        lbDevice1.Text = "-"
+        lbInput1.Text = "-"
+        PanelLot1.BackColor = Color.Silver
+        lbStart1.BackColor = Color.Transparent
+        lbOutput1.Text = "-"
+        lbStart1.Text = "-"
+        lbStop1.Text = "-"
+        TextBoxNotification1.Text = "-"
+        LbGroup1.Text = "-"
+        LbMagazine1.Text = "-"
+
+        lbOpNo2.Text = "-"
+        lbLotNo2.Text = "-"
+        lbPackage2.Text = "-"
+        lbDevice2.Text = "-"
+        lbInput2.Text = "-"
+        PanelLot2.BackColor = Color.Silver
+        lbStart2.BackColor = Color.Transparent
+        lbOutput2.Text = "-"
+        lbStart2.Text = "-"
+        lbStop2.Text = "-"
+        TextBoxNotification2.Text = "-"
+        LbGroup2.Text = "-"
+        LbMagazine2.Text = "-"
+
+    End Sub
     Public Sub UpdateDisplay(dataList As List(Of ReflowData), Optional backup As Boolean = True)
         'lbMC.Text = My.Settings.MCNo 'data.McNo
         'lbIp.Text = My.Settings.IP ' data.IPA
@@ -2094,6 +2136,11 @@ Public Class frmMain
                     Exit Sub
                 End If
                 EndLot(lbLotNo1.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+                If c_ApcsProService.CheckPackageEnable(lbPackage1.Text.Trim, c_Log) AndAlso c_ApcsProService.CheckLotisExist(lbLotNo1.Text.Trim, c_Log) Then
+                    Dim data As ReflowData = SearchReflowData(lbLotNo1.Text.Trim)
+                    'OnlineStartLotPro(c_LotInfo, c_MachineInfo, OpNo)
+                    Reload(0, 0, data.OpNo, data.McNo, lbLotNo1.Text.Trim)
+                End If
             End If
         Catch ex As Exception
             MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
@@ -2123,11 +2170,33 @@ Public Class frmMain
                     AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
                     Exit Sub
                 End If
-                EndLot(lbLotNo1.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+                EndLot(lbLotNo2.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+                If c_ApcsProService.CheckPackageEnable(lbPackage2.Text.Trim, c_Log) AndAlso c_ApcsProService.CheckLotisExist(lbLotNo2.Text.Trim, c_Log) Then
+                    Dim data As ReflowData = SearchReflowData(lbLotNo2.Text.Trim)
+                    'OnlineStartLotPro(c_LotInfo, c_MachineInfo, OpNo)
+                    Reload(0, 0, data.OpNo, data.McNo, lbLotNo2.Text.Trim)
+                End If
             End If
         Catch ex As Exception
             MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
         End Try
+    End Sub
+    Private Sub RemoveLotToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RemoveLotToolStripMenuItem.Click
+
+        Dim toolMenu As ToolStripMenuItem = CType(sender, ToolStripMenuItem)
+        Dim menuStrip As ContextMenuStrip = CType(toolMenu.Owner, ContextMenuStrip)
+        Dim name As String = menuStrip.SourceControl.Name
+        Dim data As ReflowData = Nothing
+        Select Case name
+            Case "Panel1"
+                data = SearchReflowData(lbLotNo1.Text.Trim)
+
+            Case "Panel2"
+                data = SearchReflowData(lbLotNo2.Text.Trim)
+        End Select
+        ReFlowDataList.Remove(data)
+        ClearText()
+        UpdateDisplay(ReFlowDataList)
     End Sub
 #Region "APCS Pro"
 
@@ -2496,6 +2565,8 @@ Public Class frmMain
         frmTestFunction.Show()
 
     End Sub
+
+
 
 
 #End Region
