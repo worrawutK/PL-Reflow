@@ -274,7 +274,7 @@ Public Class frmMain
                     Dim strDevice As String = strText(3).Trim
                     Dim strOPNo As String = strText(4).Trim
                     Dim intInputData As Integer = CInt(CLng("&H" & strText(5)))
-                    Dim strMaga As String = strText(6).Trim
+                    Dim strMaga As String = strText(6).Trim.ToUpper()
                     Dim strPCS_Frame As Integer = CInt(CLng("&H" & strText(7)))
                     Dim strGroup As String = Trim(strText(8)).Substring(0, 1)
 
