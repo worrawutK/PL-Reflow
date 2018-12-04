@@ -39,7 +39,7 @@ Public Class frmMain
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "180927 Support APCS Pro." '"170109"
+        lbNetversion.Text = "181114 Support APCS Pro." '"170109"
         m_TdcService = TdcService.GetInstance()
         m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
         'LoadPFAlarmTable()
