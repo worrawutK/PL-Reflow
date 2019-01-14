@@ -2214,7 +2214,7 @@ Public Class frmMain
                     c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", lotNo)
                 End If
                 If c_MachineInfo Is Nothing Then
-                    c_MachineInfo = c_ApcsProService.GetMachineInfo(mcNo)
+                    c_MachineInfo = c_ApcsProService.GetMachineInfo(mcNo, c_Log, Date.Now)
                 End If
                 If c_MachineInfo Is Nothing Then
                     c_Log.ConnectionLogger.Write(0, "SetupLotPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", mcNo)
@@ -2248,7 +2248,7 @@ Public Class frmMain
 #Region "APCS Pro CheckPermission"
     Private Function CheckPermissionApcsPro(MCNo As String, userInfo As iLibrary.UserInfo, functionName As String, logger As Logger, Optional appName As String = "CellController") As Boolean
         c_DateTimeInfo = c_ApcsProService.Get_DateTimeInfo(logger)
-        Dim userPermission As CheckUserPermissionResult = c_ApcsProService.CheckUserPermission(userInfo, appName, functionName)
+        Dim userPermission As CheckUserPermissionResult = c_ApcsProService.CheckUserPermission(userInfo, appName, functionName, logger, c_DateTimeInfo.Datetime)
         If Not userPermission.IsPass Then
             MsgBox(userPermission.ErrorMessage)
             Return False
@@ -2267,17 +2267,17 @@ Public Class frmMain
     Private Function GetInfoPro(MCNo As String, LotNo As String, OpNo As String) As UserInfo
 
         'c_Log = New Logger("1.0", MCNo)
-        c_LotInfo = c_ApcsProService.GetLotInfo(LotNo)
+        c_LotInfo = c_ApcsProService.GetLotInfo(LotNo, c_Log, Date.Now)
         If c_LotInfo Is Nothing Then
             c_Log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetLotInfo", "lotInfo is Nothing", LotNo)
         End If
         If c_MachineInfo Is Nothing Then
-            c_MachineInfo = c_ApcsProService.GetMachineInfo(MCNo)
+            c_MachineInfo = c_ApcsProService.GetMachineInfo(MCNo, c_Log, Date.Now)
         End If
         If c_MachineInfo Is Nothing Then
             c_Log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetMachineInfo", "machineInfo is Nothing", MCNo)
         End If
-        c_UserInfo = c_ApcsProService.GetUserInfo(OpNo)
+        c_UserInfo = c_ApcsProService.GetUserInfo(OpNo, c_Log, Date.Now)
         If c_UserInfo Is Nothing Then
             c_Log.ConnectionLogger.Write(0, "GetInfoPro", "OUT", "CellCon", "iLibrary", 0, "GetUserInfo", "userInfo is Nothing", OpNo)
         End If
@@ -2410,7 +2410,7 @@ Public Class frmMain
     End Sub
     Private Sub UpdateMachineOnlineState(machineID As String, onlineState As Integer, log As Logger, Optional userID As Integer = -1)
         Try
-            c_MachineInfo = c_ApcsProService.GetMachineInfo(machineID)
+            c_MachineInfo = c_ApcsProService.GetMachineInfo(machineID, c_Log, Date.Now)
             c_ApcsProService.Update_MachineOnlineState(c_MachineInfo.Id, onlineState, userID, log)
         Catch ex As Exception
             TextBoxNotification1.Text = "Update_MachineOnlineState :" & ex.ToString()

@@ -91,6 +91,7 @@ Partial Class frmMain
         Me.ContextMenuStrip1 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.LogToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.TestFuToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.RemoveLotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ButtonReload = New System.Windows.Forms.Button()
         Me.TextBoxNotification1 = New System.Windows.Forms.TextBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
@@ -195,7 +196,6 @@ Partial Class frmMain
         Me.MachineTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.RemoveLotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -388,7 +388,7 @@ Partial Class frmMain
         Me.LbVersion.Name = "LbVersion"
         Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
-        Me.LbVersion.Text = "Reflow APCS Software Version 4.02"
+        Me.LbVersion.Text = "Reflow APCS Software Version 4.03"
         '
         'Lbtime
         '
@@ -814,6 +814,12 @@ Partial Class frmMain
         Me.TestFuToolStripMenuItem.Name = "TestFuToolStripMenuItem"
         Me.TestFuToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
         Me.TestFuToolStripMenuItem.Text = "Test Function"
+        '
+        'RemoveLotToolStripMenuItem
+        '
+        Me.RemoveLotToolStripMenuItem.Name = "RemoveLotToolStripMenuItem"
+        Me.RemoveLotToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
+        Me.RemoveLotToolStripMenuItem.Text = "RemoveLot"
         '
         'ButtonReload
         '
@@ -1924,12 +1930,6 @@ Partial Class frmMain
         Me.AlarmMessageDataGridViewTextBoxColumn.HeaderText = "AlarmMessage"
         Me.AlarmMessageDataGridViewTextBoxColumn.Name = "AlarmMessageDataGridViewTextBoxColumn"
         Me.AlarmMessageDataGridViewTextBoxColumn.ReadOnly = True
-        '
-        'RemoveLotToolStripMenuItem
-        '
-        Me.RemoveLotToolStripMenuItem.Name = "RemoveLotToolStripMenuItem"
-        Me.RemoveLotToolStripMenuItem.Size = New System.Drawing.Size(145, 22)
-        Me.RemoveLotToolStripMenuItem.Text = "RemoveLot"
         '
         'frmMain
         '
