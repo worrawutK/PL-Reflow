@@ -388,7 +388,7 @@ Partial Class frmMain
         Me.LbVersion.Name = "LbVersion"
         Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
-        Me.LbVersion.Text = "Reflow APCS Software Version 4.03"
+        Me.LbVersion.Text = "Reflow APCS Software Version 4.04"
         '
         'Lbtime
         '
