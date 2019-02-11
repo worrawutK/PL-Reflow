@@ -109,6 +109,11 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Connected Services\iLibraryService\Reference.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Connected Services\ServiceReference1\Reference.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -213,6 +218,55 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\iLibraryService\service.wsdl" />
+    <None Include="Connected Services\iLibraryService\service.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\iLibraryService\service1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\iLibraryService\service2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.CancelLotResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.CheckLotApcsProResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.EndLotResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.MachineAlarmResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.MachineOnlineStateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.OnlineEndResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.OnlineStartResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.ReinputResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.SetupLotResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.StartLotResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.UpdateFinalinspectionResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.UpdateFirstinspectionResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.UpdateMachineStateResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\ServiceReference1\apcswebservice.wsdl" />
     <None Include="My Project\Application.myapp">
       <Generator>MyApplicationCodeGenerator</Generator>
@@ -245,6 +299,12 @@
     <None Include="Connected Services\ServiceReference1\configuration91.svcinfo" />
     <None Include="Connected Services\ServiceReference1\configuration.svcinfo" />
     <None Include="Connected Services\ServiceReference1\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.vb</LastGenOutput>
+    </None>
+    <None Include="Connected Services\iLibraryService\configuration91.svcinfo" />
+    <None Include="Connected Services\iLibraryService\configuration.svcinfo" />
+    <None Include="Connected Services\iLibraryService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.vb</LastGenOutput>
     </None>
@@ -292,6 +352,7 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\iLibraryService\" />
     <WCFMetadataStorage Include="Connected Services\ServiceReference1\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
