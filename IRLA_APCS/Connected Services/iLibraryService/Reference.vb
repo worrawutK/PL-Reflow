@@ -42,7 +42,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -68,6 +77,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -76,6 +98,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -89,6 +137,20 @@ Namespace iLibraryService
             End If
         End Sub
     End Class
+    
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="MessageType", [Namespace]:="http://schemas.datacontract.org/2004/07/")>  _
+    Public Enum MessageType As Integer
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        Apcs = 0
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        ApcsPro = 1
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        Unknown = 2
+    End Enum
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="MachineProcessingState", [Namespace]:="http://schemas.datacontract.org/2004/07/")>  _
@@ -134,7 +196,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -160,6 +231,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -168,6 +252,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -197,10 +307,22 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private ErrorNoField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As iLibraryService.SetupLotResult.Status
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private RecipeField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -221,6 +343,32 @@ Namespace iLibraryService
                 If (Object.ReferenceEquals(Me.CauseField, value) <> true) Then
                     Me.CauseField = value
                     Me.RaisePropertyChanged("Cause")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property ErrorNo() As String
+            Get
+                Return Me.ErrorNoField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.ErrorNoField, value) <> true) Then
+                    Me.ErrorNoField = value
+                    Me.RaisePropertyChanged("ErrorNo")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
                 End If
             End Set
         End Property
@@ -251,6 +399,32 @@ Namespace iLibraryService
             End Set
         End Property
         
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
+                End If
+            End Set
+        End Property
+        
         Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
         
         Protected Sub RaisePropertyChanged(ByVal propertyName As String)
@@ -275,6 +449,23 @@ Namespace iLibraryService
         End Enum
     End Class
     
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="RunMode", [Namespace]:="http://schemas.datacontract.org/2004/07/")>  _
+    Public Enum RunMode As Integer
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        Normal = 0
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        Separated = 1
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        SeparatedEnd = 2
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        ReRun = 3
+    End Enum
+    
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
      System.Runtime.Serialization.DataContractAttribute(Name:="StartLotResult", [Namespace]:="http://schemas.datacontract.org/2004/07/"),  _
@@ -290,7 +481,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -316,6 +516,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -324,6 +537,254 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="OnlineStartResult", [Namespace]:="http://schemas.datacontract.org/2004/07/"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class OnlineStartResult
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private CauseField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Cause() As String
+            Get
+                Return Me.CauseField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.CauseField, value) <> true) Then
+                    Me.CauseField = value
+                    Me.RaisePropertyChanged("Cause")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property IsPass() As Boolean
+            Get
+                Return Me.IsPassField
+            End Get
+            Set
+                If (Me.IsPassField.Equals(value) <> true) Then
+                    Me.IsPassField = value
+                    Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
+                End If
+            End Set
+        End Property
+        
+        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+        
+        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
+            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
+            If (Not (propertyChanged) Is Nothing) Then
+                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
+            End If
+        End Sub
+    End Class
+    
+    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
+     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="OnlineEndResult", [Namespace]:="http://schemas.datacontract.org/2004/07/"),  _
+     System.SerializableAttribute()>  _
+    Partial Public Class OnlineEndResult
+        Inherits Object
+        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
+        
+        <System.NonSerializedAttribute()>  _
+        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private CauseField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
+        
+        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
+        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
+            Get
+                Return Me.extensionDataField
+            End Get
+            Set
+                Me.extensionDataField = value
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Cause() As String
+            Get
+                Return Me.CauseField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.CauseField, value) <> true) Then
+                    Me.CauseField = value
+                    Me.RaisePropertyChanged("Cause")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property IsPass() As Boolean
+            Get
+                Return Me.IsPassField
+            End Get
+            Set
+                If (Me.IsPassField.Equals(value) <> true) Then
+                    Me.IsPassField = value
+                    Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -364,7 +825,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -390,6 +860,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -398,6 +881,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -427,7 +936,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -453,6 +971,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -461,6 +992,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -490,7 +1047,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -516,6 +1082,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -524,6 +1103,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -564,7 +1169,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -590,6 +1204,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -598,6 +1225,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -627,7 +1280,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -653,6 +1315,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -661,6 +1336,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -674,6 +1375,20 @@ Namespace iLibraryService
             End If
         End Sub
     End Class
+    
+    <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
+     System.Runtime.Serialization.DataContractAttribute(Name:="EndMode", [Namespace]:="http://schemas.datacontract.org/2004/07/")>  _
+    Public Enum EndMode As Integer
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        Normal = 1
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        AbnormalEndReset = 2
+        
+        <System.Runtime.Serialization.EnumMemberAttribute()>  _
+        AbnormalEndAccumulate = 3
+    End Enum
     
     <System.Diagnostics.DebuggerStepThroughAttribute(),  _
      System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
@@ -690,7 +1405,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -716,6 +1440,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property FunctionName() As String
+            Get
+                Return Me.FunctionNameField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property IsPass() As Boolean
             Get
                 Return Me.IsPassField
@@ -724,6 +1461,32 @@ Namespace iLibraryService
                 If (Me.IsPassField.Equals(value) <> true) Then
                     Me.IsPassField = value
                     Me.RaisePropertyChanged("IsPass")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property SubFunction() As String
+            Get
+                Return Me.SubFunctionField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property Type() As iLibraryService.MessageType
+            Get
+                Return Me.TypeField
+            End Get
+            Set
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -753,7 +1516,16 @@ Namespace iLibraryService
         Private CauseField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private FunctionNameField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private SubFunctionField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private TypeField As iLibraryService.MessageType
         
         <Global.System.ComponentModel.BrowsableAttribute(false)>  _
         Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
@@ -779,64 +1551,14 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property IsPass() As Boolean
+        Public Property FunctionName() As String
             Get
-                Return Me.IsPassField
+                Return Me.FunctionNameField
             End Get
             Set
-                If (Me.IsPassField.Equals(value) <> true) Then
-                    Me.IsPassField = value
-                    Me.RaisePropertyChanged("IsPass")
-                End If
-            End Set
-        End Property
-        
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="OnlineStartResult", [Namespace]:="http://schemas.datacontract.org/2004/07/"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class OnlineStartResult
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private CauseField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private IsPassField As Boolean
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
-        <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Cause() As String
-            Get
-                Return Me.CauseField
-            End Get
-            Set
-                If (Object.ReferenceEquals(Me.CauseField, value) <> true) Then
-                    Me.CauseField = value
-                    Me.RaisePropertyChanged("Cause")
+                If (Object.ReferenceEquals(Me.FunctionNameField, value) <> true) Then
+                    Me.FunctionNameField = value
+                    Me.RaisePropertyChanged("FunctionName")
                 End If
             End Set
         End Property
@@ -854,65 +1576,28 @@ Namespace iLibraryService
             End Set
         End Property
         
-        Public Event PropertyChanged As System.ComponentModel.PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
-        
-        Protected Sub RaisePropertyChanged(ByVal propertyName As String)
-            Dim propertyChanged As System.ComponentModel.PropertyChangedEventHandler = Me.PropertyChangedEvent
-            If (Not (propertyChanged) Is Nothing) Then
-                propertyChanged(Me, New System.ComponentModel.PropertyChangedEventArgs(propertyName))
-            End If
-        End Sub
-    End Class
-    
-    <System.Diagnostics.DebuggerStepThroughAttribute(),  _
-     System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-     System.Runtime.Serialization.DataContractAttribute(Name:="OnlineEndResult", [Namespace]:="http://schemas.datacontract.org/2004/07/"),  _
-     System.SerializableAttribute()>  _
-    Partial Public Class OnlineEndResult
-        Inherits Object
-        Implements System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged
-        
-        <System.NonSerializedAttribute()>  _
-        Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private CauseField As String
-        
-        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private IsPassField As Boolean
-        
-        <Global.System.ComponentModel.BrowsableAttribute(false)>  _
-        Public Property ExtensionData() As System.Runtime.Serialization.ExtensionDataObject Implements System.Runtime.Serialization.IExtensibleDataObject.ExtensionData
-            Get
-                Return Me.extensionDataField
-            End Get
-            Set
-                Me.extensionDataField = value
-            End Set
-        End Property
-        
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property Cause() As String
+        Public Property SubFunction() As String
             Get
-                Return Me.CauseField
+                Return Me.SubFunctionField
             End Get
             Set
-                If (Object.ReferenceEquals(Me.CauseField, value) <> true) Then
-                    Me.CauseField = value
-                    Me.RaisePropertyChanged("Cause")
+                If (Object.ReferenceEquals(Me.SubFunctionField, value) <> true) Then
+                    Me.SubFunctionField = value
+                    Me.RaisePropertyChanged("SubFunction")
                 End If
             End Set
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property IsPass() As Boolean
+        Public Property Type() As iLibraryService.MessageType
             Get
-                Return Me.IsPassField
+                Return Me.TypeField
             End Get
             Set
-                If (Me.IsPassField.Equals(value) <> true) Then
-                    Me.IsPassField = value
-                    Me.RaisePropertyChanged("IsPass")
+                If (Me.TypeField.Equals(value) <> true) Then
+                    Me.TypeField = value
+                    Me.RaisePropertyChanged("Type")
                 End If
             End Set
         End Property
@@ -940,14 +1625,35 @@ Namespace iLibraryService
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/SetupLot", ReplyAction:="http://tempuri.org/IServiceiLibrary/SetupLotResponse")>  _
         Function SetupLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String) As iLibraryService.SetupLotResult
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/SetupLotNoCheckLicenser", ReplyAction:="http://tempuri.org/IServiceiLibrary/SetupLotNoCheckLicenserResponse")>  _
+        Function SetupLotNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String) As iLibraryService.SetupLotResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/SetupLotCustomMode", ReplyAction:="http://tempuri.org/IServiceiLibrary/SetupLotCustomModeResponse")>  _
+        Function SetupLotCustomMode(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.SetupLotResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/SetupLotCustomModeNoCheckLicenser", ReplyAction:="http://tempuri.org/IServiceiLibrary/SetupLotCustomModeNoCheckLicenserResponse")>  _
+        Function SetupLotCustomModeNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.SetupLotResult
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/StartLot", ReplyAction:="http://tempuri.org/IServiceiLibrary/StartLotResponse")>  _
         Function StartLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String) As iLibraryService.StartLotResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/StartLotCustomMode", ReplyAction:="http://tempuri.org/IServiceiLibrary/StartLotCustomModeResponse")>  _
+        Function StartLotCustomMode(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.StartLotResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/OnlineStart", ReplyAction:="http://tempuri.org/IServiceiLibrary/OnlineStartResponse")>  _
+        Function OnlineStart(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String) As iLibraryService.OnlineStartResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/OnlineEnd", ReplyAction:="http://tempuri.org/IServiceiLibrary/OnlineEndResponse")>  _
+        Function OnlineEnd(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.OnlineEndResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/UpdateFirstinspection", ReplyAction:="http://tempuri.org/IServiceiLibrary/UpdateFirstinspectionResponse")>  _
         Function UpdateFirstinspection(ByVal lotNo As String, ByVal opNo As String, ByVal judge As iLibraryService.Judge, ByVal mcNo As String) As iLibraryService.UpdateFirstinspectionResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/EndLot", ReplyAction:="http://tempuri.org/IServiceiLibrary/EndLotResponse")>  _
         Function EndLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/EndLotNoCheckLicenser", ReplyAction:="http://tempuri.org/IServiceiLibrary/EndLotNoCheckLicenserResponse")>  _
+        Function EndLotNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/UpdateFinalinspection", ReplyAction:="http://tempuri.org/IServiceiLibrary/UpdateFinalinspectionResponse")>  _
         Function UpdateFinalinspection(ByVal lotNo As String, ByVal opNo As String, ByVal judge As iLibraryService.Judge, ByVal mcNo As String) As iLibraryService.UpdateFinalinspectionResult
@@ -959,19 +1665,13 @@ Namespace iLibraryService
         Function CancelLot(ByVal mcNo As String, ByVal lotNo As String, ByVal opNo As String) As iLibraryService.CancelLotResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/Reinput", ReplyAction:="http://tempuri.org/IServiceiLibrary/ReinputResponse")>  _
-        Function Reinput(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.ReinputResult
+        Function Reinput(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/ReinputAndHoldLot", ReplyAction:="http://tempuri.org/IServiceiLibrary/ReinputAndHoldLotResponse")>  _
-        Function ReinputAndHoldLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.ReinputResult
+        Function ReinputAndHoldLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/CheckLotApcsProManual", ReplyAction:="http://tempuri.org/IServiceiLibrary/CheckLotApcsProManualResponse")>  _
         Function CheckLotApcsProManual(ByVal lotNo As String, ByVal mcNo As String, ByVal package As String) As iLibraryService.CheckLotApcsProResult
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/OnlineStart", ReplyAction:="http://tempuri.org/IServiceiLibrary/OnlineStartResponse")>  _
-        Function OnlineStart(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String) As iLibraryService.OnlineStartResult
-        
-        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/OnlineEnd", ReplyAction:="http://tempuri.org/IServiceiLibrary/OnlineEndResponse")>  _
-        Function OnlineEnd(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.OnlineEndResult
     End Interface
     
     <System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")>  _
@@ -1017,8 +1717,32 @@ Namespace iLibraryService
             Return MyBase.Channel.SetupLot(lotNo, mcNo, opNo, processName, layerNo)
         End Function
         
+        Public Function SetupLotNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String) As iLibraryService.SetupLotResult Implements iLibraryService.IServiceiLibrary.SetupLotNoCheckLicenser
+            Return MyBase.Channel.SetupLotNoCheckLicenser(lotNo, mcNo, opNo, processName, layerNo)
+        End Function
+        
+        Public Function SetupLotCustomMode(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.SetupLotResult Implements iLibraryService.IServiceiLibrary.SetupLotCustomMode
+            Return MyBase.Channel.SetupLotCustomMode(lotNo, mcNo, opNo, processName, layerNo, runMode)
+        End Function
+        
+        Public Function SetupLotCustomModeNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.SetupLotResult Implements iLibraryService.IServiceiLibrary.SetupLotCustomModeNoCheckLicenser
+            Return MyBase.Channel.SetupLotCustomModeNoCheckLicenser(lotNo, mcNo, opNo, processName, layerNo, runMode)
+        End Function
+        
         Public Function StartLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String) As iLibraryService.StartLotResult Implements iLibraryService.IServiceiLibrary.StartLot
             Return MyBase.Channel.StartLot(lotNo, mcNo, opNo, recipe)
+        End Function
+        
+        Public Function StartLotCustomMode(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.StartLotResult Implements iLibraryService.IServiceiLibrary.StartLotCustomMode
+            Return MyBase.Channel.StartLotCustomMode(lotNo, mcNo, opNo, recipe, runMode)
+        End Function
+        
+        Public Function OnlineStart(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String) As iLibraryService.OnlineStartResult Implements iLibraryService.IServiceiLibrary.OnlineStart
+            Return MyBase.Channel.OnlineStart(lotNo, mcNo, opNo)
+        End Function
+        
+        Public Function OnlineEnd(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.OnlineEndResult Implements iLibraryService.IServiceiLibrary.OnlineEnd
+            Return MyBase.Channel.OnlineEnd(lotNo, mcNo, opNo, good, ng)
         End Function
         
         Public Function UpdateFirstinspection(ByVal lotNo As String, ByVal opNo As String, ByVal judge As iLibraryService.Judge, ByVal mcNo As String) As iLibraryService.UpdateFirstinspectionResult Implements iLibraryService.IServiceiLibrary.UpdateFirstinspection
@@ -1027,6 +1751,10 @@ Namespace iLibraryService
         
         Public Function EndLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult Implements iLibraryService.IServiceiLibrary.EndLot
             Return MyBase.Channel.EndLot(lotNo, mcNo, opNo, good, ng)
+        End Function
+        
+        Public Function EndLotNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult Implements iLibraryService.IServiceiLibrary.EndLotNoCheckLicenser
+            Return MyBase.Channel.EndLotNoCheckLicenser(lotNo, mcNo, opNo, good, ng)
         End Function
         
         Public Function UpdateFinalinspection(ByVal lotNo As String, ByVal opNo As String, ByVal judge As iLibraryService.Judge, ByVal mcNo As String) As iLibraryService.UpdateFinalinspectionResult Implements iLibraryService.IServiceiLibrary.UpdateFinalinspection
@@ -1041,24 +1769,16 @@ Namespace iLibraryService
             Return MyBase.Channel.CancelLot(mcNo, lotNo, opNo)
         End Function
         
-        Public Function Reinput(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.ReinputResult Implements iLibraryService.IServiceiLibrary.Reinput
-            Return MyBase.Channel.Reinput(lotNo, mcNo, opNo, good, ng)
+        Public Function Reinput(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult Implements iLibraryService.IServiceiLibrary.Reinput
+            Return MyBase.Channel.Reinput(lotNo, mcNo, opNo, good, ng, endMode)
         End Function
         
-        Public Function ReinputAndHoldLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.ReinputResult Implements iLibraryService.IServiceiLibrary.ReinputAndHoldLot
-            Return MyBase.Channel.ReinputAndHoldLot(lotNo, mcNo, opNo, good, ng)
+        Public Function ReinputAndHoldLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult Implements iLibraryService.IServiceiLibrary.ReinputAndHoldLot
+            Return MyBase.Channel.ReinputAndHoldLot(lotNo, mcNo, opNo, good, ng, endMode)
         End Function
         
         Public Function CheckLotApcsProManual(ByVal lotNo As String, ByVal mcNo As String, ByVal package As String) As iLibraryService.CheckLotApcsProResult Implements iLibraryService.IServiceiLibrary.CheckLotApcsProManual
             Return MyBase.Channel.CheckLotApcsProManual(lotNo, mcNo, package)
-        End Function
-        
-        Public Function OnlineStart(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String) As iLibraryService.OnlineStartResult Implements iLibraryService.IServiceiLibrary.OnlineStart
-            Return MyBase.Channel.OnlineStart(lotNo, mcNo, opNo)
-        End Function
-        
-        Public Function OnlineEnd(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.OnlineEndResult Implements iLibraryService.IServiceiLibrary.OnlineEnd
-            Return MyBase.Channel.OnlineEnd(lotNo, mcNo, opNo, good, ng)
         End Function
     End Class
 End Namespace

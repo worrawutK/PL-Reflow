@@ -9,8 +9,9 @@ Imports WindowsApplication1.ServiceReference1
 Imports System.Xml.Serialization
 Imports System.Text.RegularExpressions
 Imports WindowsApplication1.iLibraryService
+Imports MessageDialog
 Public Class frmMain
-    Private m_TdcService As TdcService
+    'Private m_TdcService As TdcService
     Dim DataSendTDC As String
     Dim SoftwareRevision As String = "Reflow SelfCon ver.161109"
     Dim buffer As String
@@ -19,7 +20,7 @@ Public Class frmMain
     Private m_LotSetQueue As Queue(Of String) = New Queue(Of String)
     Private m_LotEndQueue As Queue(Of String) = New Queue(Of String)
     Private m_LotReqQueue As Queue(Of String) = New Queue(Of String)
-    Dim c_dlg As TdcAlarmMessageForm
+    'Dim c_dlg As TdcAlarmMessageForm
 
     Private RFData As Dictionary(Of String, ReflowData) = New Dictionary(Of String, ReflowData)
     Private ReFlowDataList As List(Of ReflowData)
@@ -42,9 +43,9 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "190204 Support APCS Pro." '"170109"
-        m_TdcService = TdcService.GetInstance()
-        m_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
+        lbNetversion.Text = "190212 Support APCS Pro." 'Add WCF Service iLibrary+Tdc 
+        'm_TdcService = TdcService.GetInstance()
+        'm_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
         'LoadPFAlarmTable()
         ' LoadAlarmInfoXml()
         ' LoadReflowDataTableXml()
@@ -64,13 +65,9 @@ Public Class frmMain
         InitialNetworkComponent()
         Me.StartSocketThread()
 
-        'radNormalEnd.Checked = True
-
-        'm_SelfData.McNo = My.Settings.MCNo
-        'm_SelfData.IPA = My.Settings.IP
+        'radNormalEnd.Checked = True      
 
         UpdateDisplay(ReFlowDataList, False)
-        'UpdateMachineOnlineState(My.Settings.MCNo, 1, c_Log)
         Try
             c_ServiceiLibrary.MachineOnlineState(My.Settings.MCNo, MachineOnline.Online)
         Catch ex As Exception
@@ -339,6 +336,7 @@ Public Class frmMain
                         data.LotInform = ApcsInfo.ErrorMessage
                         UpdateDisplay(ReFlowDataList, False)
                         ReFlowDataList.Remove(data)
+
                         ' lbNotification1.Text = ApcsInfo.ErrorMessage
                         Exit Sub
                     Else
@@ -633,7 +631,7 @@ Public Class frmMain
         End Select
     End Sub
 
-    Private Function EndLot(LotNo As String, good As String, Optional isHexadecimal As Boolean = False, Optional endMode As EndModeType = EndModeType.Normal) As Boolean
+    Private Function EndLot(LotNo As String, good As String, Optional isHexadecimal As Boolean = False, Optional endMode As EndMode = EndMode.Normal) As Boolean
         Dim data As ReflowData = SearchReflowData(LotNo)
         If data Is Nothing Then
             MessageBox.Show("ไม่พบข้อมูลของ LotNo:" & LotNo)
@@ -2086,51 +2084,57 @@ Public Class frmMain
         '    End If
         'End If
         Try
-            If c_ServiceiLibrary.CheckLotApcsProManual(LotNo, mc, data.Package).IsPass Then
-                Dim result As SetupLotResult = c_ServiceiLibrary.SetupLot(LotNo, mc, OpNo, "PL", "")
-                If result.IsPass = SetupLotResult.Status.NotPass Then
-                    apcsInfo.ErrorMessage = result.Cause
-                    apcsInfo.IsPass = False
-                    Return apcsInfo
-                End If
-                c_ApcsPro.Recipe = result.Recipe
-                XmlSave(c_ApcsPro)
+            'If c_ServiceiLibrary.CheckLotApcsProManual(LotNo, mc, data.Package).IsPass Then
+            Dim result As SetupLotResult = c_ServiceiLibrary.SetupLot(LotNo, mc, OpNo, "PL", "")
+            If result.IsPass = SetupLotResult.Status.NotPass Then
+                MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
+                apcsInfo.ErrorMessage = result.Cause
+                apcsInfo.IsPass = False
+                Return apcsInfo
+            ElseIf (result.IsPass = SetupLotResult.Status.Warning) Then
+                MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
             End If
+            c_ApcsPro.Recipe = result.Recipe
+            XmlSave(c_ApcsPro)
+            'End If
 
         Catch ex As Exception
-            TextBoxNotification1.Text = "CheckLotApcsProManual,SetupLot :" & ex.ToString()
+            TextBoxNotification1.Text = "SetupLot :" & ex.ToString()
         End Try
+        apcsInfo.ErrorMessage = "00 : Run Normal"
+        apcsInfo.IsPass = True
+        Return apcsInfo
 
-        Dim res As TdcLotRequestResponse = m_TdcService.LotRequest(mc, LotNo, rm)
+        'Dim res As TdcLotRequestResponse = m_TdcService.LotRequest(mc, LotNo, rm)
 
-        If res.HasError Then
+        'If res.HasError Then
 
-            Using svError As ApcsWebServiceSoapClient = New ApcsWebServiceSoapClient
-                If svError.LotRptIgnoreError(mc, res.ErrorCode) = False Then
-                    Dim li As Rohm.Apcs.Tdc.LotInfo = Nothing
-                    li = m_TdcService.GetLotInfo(LotNo, mc)
-                    c_dlg = New TdcAlarmMessageForm(res.ErrorCode, res.ErrorMessage, LotNo, li)
-                    c_dlg.Show()
-                    apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
-                    apcsInfo.ErrorCode = res.ErrorCode
-                    apcsInfo.IsPass = False
-                    Return apcsInfo
-                End If
-            End Using
-            apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
-            apcsInfo.IsPass = True
-            Return apcsInfo
-        Else
+        '    Using svError As ApcsWebServiceSoapClient = New ApcsWebServiceSoapClient
+        '        If svError.LotRptIgnoreError(mc, res.ErrorCode) = False Then
+        '            Dim li As Rohm.Apcs.Tdc.LotInfo = Nothing
+        '            li = m_TdcService.GetLotInfo(LotNo, mc)
+        '            c_dlg = New TdcAlarmMessageForm(res.ErrorCode, res.ErrorMessage, LotNo, li)
+        '            c_dlg.Show()
+        '            apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
+        '            apcsInfo.ErrorCode = res.ErrorCode
+        '            apcsInfo.IsPass = False
+        '            Return apcsInfo
+        '        End If
+        '    End Using
+        '    apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
+        '    apcsInfo.IsPass = True
+        '    Return apcsInfo
+        'Else
 
-            apcsInfo.ErrorMessage = "00 : Run Normal"
-            apcsInfo.IsPass = True
-            Return apcsInfo
-        End If
+        '    apcsInfo.ErrorMessage = "00 : Run Normal"
+        '    apcsInfo.IsPass = True
+        '    Return apcsInfo
+        'End If
 
     End Function
 
     Private Sub LotSetTdc(MCno As String, LotNo As String, StartTime As DateTime, OpNo As String)
-        Dim res As TdcResponse = m_TdcService.LotSet(MCno, LotNo, StartTime, OpNo, RunModeType.Normal)
+        'Dim res As TdcResponse = m_TdcService.LotSet(MCno, LotNo, StartTime, OpNo, RunModeType.Normal)
         Dim data As ReflowData = SearchReflowData(LotNo)
         'GetInfoPro(MCno, LotNo, OpNo)
 
@@ -2157,17 +2161,22 @@ Public Class frmMain
             TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
         End Try
     End Sub
-    Private Sub LotEndTdc(McNo As String, LotNo As String, EndTime As DateTime, Good As Integer, Ng As Integer, OpNo As String, mode As EndModeType)
-        Dim res As TdcResponse = m_TdcService.LotEnd(McNo, LotNo, EndTime, Good, Ng, mode, OpNo)
+    Private Sub LotEndTdc(McNo As String, LotNo As String, EndTime As DateTime, Good As Integer, Ng As Integer, OpNo As String, modeEnd As EndMode)
+        'Dim res As TdcResponse = m_TdcService.LotEnd(McNo, LotNo, EndTime, Good, Ng, mode, OpNo)
         Dim data As ReflowData = SearchReflowData(LotNo)
-        'GetInfoPro(McNo, LotNo, OpNo)
-        'If c_ApcsProService.CheckPackageEnable(data.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
-        '    'OnlineEndLotPro(c_LotInfo, c_MachineInfo, OpNo, Good, Ng)
-        '    EndLotPro(c_LotInfo, c_MachineInfo, OpNo, Good, Ng)
-        'End If
-        Dim endLotResult = c_ServiceiLibrary.EndLot(LotNo, McNo, OpNo, Good, Ng)
-        c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
-        'UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Idle, c_Log)
+
+        Try
+            If modeEnd = EndMode.Normal Then
+                Dim endLotResult = c_ServiceiLibrary.EndLotNoCheckLicenser(LotNo, McNo, OpNo, Good, Ng)
+            Else
+                Dim reinputLotResult = c_ServiceiLibrary.Reinput(LotNo, McNo, OpNo, Good, Ng, modeEnd)
+            End If
+
+            c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
+        Catch ex As Exception
+
+        End Try
+
         Try
             c_ServiceiLibrary.UpdateMachineState(My.Settings.MCNo, iLibraryService.MachineProcessingState.Idle)
         Catch ex As Exception
@@ -2177,7 +2186,6 @@ Public Class frmMain
 
     Private Sub frmMain_FormClosed(sender As Object, e As FormClosedEventArgs) Handles MyBase.FormClosed
         Try
-            'UpdateMachineOnlineState(c_MachineInfo.Name, 0, c_Log)
             c_ServiceiLibrary.MachineOnlineState(My.Settings.MCNo, MachineOnline.Offline)
 
         Catch ex As Exception
@@ -2207,18 +2215,18 @@ Public Class frmMain
                     AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
                     Exit Sub
                 End If
-                EndLot(lbLotNo1.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+                EndLot(lbLotNo1.Text, InputGoodTotal, False, EndMode.AbnormalEndAccumulate)
                 'If c_ApcsProService.CheckPackageEnable(lbPackage1.Text.Trim, c_Log) AndAlso c_ApcsProService.CheckLotisExist(lbLotNo1.Text.Trim, c_Log) Then
                 '    Dim data As ReflowData = SearchReflowData(lbLotNo1.Text.Trim)
                 '    'OnlineStartLotPro(c_LotInfo, c_MachineInfo, OpNo)
                 '    Reload(0, 0, data.OpNo, data.McNo, lbLotNo1.Text.Trim)
                 'End If
-                Try
-                    Dim data As ReflowData = SearchReflowData(lbLotNo1.Text.Trim)
-                    c_ServiceiLibrary.Reinput(data.LotNo, data.McNo, data.OpNo, 0, 0)
-                Catch ex As Exception
+                'Try
+                '    Dim data As ReflowData = SearchReflowData(lbLotNo1.Text.Trim)
+                '    c_ServiceiLibrary.Reinput(data.LotNo, data.McNo, data.OpNo, 0, 0)
+                'Catch ex As Exception
 
-                End Try
+                'End Try
 
             End If
         Catch ex As Exception
@@ -2249,18 +2257,18 @@ Public Class frmMain
                     AlarmMessage("Good Pcs ไม่ถูกต้องกรุณาตรวจสอบ")
                     Exit Sub
                 End If
-                EndLot(lbLotNo2.Text, InputGoodTotal, False, EndModeType.AbnormalEndAccumulate)
+                EndLot(lbLotNo2.Text, InputGoodTotal, False, EndMode.AbnormalEndAccumulate)
                 'If c_ApcsProService.CheckPackageEnable(lbPackage2.Text.Trim, c_Log) AndAlso c_ApcsProService.CheckLotisExist(lbLotNo2.Text.Trim, c_Log) Then
                 '    Dim data As ReflowData = SearchReflowData(lbLotNo2.Text.Trim)
                 '    'OnlineStartLotPro(c_LotInfo, c_MachineInfo, OpNo)
                 '    Reload(0, 0, data.OpNo, data.McNo, lbLotNo2.Text.Trim)
                 'End If
-                Try
-                    Dim data As ReflowData = SearchReflowData(lbLotNo2.Text.Trim)
-                    c_ServiceiLibrary.Reinput(data.LotNo, data.McNo, data.OpNo, 0, 0)
-                Catch ex As Exception
+                'Try
+                '    Dim data As ReflowData = SearchReflowData(lbLotNo2.Text.Trim)
+                '    c_ServiceiLibrary.Reinput(data.LotNo, data.McNo, data.OpNo, 0, 0)
+                'Catch ex As Exception
 
-                End Try
+                'End Try
             End If
         Catch ex As Exception
             MessageBox.Show("BtEndLot_Click :" & ex.Message.ToString())
