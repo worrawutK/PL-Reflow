@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "190212 Support APCS Pro." 'Add WCF Service iLibrary+Tdc 
+        lbNetversion.Text = "190220 Support APCS Pro." 'Add Search Record
         'm_TdcService = TdcService.GetInstance()
         'm_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
         'LoadPFAlarmTable()
@@ -1948,6 +1948,11 @@ Public Class frmMain
     End Sub
 
     Private Sub SearchToolStripMenuItem3_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles SearchToolStripMenuItem3.Click
+        Using frmSeachData As New frmSearch(Me)
+            frmSeachData.ShowDialog()
+            frmSeachData.Focus()
+        End Using
+        'Dim frmSeachData As frmSearch
         'If frmSeachData Is Nothing OrElse frmSeachData.Visible = False Then
         '    frmSeachData = New frmSearch(Me)
         'End If

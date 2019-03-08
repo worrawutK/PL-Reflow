@@ -541,7 +541,7 @@ Partial Class frmMain
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AndonToolStripMenuItem4, Me.WorkRecordToolStripMenuItem3, Me.HelpToolStripMenuItem2, Me.BMRequestToolStripMenuItem3, Me.PMRepairingToolStripMenuItem3, Me.SearchToolStripMenuItem3, Me.WIPToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(51, 166)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(568, 27)
+        Me.MenuStrip1.Size = New System.Drawing.Size(644, 27)
         Me.MenuStrip1.TabIndex = 213
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -580,7 +580,6 @@ Partial Class frmMain
         Me.SearchToolStripMenuItem3.Name = "SearchToolStripMenuItem3"
         Me.SearchToolStripMenuItem3.Size = New System.Drawing.Size(76, 23)
         Me.SearchToolStripMenuItem3.Text = "Search"
-        Me.SearchToolStripMenuItem3.Visible = False
         '
         'WIPToolStripMenuItem
         '
