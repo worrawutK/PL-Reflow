@@ -175,6 +175,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ReflowAlarmInfoData.vb" />
     <Compile Include="ReflowData.vb" />
     <Compile Include="Module1.vb" />
     <Compile Include="UDPSocket.vb" />

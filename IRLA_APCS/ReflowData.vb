@@ -1,5 +1,17 @@
 ﻿<Serializable()>
 Public Class ReflowData
+    Sub New()
+        c_AlarmInfoDatas = New List(Of ReflowAlarmInfoData)
+    End Sub
+    Private c_AlarmInfoDatas As List(Of ReflowAlarmInfoData)
+    Public Property AlarmInfoDatas() As List(Of ReflowAlarmInfoData)
+        Get
+            Return c_AlarmInfoDatas
+        End Get
+        Set(ByVal value As List(Of ReflowAlarmInfoData))
+            c_AlarmInfoDatas = value
+        End Set
+    End Property
     Private _mcNum As String
     Public Property McNo() As String
         Get
@@ -221,25 +233,25 @@ Public Class ReflowData
         End Set
     End Property
 
-    Private AlmID As Integer
-    Public Property AlarmID() As Integer
-        Get
-            Return AlmID
-        End Get
-        Set(ByVal value As Integer)
-            AlmID = value
-        End Set
-    End Property
+    'Private AlmID As Integer
+    'Public Property AlarmID() As Integer
+    '    Get
+    '        Return AlmID
+    '    End Get
+    '    Set(ByVal value As Integer)
+    '        AlmID = value
+    '    End Set
+    'End Property
 
-    Private AlarmNoData As String
-    Public Property AlarmNo() As String
-        Get
-            Return AlarmNoData
-        End Get
-        Set(ByVal value As String)
-            AlarmNoData = value
-        End Set
-    End Property
+    'Private AlarmNoData As String
+    'Public Property AlarmNo() As String
+    '    Get
+    '        Return AlarmNoData
+    '    End Get
+    '    Set(ByVal value As String)
+    '        AlarmNoData = value
+    '    End Set
+    'End Property
 
     Private AlarmTotalData As Integer
     Public Property AlarmTotal() As Integer

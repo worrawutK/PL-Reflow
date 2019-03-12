@@ -1634,11 +1634,17 @@ Namespace iLibraryService
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/SetupLotCustomModeNoCheckLicenser", ReplyAction:="http://tempuri.org/IServiceiLibrary/SetupLotCustomModeNoCheckLicenserResponse")>  _
         Function SetupLotCustomModeNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.SetupLotResult
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/SetupLotOven", ReplyAction:="http://tempuri.org/IServiceiLibrary/SetupLotOvenResponse")>  _
+        Function SetupLotOven(ByVal lotNo As String, ByVal mcNoApcsPro As String, ByVal mcNoApcs As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String) As iLibraryService.SetupLotResult
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/StartLot", ReplyAction:="http://tempuri.org/IServiceiLibrary/StartLotResponse")>  _
         Function StartLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String) As iLibraryService.StartLotResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/StartLotCustomMode", ReplyAction:="http://tempuri.org/IServiceiLibrary/StartLotCustomModeResponse")>  _
         Function StartLotCustomMode(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.StartLotResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/StartLotOven", ReplyAction:="http://tempuri.org/IServiceiLibrary/StartLotOvenResponse")>  _
+        Function StartLotOven(ByVal lotNo As String, ByVal mcNoApcsPro As String, ByVal mcNoApcs As String, ByVal opNo As String, ByVal recipe As String) As iLibraryService.StartLotResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/OnlineStart", ReplyAction:="http://tempuri.org/IServiceiLibrary/OnlineStartResponse")>  _
         Function OnlineStart(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String) As iLibraryService.OnlineStartResult
@@ -1655,6 +1661,9 @@ Namespace iLibraryService
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/EndLotNoCheckLicenser", ReplyAction:="http://tempuri.org/IServiceiLibrary/EndLotNoCheckLicenserResponse")>  _
         Function EndLotNoCheckLicenser(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult
         
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/EndLotOven", ReplyAction:="http://tempuri.org/IServiceiLibrary/EndLotOvenResponse")>  _
+        Function EndLotOven(ByVal lotNo As String, ByVal mcNoApcs As String, ByVal mcNoApcsPro As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult
+        
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/UpdateFinalinspection", ReplyAction:="http://tempuri.org/IServiceiLibrary/UpdateFinalinspectionResponse")>  _
         Function UpdateFinalinspection(ByVal lotNo As String, ByVal opNo As String, ByVal judge As iLibraryService.Judge, ByVal mcNo As String) As iLibraryService.UpdateFinalinspectionResult
         
@@ -1669,6 +1678,9 @@ Namespace iLibraryService
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/ReinputAndHoldLot", ReplyAction:="http://tempuri.org/IServiceiLibrary/ReinputAndHoldLotResponse")>  _
         Function ReinputAndHoldLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult
+        
+        <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/ReinputOven", ReplyAction:="http://tempuri.org/IServiceiLibrary/ReinputOvenResponse")>  _
+        Function ReinputOven(ByVal lotNo As String, ByVal mcNoApcsPro As String, ByVal mcNoApcs As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult
         
         <System.ServiceModel.OperationContractAttribute(Action:="http://tempuri.org/IServiceiLibrary/CheckLotApcsProManual", ReplyAction:="http://tempuri.org/IServiceiLibrary/CheckLotApcsProManualResponse")>  _
         Function CheckLotApcsProManual(ByVal lotNo As String, ByVal mcNo As String, ByVal package As String) As iLibraryService.CheckLotApcsProResult
@@ -1729,12 +1741,20 @@ Namespace iLibraryService
             Return MyBase.Channel.SetupLotCustomModeNoCheckLicenser(lotNo, mcNo, opNo, processName, layerNo, runMode)
         End Function
         
+        Public Function SetupLotOven(ByVal lotNo As String, ByVal mcNoApcsPro As String, ByVal mcNoApcs As String, ByVal opNo As String, ByVal processName As String, ByVal layerNo As String) As iLibraryService.SetupLotResult Implements iLibraryService.IServiceiLibrary.SetupLotOven
+            Return MyBase.Channel.SetupLotOven(lotNo, mcNoApcsPro, mcNoApcs, opNo, processName, layerNo)
+        End Function
+        
         Public Function StartLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String) As iLibraryService.StartLotResult Implements iLibraryService.IServiceiLibrary.StartLot
             Return MyBase.Channel.StartLot(lotNo, mcNo, opNo, recipe)
         End Function
         
         Public Function StartLotCustomMode(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal recipe As String, ByVal runMode As iLibraryService.RunMode) As iLibraryService.StartLotResult Implements iLibraryService.IServiceiLibrary.StartLotCustomMode
             Return MyBase.Channel.StartLotCustomMode(lotNo, mcNo, opNo, recipe, runMode)
+        End Function
+        
+        Public Function StartLotOven(ByVal lotNo As String, ByVal mcNoApcsPro As String, ByVal mcNoApcs As String, ByVal opNo As String, ByVal recipe As String) As iLibraryService.StartLotResult Implements iLibraryService.IServiceiLibrary.StartLotOven
+            Return MyBase.Channel.StartLotOven(lotNo, mcNoApcsPro, mcNoApcs, opNo, recipe)
         End Function
         
         Public Function OnlineStart(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String) As iLibraryService.OnlineStartResult Implements iLibraryService.IServiceiLibrary.OnlineStart
@@ -1757,6 +1777,10 @@ Namespace iLibraryService
             Return MyBase.Channel.EndLotNoCheckLicenser(lotNo, mcNo, opNo, good, ng)
         End Function
         
+        Public Function EndLotOven(ByVal lotNo As String, ByVal mcNoApcs As String, ByVal mcNoApcsPro As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer) As iLibraryService.EndLotResult Implements iLibraryService.IServiceiLibrary.EndLotOven
+            Return MyBase.Channel.EndLotOven(lotNo, mcNoApcs, mcNoApcsPro, opNo, good, ng)
+        End Function
+        
         Public Function UpdateFinalinspection(ByVal lotNo As String, ByVal opNo As String, ByVal judge As iLibraryService.Judge, ByVal mcNo As String) As iLibraryService.UpdateFinalinspectionResult Implements iLibraryService.IServiceiLibrary.UpdateFinalinspection
             Return MyBase.Channel.UpdateFinalinspection(lotNo, opNo, judge, mcNo)
         End Function
@@ -1775,6 +1799,10 @@ Namespace iLibraryService
         
         Public Function ReinputAndHoldLot(ByVal lotNo As String, ByVal mcNo As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult Implements iLibraryService.IServiceiLibrary.ReinputAndHoldLot
             Return MyBase.Channel.ReinputAndHoldLot(lotNo, mcNo, opNo, good, ng, endMode)
+        End Function
+        
+        Public Function ReinputOven(ByVal lotNo As String, ByVal mcNoApcsPro As String, ByVal mcNoApcs As String, ByVal opNo As String, ByVal good As Integer, ByVal ng As Integer, ByVal endMode As iLibraryService.EndMode) As iLibraryService.ReinputResult Implements iLibraryService.IServiceiLibrary.ReinputOven
+            Return MyBase.Channel.ReinputOven(lotNo, mcNoApcsPro, mcNoApcs, opNo, good, ng, endMode)
         End Function
         
         Public Function CheckLotApcsProManual(ByVal lotNo As String, ByVal mcNo As String, ByVal package As String) As iLibraryService.CheckLotApcsProResult Implements iLibraryService.IServiceiLibrary.CheckLotApcsProManual

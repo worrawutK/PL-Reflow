@@ -43,12 +43,15 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "190220 Support APCS Pro." 'Add Search Record
+        lbNetversion.Text = "190312 Support APCS Pro." 'Add Search Record
+
+        'Load Alarm table
+        ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
         'm_TdcService = TdcService.GetInstance()
         'm_TdcService.ConnectionString = My.Settings.APCSDBConnectionString
         'LoadPFAlarmTable()
-        ' LoadAlarmInfoXml()
-        ' LoadReflowDataTableXml()
+        'LoadAlarmInfoXml()
+        'LoadReflowDataTableXml()
         'LoadBackup()
         If ReFlowDataList Is Nothing Then
             ReFlowDataList = New List(Of ReflowData)
@@ -266,6 +269,9 @@ Public Class frmMain
         Next
         Return Nothing
     End Function
+    Private Function SearchData(lotNo As String) As Boolean
+        Return ReFlowDataList.Where(Function(x) x.LotStatus = _StatusLot.LotSetup And x.LotNo = lotNo).Any()
+    End Function
     Private Sub GetCode(ByVal UserCtrlReflow As ReflowData)
 
         Dim strText() As String = m_SelfData.LotData.Split(CChar(","))
@@ -283,7 +289,10 @@ Public Class frmMain
                     Dim strMaga As String = strText(6).Trim.ToUpper()
                     Dim strPCS_Frame As Integer = CInt(CLng("&H" & strText(7)))
                     Dim strGroup As String = Trim(strText(8)).Substring(0, 1)
-
+                    If SearchData(strLotNo) Then
+                        SendTheMessage(My.Settings.IP, "LP00" & vbCr, My.Settings.MCNo)
+                        Exit Sub
+                    End If
                     Dim data As ReflowData
                     'If Not RFData.ContainsKey(strLotNo) Then
                     data = New ReflowData With {
@@ -409,6 +418,7 @@ Public Class frmMain
                         data.LotStatus = _StatusLot.LotStart
 
                     End If
+                    SaveAlarm(data, "", AlarmState.RESET)
                 Next
                 UpdateDisplay(ReFlowDataList)
                 'If m_SelfData.StartTime <> "" And m_SelfData.StopTime = "" Then
@@ -454,22 +464,37 @@ Public Class frmMain
                     If data.StartTime <> "" And data.StopTime = "" Then
                         Try
                             Dim AlarmNo As String = strText(1).Trim
-                            Dim AlarmID As String = ""
 
+                            ''Alarm Reset
+                            'Try
+                            '    If data.AlarmNo <> "" Then
+                            '        c_ServiceiLibrary.MachineAlarm(data.LotNo, My.Settings.MCNo, data.OpNo, data.AlarmNo, AlarmState.RESET)
+                            '        data.AlarmNo = ""
+                            '    End If
+                            'Catch ex As Exception
+                            '    TextBoxNotification1.Text = "MachineAlarm :" & ex.ToString()
+                            'End Try
+
+
+                            'AlarmID = SearchAlarmID(AlarmNo)
+                            'data.AlarmNo = AlarmNo
+                            'data.AlarmID = CInt(AlarmID.Trim)
+                            'If AlarmID <> "" Then
+                            SaveAlarm(data, AlarmNo, AlarmState.SET)
+                            'AddAlarmInfoToTable(AlarmNo, data.LotNo, data.McNo)
+
+                            'End If
                             'UpdateAlarm(data.LotNo, AlarmNo, data.Package)
                             'UpdateMachineState(c_MachineInfo.Id, MachineProcessingState.Pause, c_Log)
-                            Try
-                                c_ServiceiLibrary.MachineAlarm(data.LotNo, My.Settings.MCNo, data.OpNo, AlarmNo, AlarmState.SET)
-                                c_ServiceiLibrary.UpdateMachineState(My.Settings.MCNo, iLibraryService.MachineProcessingState.Pause)
-                            Catch ex As Exception
-                                TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
-                            End Try
+                            'Try
 
-                            AlarmID = SearchAlarmID(AlarmNo)
-                            If AlarmID <> "" Then
-                                AddAlarmInfoToTable(AlarmNo, data.LotNo, data.McNo)
-                                data.AlarmTotal += 1
-                            End If
+                            '    c_ServiceiLibrary.MachineAlarm(data.LotNo, My.Settings.MCNo, data.OpNo, AlarmNo, AlarmState.SET)
+                            '    c_ServiceiLibrary.UpdateMachineState(My.Settings.MCNo, iLibraryService.MachineProcessingState.Pause)
+                            'Catch ex As Exception
+                            '    TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
+                            'End Try
+
+
 
                             data.LotStatus = _StatusLot.LotAlarm
 
@@ -1011,10 +1036,11 @@ Public Class frmMain
 
     Private Sub APCSClose_Click_1(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles APCSClose.Click
         If MessageBox.Show("ต้องการปิดโปรแกรม ?", "", MessageBoxButtons.YesNo) = Windows.Forms.DialogResult.Yes Then
-            SaveAlarmInfo()
-            SaveAlarmTableXML()
-            SaveReflowDataTableXml()
-            SaveBackup()
+            'SaveAlarmInfo()
+            'SaveAlarmTableXML()
+            'SaveReflowDataTableXml()
+            'SaveBackup()
+            SaveBackupList(ReFlowDataList)
             Me.Close()
         End If
     End Sub
@@ -1189,12 +1215,14 @@ Public Class frmMain
         Dim ret As String = ""
 
         Try
-            For Each AlarmRow As DBxDataSet.ReflowAlarmTableRow In DBxDataSet.ReflowAlarmTable.Rows
-                If CDbl(AlarmRow.AlarmNo) = tmpAlarmNo Then
-                    ret = CStr(AlarmRow.ID)
-                    Return ret
-                End If
-            Next
+
+            'For Each AlarmRow As DBxDataSet.ReflowAlarmTableRow In DBxDataSet.ReflowAlarmTable.Rows
+            '    If CDbl(AlarmRow.AlarmNo) = tmpAlarmNo Then
+            '        ret = CStr(AlarmRow.ID)
+            '        Return ret
+            '    End If
+            'Next
+            ret = DBxDataSet.ReflowAlarmTable.Where(Function(r) CInt(r.AlarmNo) = tmpAlarmNo).Select(Function(x) x.ID)(0).ToString()
         Catch ex As Exception
         End Try
         Return ret
@@ -1223,27 +1251,7 @@ Public Class frmMain
 
     End Sub
 
-    Private Sub SaveAlarmInfoToDbx(data As ReflowData)
-        If My.Computer.Network.Ping("172.16.0.102") = False Then
-            Exit Sub
-        End If
 
-        Dim removeList As List(Of DataRow) = New List(Of DataRow)
-        For Each DataRow As DBxDataSet.ReflowAlarmInfoRow In DBxDataSet.ReflowAlarmInfo.Rows
-            Try
-                If DataRow.MCNo = data.McNo AndAlso DataRow.IsClearTimeNull = False Then
-                    ReflowAlarmInfoTableAdapter.Update(DataRow)
-                    removeList.Add(DataRow)
-                End If
-            Catch ex As Exception
-                SaveAlarmDataError(DataRow)
-                removeList.Add(DataRow)
-            End Try
-        Next
-        For Each RemoveRow As DataRow In removeList
-            DBxDataSet.ReflowAlarmInfo.Rows.Remove(RemoveRow)
-        Next
-    End Sub
 
     Sub ClearAlarmInfoTable(ByVal LotNo As String, ByVal McNo As String)
         For Each DataRow As DBxDataSet.ReflowAlarmInfoRow In DBxDataSet.ReflowAlarmInfo.Rows
@@ -2147,11 +2155,21 @@ Public Class frmMain
 
             Dim result As StartLotResult = c_ServiceiLibrary.StartLot(LotNo, MCno, OpNo, c_ApcsPro.Recipe)
             If Not result.IsPass Then
-                TextBoxNotification1.Text = "StartLot :" & result.Cause
+                If lbLotNo1.Text = LotNo Then
+                    TextBoxNotification1.Text = "StartLot :" & result.Cause
+                Else
+                    TextBoxNotification2.Text = "StartLot :" & result.Cause
+                End If
+
             End If
             c_ServiceiLibrary.OnlineStart(LotNo, MCno, OpNo)
         Catch ex As Exception
-            TextBoxNotification1.Text = "StartLot,OnlineStart :" & ex.Message.ToString()
+            If lbLotNo1.Text = LotNo Then
+                TextBoxNotification1.Text = "StartLot,OnlineStart :" & ex.Message.ToString()
+            Else
+                TextBoxNotification2.Text = "StartLot,OnlineStart :" & ex.Message.ToString()
+            End If
+
         End Try
 
 
@@ -2297,7 +2315,17 @@ Public Class frmMain
         UpdateDisplay(ReFlowDataList)
     End Sub
 #Region "APCS Pro"
-
+    'Private Sub AlarmRest(data As ReflowData)
+    '    'Alarm Reset
+    '    Try
+    '        If data.AlarmNo <> "" Then
+    '            c_ServiceiLibrary.MachineAlarm(data.LotNo, My.Settings.MCNo, data.OpNo, data.AlarmNo, AlarmState.RESET)
+    '            data.AlarmNo = ""
+    '        End If
+    '    Catch ex As Exception
+    '        TextBoxNotification1.Text = "MachineAlarm :" & ex.ToString()
+    '    End Try
+    'End Sub
     '#Region "Apcs_Pro LotSetUp"
     '    Private Function SetUpApcsPro(mcNo As String, lotNo As String, opNo As String) As Boolean
     '        'Auto Move TDC
@@ -2631,6 +2659,83 @@ Public Class frmMain
         End Try
 
     End Function
+    Private Sub SaveAlarmInfoToDbx(data As ReflowData)
+
+        For Each rfAlarm As ReflowAlarmInfoData In data.AlarmInfoDatas
+            Dim newAlarmInfo As DBxDataSet.ReflowAlarmInfoRow = DBxDataSet.ReflowAlarmInfo.NewReflowAlarmInfoRow
+            newAlarmInfo.RecordTime = rfAlarm.RecordTime.Value
+            newAlarmInfo.MCNo = data.McNo
+            newAlarmInfo.AlarmID = rfAlarm.AlarmId
+            newAlarmInfo.LotNo = data.LotNo
+
+            If (rfAlarm.ClearTime.HasValue) Then
+                newAlarmInfo.ClearTime = rfAlarm.ClearTime.Value
+            Else
+                newAlarmInfo.ClearTime = Now
+            End If
+
+            DBxDataSet.ReflowAlarmInfo.Rows.Add(newAlarmInfo)
+            ReflowAlarmInfoTableAdapter.Update(newAlarmInfo)
+        Next
+
+
+        'If My.Computer.Network.Ping("172.16.0.102") = False Then
+        '    Exit Sub
+        'End If
+
+        'Dim removeList As List(Of DataRow) = New List(Of DataRow)
+        'For Each DataRow As DBxDataSet.ReflowAlarmInfoRow In DBxDataSet.ReflowAlarmInfo.Rows
+        '    Try
+        '        If DataRow.MCNo = data.McNo AndAlso DataRow.IsClearTimeNull = False Then
+        '            ReflowAlarmInfoTableAdapter.Update(DataRow)
+        '            removeList.Add(DataRow)
+        '        End If
+        '    Catch ex As Exception
+        '        SaveAlarmDataError(DataRow)
+        '        removeList.Add(DataRow)
+        '    End Try
+        'Next
+        'For Each RemoveRow As DataRow In removeList
+        '    DBxDataSet.ReflowAlarmInfo.Rows.Remove(RemoveRow)
+        'Next
+    End Sub
+    Private Delegate Sub workCompletedDelegate(result As String)
+    Private Sub SaveAlarm(data As ReflowData, alarmNo As String, alarm As AlarmState)
+
+
+        'Dim alarmData As List(Of ReflowAlarmInfoData) = data.AlarmInfoDatas.Where(Function(x) x.AlarmId = AlarmID).ToList
+        Try
+
+            c_ServiceiLibrary.MachineAlarm(data.LotNo, data.McNo, data.OpNo, alarmNo, alarm)
+            Select Case alarm
+                Case AlarmState.SET
+                    Dim AlarmID As Integer
+                    Integer.TryParse(SearchAlarmID(alarmNo), AlarmID)
+                    If AlarmID = 0 Then
+
+                        Me.BeginInvoke(Sub() Me.TextBoxNotificationNextLot.Text = "AlarmNo :" & alarmNo & " data not found")
+                        ' TextBoxNotification1.Text = "AlarmNo :" & alarmNo & " data not found"
+                        Return
+                    End If
+                    data.AlarmTotal += 1
+                    c_ServiceiLibrary.UpdateMachineState(data.McNo, iLibraryService.MachineProcessingState.Pause)
+                    Dim alarmInfo As New ReflowAlarmInfoData
+                    alarmInfo.RecordTime = Now
+                    alarmInfo.AlarmId = AlarmID
+                    data.AlarmInfoDatas.Add(alarmInfo)
+
+                Case AlarmState.RESET
+                    Dim alarmDatas As List(Of ReflowAlarmInfoData) = data.AlarmInfoDatas.Where(Function(x) Not x.ClearTime.HasValue).ToList
+                    Dim alarmClear As Date = Now
+                    For Each alarmData As ReflowAlarmInfoData In alarmDatas
+                        alarmData.ClearTime = alarmClear
+                    Next
+            End Select
+        Catch ex As Exception
+            TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
+        End Try
+
+    End Sub
 #Region "Apcs_Pro Valiable"
     ' Private ApcsProService As IApcsProService = New ApcsProService()
     'Private lotInfo As iLibrary.LotInfo
