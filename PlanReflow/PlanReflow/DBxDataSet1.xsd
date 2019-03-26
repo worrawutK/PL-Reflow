@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="DBxDataSet1" targetNamespace="http://tempuri.org/DBxDataSet1.xsd" xmlns:mstns="http://tempuri.org/DBxDataSet1.xsd" xmlns="http://tempuri.org/DBxDataSet1.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="1" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections>
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="APCSDBConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="APCSDBConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.PlanReflow.My.MySettings.GlobalReference.Default.APCSDBConnectionString" Provider="System.Data.SqlClient" />
+          <Connection AppSettingsObjectName="MySettings" AppSettingsPropertyName="DBxConnectionString" ConnectionStringObject="" IsAppSettingsProperty="true" Modifier="Assembly" Name="DBxConnectionString (MySettings)" ParameterPrefix="@" PropertyReference="ApplicationSettings.PlanReflow.My.MySettings.GlobalReference.Default.DBxConnectionString" Provider="System.Data.SqlClient" />
+        </Connections>
+        <Tables>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="PLMecoPlanGroupTableAdapter" GeneratorDataComponentClassName="PLMecoPlanGroupTableAdapter" Name="PLMecoPlanGroup" UserDataComponentName="PLMecoPlanGroupTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectName="DBx.dbo.PLMecoPlanData" DbObjectType="Table" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="false">
+                    <CommandText>SELECT        SUM(PLMecoPlanData.WIP) AS WIP, SUM(PLMecoPlanData.Result) AS RESULT, PLMecoPlanData.GroupPKG, PLMecoPlanData_1.Package, 
+                         PLMecoPlanData_1.DayPlan
+FROM            PLMecoPlanData INNER JOIN
+                         PLMecoPlanData AS PLMecoPlanData_1 ON PLMecoPlanData.GroupPKG = PLMecoPlanData_1.GroupPKG
+GROUP BY PLMecoPlanData.GroupPKG, PLMecoPlanData_1.Package, PLMecoPlanData_1.DayPlan
+ORDER BY PLMecoPlanData.GroupPKG</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="WIP" DataSetColumn="WIP" />
+              <Mapping SourceColumn="RESULT" DataSetColumn="RESULT" />
+              <Mapping SourceColumn="GroupPKG" DataSetColumn="GroupPKG" />
+              <Mapping SourceColumn="Package" DataSetColumn="Package" />
+              <Mapping SourceColumn="DayPlan" DataSetColumn="DayPlan" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+          <TableAdapter BaseClass="System.ComponentModel.Component" DataAccessorModifier="AutoLayout, AnsiClass, Class, Public" DataAccessorName="RFWIPTableAdapter" GeneratorDataComponentClassName="RFWIPTableAdapter" Name="RFWIP" UserDataComponentName="RFWIPTableAdapter">
+            <MainSource>
+              <DbSource ConnectionRef="DBxConnectionString (MySettings)" DbObjectType="Unknown" FillMethodModifier="Public" FillMethodName="Fill" GenerateMethods="Both" GenerateShortCommands="false" GeneratorGetMethodName="GetData" GeneratorSourceName="Fill" GetMethodModifier="Public" GetMethodName="GetData" QueryType="Rowset" ScalarCallRetval="System.Object, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" UseOptimisticConcurrency="false" UserGetMethodName="GetData" UserSourceName="Fill">
+                <SelectCommand>
+                  <DbCommand CommandType="Text" ModifiedByUser="true">
+                    <CommandText>SELECT        TCTransfer.LotNo, TCTransfer.CartNo, TCTransfer.LotStartTime, TCTransfer.LotEndTime, TransactionData.Package, TransactionData.Device
+FROM            TCTransfer INNER JOIN
+                         TransactionData ON TCTransfer.LotNo = TransactionData.LotNo
+WHERE        (TCTransfer.LotEndTime &gt; DATEADD(DAY, - 7, GETDATE())) AND (TCTransfer.LotNo NOT IN
+                             (SELECT DISTINCT LotNo
+                               FROM            ReflowData
+                               WHERE        (LotStartTime &gt; DATEADD(DAY, - 7, GETDATE()))))</CommandText>
+                    <Parameters />
+                  </DbCommand>
+                </SelectCommand>
+              </DbSource>
+            </MainSource>
+            <Mappings>
+              <Mapping SourceColumn="LotNo" DataSetColumn="LotNo" />
+              <Mapping SourceColumn="CartNo" DataSetColumn="CartNo" />
+              <Mapping SourceColumn="LotStartTime" DataSetColumn="LotStartTime" />
+              <Mapping SourceColumn="LotEndTime" DataSetColumn="LotEndTime" />
+              <Mapping SourceColumn="Package" DataSetColumn="Package" />
+              <Mapping SourceColumn="Device" DataSetColumn="Device" />
+            </Mappings>
+            <Sources />
+          </TableAdapter>
+        </Tables>
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="DBxDataSet1" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_DataSetName="DBxDataSet1" msprop:Generator_UserDSName="DBxDataSet1">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="PLMecoPlanGroup" msprop:Generator_TableClassName="PLMecoPlanGroupDataTable" msprop:Generator_TableVarName="tablePLMecoPlanGroup" msprop:Generator_TablePropName="PLMecoPlanGroup" msprop:Generator_RowDeletingName="PLMecoPlanGroupRowDeleting" msprop:Generator_RowChangingName="PLMecoPlanGroupRowChanging" msprop:Generator_RowEvHandlerName="PLMecoPlanGroupRowChangeEventHandler" msprop:Generator_RowDeletedName="PLMecoPlanGroupRowDeleted" msprop:Generator_UserTableName="PLMecoPlanGroup" msprop:Generator_RowChangedName="PLMecoPlanGroupRowChanged" msprop:Generator_RowEvArgName="PLMecoPlanGroupRowChangeEvent" msprop:Generator_RowClassName="PLMecoPlanGroupRow">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="WIP" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnWIP" msprop:Generator_ColumnPropNameInRow="WIP" msprop:Generator_ColumnPropNameInTable="WIPColumn" msprop:Generator_UserColumnName="WIP" type="xs:int" minOccurs="0" />
+              <xs:element name="RESULT" msdata:ReadOnly="true" msprop:Generator_ColumnVarNameInTable="columnRESULT" msprop:Generator_ColumnPropNameInRow="RESULT" msprop:Generator_ColumnPropNameInTable="RESULTColumn" msprop:Generator_UserColumnName="RESULT" type="xs:int" minOccurs="0" />
+              <xs:element name="GroupPKG" msprop:Generator_ColumnVarNameInTable="columnGroupPKG" msprop:Generator_ColumnPropNameInRow="GroupPKG" msprop:Generator_ColumnPropNameInTable="GroupPKGColumn" msprop:Generator_UserColumnName="GroupPKG" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="2" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Package" msprop:Generator_ColumnVarNameInTable="columnPackage" msprop:Generator_ColumnPropNameInRow="Package" msprop:Generator_ColumnPropNameInTable="PackageColumn" msprop:Generator_UserColumnName="Package">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="100" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="DayPlan" msprop:Generator_ColumnVarNameInTable="columnDayPlan" msprop:Generator_ColumnPropNameInRow="DayPlan" msprop:Generator_ColumnPropNameInTable="DayPlanColumn" msprop:Generator_UserColumnName="DayPlan" type="xs:short" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="RFWIP" msprop:Generator_TableClassName="RFWIPDataTable" msprop:Generator_TableVarName="tableRFWIP" msprop:Generator_RowChangedName="RFWIPRowChanged" msprop:Generator_TablePropName="RFWIP" msprop:Generator_RowDeletingName="RFWIPRowDeleting" msprop:Generator_RowChangingName="RFWIPRowChanging" msprop:Generator_RowEvHandlerName="RFWIPRowChangeEventHandler" msprop:Generator_RowDeletedName="RFWIPRowDeleted" msprop:Generator_RowClassName="RFWIPRow" msprop:Generator_UserTableName="RFWIP" msprop:Generator_RowEvArgName="RFWIPRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="LotNo" msprop:Generator_ColumnVarNameInTable="columnLotNo" msprop:Generator_ColumnPropNameInRow="LotNo" msprop:Generator_ColumnPropNameInTable="LotNoColumn" msprop:Generator_UserColumnName="LotNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="CartNo" msprop:Generator_ColumnVarNameInTable="columnCartNo" msprop:Generator_ColumnPropNameInRow="CartNo" msprop:Generator_ColumnPropNameInTable="CartNoColumn" msprop:Generator_UserColumnName="CartNo">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="LotStartTime" msprop:Generator_ColumnVarNameInTable="columnLotStartTime" msprop:Generator_ColumnPropNameInRow="LotStartTime" msprop:Generator_ColumnPropNameInTable="LotStartTimeColumn" msprop:Generator_UserColumnName="LotStartTime" type="xs:dateTime" />
+              <xs:element name="LotEndTime" msprop:Generator_ColumnVarNameInTable="columnLotEndTime" msprop:Generator_ColumnPropNameInRow="LotEndTime" msprop:Generator_ColumnPropNameInTable="LotEndTimeColumn" msprop:Generator_UserColumnName="LotEndTime" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="Package" msprop:Generator_ColumnVarNameInTable="columnPackage" msprop:Generator_ColumnPropNameInRow="Package" msprop:Generator_ColumnPropNameInTable="PackageColumn" msprop:Generator_UserColumnName="Package" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="10" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+              <xs:element name="Device" msprop:Generator_ColumnVarNameInTable="columnDevice" msprop:Generator_ColumnPropNameInRow="Device" msprop:Generator_ColumnPropNameInTable="DeviceColumn" msprop:Generator_UserColumnName="Device" minOccurs="0">
+                <xs:simpleType>
+                  <xs:restriction base="xs:string">
+                    <xs:maxLength value="20" />
+                  </xs:restriction>
+                </xs:simpleType>
+              </xs:element>
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+    <xs:unique name="Constraint1" msdata:PrimaryKey="true">
+      <xs:selector xpath=".//mstns:RFWIP" />
+      <xs:field xpath="mstns:LotNo" />
+      <xs:field xpath="mstns:LotStartTime" />
+    </xs:unique>
+  </xs:element>
+</xs:schema>
