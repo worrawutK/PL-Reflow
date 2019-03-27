@@ -2189,13 +2189,14 @@ Public Class frmMain
         Dim data As ReflowData = SearchReflowData(LotNo)
 
         Try
+            c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
             If modeEnd = EndMode.Normal Then
                 Dim endLotResult = c_ServiceiLibrary.EndLotNoCheckLicenser(LotNo, McNo, OpNo, Good, Ng)
             Else
                 Dim reinputLotResult = c_ServiceiLibrary.Reinput(LotNo, McNo, OpNo, Good, Ng, modeEnd)
             End If
 
-            c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
+
         Catch ex As Exception
 
         End Try
