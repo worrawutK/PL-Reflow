@@ -11,7 +11,7 @@ Option Strict On
 Option Explicit On
 
 
-Partial Public Class MasterForm
+Partial Public Class ReflowWIP
     
     '''<summary>
     '''form1 control.
@@ -30,6 +30,15 @@ Partial Public Class MasterForm
     '''To modify move field declaration from designer file to code-behind file.
     '''</remarks>
     Protected WithEvents lbHeader As Global.System.Web.UI.WebControls.Label
+    
+    '''<summary>
+    '''LinkButton1 control.
+    '''</summary>
+    '''<remarks>
+    '''Auto-generated field.
+    '''To modify move field declaration from designer file to code-behind file.
+    '''</remarks>
+    Protected WithEvents LinkButton1 As Global.System.Web.UI.WebControls.LinkButton
     
     '''<summary>
     '''rbPACKAGE control.

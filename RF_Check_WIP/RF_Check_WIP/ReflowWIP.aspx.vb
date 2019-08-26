@@ -1,12 +1,15 @@
-﻿Public Class MasterForm
+﻿Public Class ReflowWIP
     Inherits System.Web.UI.Page
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        If Session("Load") = Nothing Then
-            Session("Load") = True
+        'If Session("load") = Nothing Then
+        '    Session("load") = True
+        '    Dropdown()
+        'End If
+        If Not IsPostBack Then
             Dropdown()
         End If
-
+        'Dropdown()
 
     End Sub
 

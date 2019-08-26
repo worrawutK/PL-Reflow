@@ -1,4 +1,4 @@
-﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="ReflowWIP.aspx.vb" Inherits="RF_Check_WIP.MasterForm" %>
+﻿<%@ Page Language="vb" AutoEventWireup="false" CodeBehind="ReflowWIP.aspx.vb" Inherits="RF_Check_WIP.ReflowWIP" %>
 
 <%@ Register src="WebUserControl1.ascx" tagname="WebUserControl1" tagprefix="uc1" %>
 
@@ -18,6 +18,9 @@
  
     <div>
          <asp:Label ID="lbHeader" runat="server" Font-Size="40pt" ForeColor="#0033CC" >Reflow WIP</asp:Label>
+       
+     
+         <asp:LinkButton ID="LinkButton1" runat="server" Font-Size="20pt" PostBackUrl="~/TCTransferHistory.aspx">Transfer History</asp:LinkButton>
        
      
         <table style="width: 100%;" align="center">

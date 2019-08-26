@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -123,6 +124,7 @@
     <Content Include="ReflowWIP.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="TCTransferHistory.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebUserControl1.ascx" />
   </ItemGroup>
@@ -158,6 +160,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="TCTransferHistory.aspx.designer.vb">
+      <DependentUpon>TCTransferHistory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="TCTransferHistory.aspx.vb">
+      <DependentUpon>TCTransferHistory.aspx</DependentUpon>
+      <SubType>ASPXCodebehind</SubType>
+    </Compile>
+    <Compile Include="TransferData.vb" />
     <Compile Include="WebUserControl1.ascx.designer.vb">
       <DependentUpon>WebUserControl1.ascx</DependentUpon>
     </Compile>
