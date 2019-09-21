@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "190312 Support APCS Pro." 'Add Search Record
+        lbNetversion.Text = "190920 Support APCS Pro." 'Add Search Record
 
         'Load Alarm table
         ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
@@ -446,6 +446,7 @@ Public Class frmMain
                 Try
                     c_ServiceiLibrary.UpdateMachineState(My.Settings.MCNo, iLibraryService.MachineProcessingState.Idle)
                 Catch ex As Exception
+                    addlogfile("SB : " & "Update_MachineState :" & ex.ToString())
                     TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
                 End Try
                 For Each data As ReflowData In ReFlowDataList
@@ -598,6 +599,7 @@ Public Class frmMain
                     'End If
 
                     If strText.Length <> 4 OrElse strText(1).Trim.Length <> 10 OrElse strText(1).Contains(Chr(0)) Then
+                        SendTheMessage(My.Settings.IP, "CP" & vbCr, My.Settings.MCNo)
                         Exit Sub
                     End If
                     SendTheMessage(My.Settings.IP, "CP" & vbCr, My.Settings.MCNo)
@@ -734,11 +736,24 @@ Public Class frmMain
             addlogfile("LE Alm : " & ex.Message)
         End Try
 
-        UpdateDisplay(ReFlowDataList, False)
         ReFlowDataList.Remove(data)
+        UpdateDisplay(ReFlowDataList)
         SaveBackupList(ReFlowDataList)
         Return True
     End Function
+    Private Sub GetMachineRecord()
+        MachineRecordTableAdapter1.FillMachineRecord(DBxDataSet.MachineRecord, My.Settings.MCNo)
+        'Dim reflowDatas As List(Of ReflowData) = New List(Of ReflowData)
+
+        'For Each rowData As DBxDataSet.ReflowDataRow In reflowTable
+        '    Dim reflowData As ReflowData = New ReflowData()
+        '    reflowData.LotNo = rowData.LotNo
+        '    reflowData.McNo = rowData.MCNo
+        '    reflowData.MagazineNo = rowData.MagazineNo
+        '    reflowData.OpNo = rowData.OPNo
+        'Next
+
+    End Sub
     Enum StatusLot
         None
         Load
@@ -787,6 +802,7 @@ Public Class frmMain
         LabelNextLot.Text = "-"
         TextBoxNotificationNextLot.Text = "-"
         PanelNextLot.BackColor = Color.Silver
+        RemoveDisplay(dataList)
         For Each data As ReflowData In dataList
 
             'lbMC.Text = My.Settings.MCNo 'data.McNo
@@ -937,6 +953,68 @@ Public Class frmMain
 
     End Sub
 
+    Private Sub RemoveDisplay(dataList As List(Of ReflowData))
+        If dataList.Count = 0 Then
+            lbLotNo1.Text = "-"
+            lbOpNo1.Text = "-"
+            lbPackage1.Text = "-"
+            lbDevice1.Text = "-"
+            lbInput1.Text = "-"
+            lbOutput1.Text = "-"
+            LbMagazine1.Text = "-"
+            LbGroup1.Text = "-"
+            lbStart1.Text = "-"
+            lbStop1.Text = "-"
+            TextBoxNotification1.Text = "-"
+            PanelLot1.BackColor = Color.Silver
+            lbStart1.BackColor = Color.Transparent
+
+            lbLotNo2.Text = "-"
+            lbOpNo2.Text = "-"
+            lbPackage2.Text = "-"
+            lbDevice2.Text = "-"
+            lbInput2.Text = "-"
+            lbOutput2.Text = "-"
+            LbMagazine2.Text = "-"
+            LbGroup2.Text = "-"
+            lbStart2.Text = "-"
+            lbStop2.Text = "-"
+            TextBoxNotification2.Text = "-"
+            PanelLot2.BackColor = Color.Silver
+            lbStart2.BackColor = Color.Transparent
+        ElseIf Not dataList.Where(Function(x) x.LotNo = lbLotNo1.Text).Any() Then
+            lbLotNo1.Text = "-"
+            lbOpNo1.Text = "-"
+            lbPackage1.Text = "-"
+            lbDevice1.Text = "-"
+            lbInput1.Text = "-"
+            lbOutput1.Text = "-"
+            LbMagazine1.Text = "-"
+            LbGroup1.Text = "-"
+            lbStart1.Text = "-"
+            lbStop1.Text = "-"
+            TextBoxNotification1.Text = "-"
+            PanelLot1.BackColor = Color.Silver
+            lbStart1.BackColor = Color.Transparent
+        ElseIf Not dataList.Where(Function(x) x.LotNo = lbLotNo2.Text).Any() Then
+            lbLotNo2.Text = "-"
+            lbOpNo2.Text = "-"
+            lbPackage2.Text = "-"
+            lbDevice2.Text = "-"
+            lbInput2.Text = "-"
+            lbOutput2.Text = "-"
+            LbMagazine2.Text = "-"
+            LbGroup2.Text = "-"
+            lbStart2.Text = "-"
+            lbStop2.Text = "-"
+            TextBoxNotification2.Text = "-"
+            PanelLot2.BackColor = Color.Silver
+            lbStart2.BackColor = Color.Transparent
+        End If
+
+
+
+    End Sub
 #End Region
 
 #Region "==========================================Button==============================================="
@@ -2770,6 +2848,13 @@ Public Class frmMain
         frmTestFunction = New frmTestFunction(Me)
         frmTestFunction.Show()
 
+    End Sub
+
+    Private Sub TabControl2_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TabControl2.SelectedIndexChanged
+        Dim tap = CType(sender, TabControl)
+        If tap.SelectedTab.Name = "tabRecord" Then
+            GetMachineRecord()
+        End If
     End Sub
 
 

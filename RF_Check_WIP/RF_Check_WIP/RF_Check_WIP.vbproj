@@ -124,6 +124,9 @@
     <Content Include="ReflowWIP.aspx" />
     <Content Include="scripts\ai.0.22.9-build00167.js" />
     <Content Include="scripts\ai.0.22.9-build00167.min.js" />
+    <Content Include="scripts\bootstrap.min.css" />
+    <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\jquery.min.js" />
     <Content Include="TCTransferHistory.aspx" />
     <Content Include="Web.config" />
     <Content Include="WebUserControl1.ascx" />

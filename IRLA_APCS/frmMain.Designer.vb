@@ -24,6 +24,9 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lbStart1 = New System.Windows.Forms.Label()
         Me.lbIp = New System.Windows.Forms.Label()
         Me.lbOpNo1 = New System.Windows.Forms.Label()
@@ -34,10 +37,6 @@ Partial Class frmMain
         Me.lbPackage1 = New System.Windows.Forms.Label()
         Me.lbLotNo1 = New System.Windows.Forms.Label()
         Me.lbMC = New System.Windows.Forms.Label()
-        Me.ReflowDataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.DBxDataSet = New WindowsApplication1.DBxDataSet()
-        Me.ReflowAlarmInfoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.ReflowAlarmTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.BtEndLot = New System.Windows.Forms.Button()
         Me.LbGroup1 = New System.Windows.Forms.Label()
         Me.LbVersion = New System.Windows.Forms.Label()
@@ -154,9 +153,6 @@ Partial Class frmMain
         Me.Label34 = New System.Windows.Forms.Label()
         Me.Label35 = New System.Windows.Forms.Label()
         Me.Label36 = New System.Windows.Forms.Label()
-        Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter()
-        Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter()
-        Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter()
         Me.PictureBox1 = New System.Windows.Forms.PictureBox()
         Me.MinimizeButton = New System.Windows.Forms.Button()
         Me.APCSClose = New System.Windows.Forms.Button()
@@ -173,6 +169,10 @@ Partial Class frmMain
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.ReflowDataDataGridView = New System.Windows.Forms.DataGridView()
+        Me.ReflowAlarmInfoDataGridView = New System.Windows.Forms.DataGridView()
+        Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView()
+        Me.tabRecord = New System.Windows.Forms.TabPage()
+        Me.dataGridViewRecord = New System.Windows.Forms.DataGridView()
         Me.LotNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MCNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotStartTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -184,22 +184,40 @@ Partial Class frmMain
         Me.TemperatureGroupDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RemarkDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ReflowAlarmInfoDataGridView = New System.Windows.Forms.DataGridView()
+        Me.ReflowDataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.DBxDataSet = New WindowsApplication1.DBxDataSet()
         Me.RecordTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MCNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClearTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView()
+        Me.ReflowAlarmInfoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.IDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MachineTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.ReflowAlarmTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.MachineRecordBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter()
+        Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter()
+        Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter()
+        Me.MachineRecordTableAdapter1 = New WindowsApplication1.DBxDataSetTableAdapters.MachineRecordTableAdapter()
+        Me.LotNoDataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LotStartTimeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.LotEndTimeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.InputQtyDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OutputQtyDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MCNoDataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.PackageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.DeviceDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.OPNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.MagazineNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.TemperatureGroupDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.RemarkDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.AlarmTotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.selectLot = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.ReflowDataBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.MenuStrip1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -222,6 +240,14 @@ Partial Class frmMain
         CType(Me.ReflowDataDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmInfoDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabRecord.SuspendLayout()
+        CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.MachineRecordBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbStart1
@@ -336,26 +362,6 @@ Partial Class frmMain
         Me.lbMC.TabIndex = 24
         Me.lbMC.Text = "MCNo"
         '
-        'ReflowDataBindingSource
-        '
-        Me.ReflowDataBindingSource.DataMember = "ReflowData"
-        Me.ReflowDataBindingSource.DataSource = Me.DBxDataSet
-        '
-        'DBxDataSet
-        '
-        Me.DBxDataSet.DataSetName = "DBxDataSet"
-        Me.DBxDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
-        '
-        'ReflowAlarmInfoBindingSource
-        '
-        Me.ReflowAlarmInfoBindingSource.DataMember = "ReflowAlarmInfo"
-        Me.ReflowAlarmInfoBindingSource.DataSource = Me.DBxDataSet
-        '
-        'ReflowAlarmTableBindingSource
-        '
-        Me.ReflowAlarmTableBindingSource.DataMember = "ReflowAlarmTable"
-        Me.ReflowAlarmTableBindingSource.DataSource = Me.DBxDataSet
-        '
         'BtEndLot
         '
         Me.BtEndLot.BackColor = System.Drawing.SystemColors.Control
@@ -388,7 +394,7 @@ Partial Class frmMain
         Me.LbVersion.Name = "LbVersion"
         Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
-        Me.LbVersion.Text = "Reflow APCS Software Version 4.06"
+        Me.LbVersion.Text = "Reflow APCS Software Version 4.11"
         '
         'Lbtime
         '
@@ -1564,18 +1570,6 @@ Partial Class frmMain
         Me.Label36.TabIndex = 214
         Me.Label36.Text = "Package      "
         '
-        'ReflowAlarmTableTableAdapter
-        '
-        Me.ReflowAlarmTableTableAdapter.ClearBeforeFill = True
-        '
-        'ReflowAlarmInfoTableAdapter
-        '
-        Me.ReflowAlarmInfoTableAdapter.ClearBeforeFill = True
-        '
-        'ReflowDataTableAdapter
-        '
-        Me.ReflowDataTableAdapter.ClearBeforeFill = True
-        '
         'PictureBox1
         '
         Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
@@ -1614,7 +1608,8 @@ Partial Class frmMain
         '
         Me.TabControl2.Controls.Add(Me.TabPage3)
         Me.TabControl2.Controls.Add(Me.TabPage4)
-        Me.TabControl2.Location = New System.Drawing.Point(29, 205)
+        Me.TabControl2.Controls.Add(Me.tabRecord)
+        Me.TabControl2.Location = New System.Drawing.Point(29, 199)
         Me.TabControl2.Name = "TabControl2"
         Me.TabControl2.SelectedIndex = 0
         Me.TabControl2.Size = New System.Drawing.Size(1239, 815)
@@ -1762,6 +1757,86 @@ Partial Class frmMain
         Me.ReflowDataDataGridView.Size = New System.Drawing.Size(1194, 234)
         Me.ReflowDataDataGridView.TabIndex = 4
         '
+        'ReflowAlarmInfoDataGridView
+        '
+        Me.ReflowAlarmInfoDataGridView.AllowUserToAddRows = False
+        Me.ReflowAlarmInfoDataGridView.AutoGenerateColumns = False
+        Me.ReflowAlarmInfoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ReflowAlarmInfoDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecordTimeDataGridViewTextBoxColumn, Me.MCNoDataGridViewTextBoxColumn, Me.AlarmIDDataGridViewTextBoxColumn, Me.LotNoDataGridViewTextBoxColumn, Me.ClearTimeDataGridViewTextBoxColumn})
+        Me.ReflowAlarmInfoDataGridView.DataSource = Me.ReflowAlarmInfoBindingSource
+        Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(642, 24)
+        Me.ReflowAlarmInfoDataGridView.Name = "ReflowAlarmInfoDataGridView"
+        Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(567, 220)
+        Me.ReflowAlarmInfoDataGridView.TabIndex = 2
+        '
+        'ReflowAlarmTableDataGridView
+        '
+        Me.ReflowAlarmTableDataGridView.AllowUserToAddRows = False
+        Me.ReflowAlarmTableDataGridView.AllowUserToDeleteRows = False
+        Me.ReflowAlarmTableDataGridView.AutoGenerateColumns = False
+        Me.ReflowAlarmTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ReflowAlarmTableDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDDataGridViewTextBoxColumn, Me.AlarmNoDataGridViewTextBoxColumn, Me.MachineTypeDataGridViewTextBoxColumn, Me.AlarmTypeDataGridViewTextBoxColumn, Me.AlarmMessageDataGridViewTextBoxColumn})
+        Me.ReflowAlarmTableDataGridView.DataSource = Me.ReflowAlarmTableBindingSource
+        Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(15, 24)
+        Me.ReflowAlarmTableDataGridView.Name = "ReflowAlarmTableDataGridView"
+        Me.ReflowAlarmTableDataGridView.ReadOnly = True
+        Me.ReflowAlarmTableDataGridView.Size = New System.Drawing.Size(594, 220)
+        Me.ReflowAlarmTableDataGridView.TabIndex = 1
+        '
+        'tabRecord
+        '
+        Me.tabRecord.Controls.Add(Me.dataGridViewRecord)
+        Me.tabRecord.Location = New System.Drawing.Point(4, 22)
+        Me.tabRecord.Name = "tabRecord"
+        Me.tabRecord.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabRecord.Size = New System.Drawing.Size(1231, 789)
+        Me.tabRecord.TabIndex = 2
+        Me.tabRecord.Text = "Record"
+        Me.tabRecord.UseVisualStyleBackColor = True
+        '
+        'dataGridViewRecord
+        '
+        Me.dataGridViewRecord.AllowUserToAddRows = False
+        Me.dataGridViewRecord.AllowUserToDeleteRows = False
+        Me.dataGridViewRecord.AllowUserToResizeColumns = False
+        Me.dataGridViewRecord.AllowUserToResizeRows = False
+        Me.dataGridViewRecord.AutoGenerateColumns = False
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle1.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridViewRecord.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        Me.dataGridViewRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dataGridViewRecord.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn2, Me.LotStartTimeDataGridViewTextBoxColumn1, Me.LotEndTimeDataGridViewTextBoxColumn1, Me.InputQtyDataGridViewTextBoxColumn1, Me.OutputQtyDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn2, Me.PackageDataGridViewTextBoxColumn, Me.DeviceDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn1, Me.MagazineNoDataGridViewTextBoxColumn1, Me.TemperatureGroupDataGridViewTextBoxColumn1, Me.RemarkDataGridViewTextBoxColumn1, Me.AlarmTotalDataGridViewTextBoxColumn1, Me.selectLot})
+        Me.dataGridViewRecord.DataSource = Me.MachineRecordBindingSource
+        Me.dataGridViewRecord.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dataGridViewRecord.EnableHeadersVisualStyles = False
+        Me.dataGridViewRecord.Location = New System.Drawing.Point(3, 3)
+        Me.dataGridViewRecord.Margin = New System.Windows.Forms.Padding(4)
+        Me.dataGridViewRecord.MultiSelect = False
+        Me.dataGridViewRecord.Name = "dataGridViewRecord"
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridViewRecord.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
+        Me.dataGridViewRecord.RowHeadersVisible = False
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.dataGridViewRecord.RowsDefaultCellStyle = DataGridViewCellStyle3
+        Me.dataGridViewRecord.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dataGridViewRecord.RowTemplate.Height = 30
+        Me.dataGridViewRecord.RowTemplate.ReadOnly = True
+        Me.dataGridViewRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dataGridViewRecord.Size = New System.Drawing.Size(1225, 783)
+        Me.dataGridViewRecord.TabIndex = 4
+        '
         'LotNoDataGridViewTextBoxColumn1
         '
         Me.LotNoDataGridViewTextBoxColumn1.DataPropertyName = "LotNo"
@@ -1839,17 +1914,15 @@ Partial Class frmMain
         Me.AlarmTotalDataGridViewTextBoxColumn.Name = "AlarmTotalDataGridViewTextBoxColumn"
         Me.AlarmTotalDataGridViewTextBoxColumn.ReadOnly = True
         '
-        'ReflowAlarmInfoDataGridView
+        'ReflowDataBindingSource
         '
-        Me.ReflowAlarmInfoDataGridView.AllowUserToAddRows = False
-        Me.ReflowAlarmInfoDataGridView.AutoGenerateColumns = False
-        Me.ReflowAlarmInfoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ReflowAlarmInfoDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecordTimeDataGridViewTextBoxColumn, Me.MCNoDataGridViewTextBoxColumn, Me.AlarmIDDataGridViewTextBoxColumn, Me.LotNoDataGridViewTextBoxColumn, Me.ClearTimeDataGridViewTextBoxColumn})
-        Me.ReflowAlarmInfoDataGridView.DataSource = Me.ReflowAlarmInfoBindingSource
-        Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(642, 24)
-        Me.ReflowAlarmInfoDataGridView.Name = "ReflowAlarmInfoDataGridView"
-        Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(567, 220)
-        Me.ReflowAlarmInfoDataGridView.TabIndex = 2
+        Me.ReflowDataBindingSource.DataMember = "ReflowData"
+        Me.ReflowDataBindingSource.DataSource = Me.DBxDataSet
+        '
+        'DBxDataSet
+        '
+        Me.DBxDataSet.DataSetName = "DBxDataSet"
+        Me.DBxDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
         'RecordTimeDataGridViewTextBoxColumn
         '
@@ -1881,19 +1954,10 @@ Partial Class frmMain
         Me.ClearTimeDataGridViewTextBoxColumn.HeaderText = "ClearTime"
         Me.ClearTimeDataGridViewTextBoxColumn.Name = "ClearTimeDataGridViewTextBoxColumn"
         '
-        'ReflowAlarmTableDataGridView
+        'ReflowAlarmInfoBindingSource
         '
-        Me.ReflowAlarmTableDataGridView.AllowUserToAddRows = False
-        Me.ReflowAlarmTableDataGridView.AllowUserToDeleteRows = False
-        Me.ReflowAlarmTableDataGridView.AutoGenerateColumns = False
-        Me.ReflowAlarmTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ReflowAlarmTableDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDDataGridViewTextBoxColumn, Me.AlarmNoDataGridViewTextBoxColumn, Me.MachineTypeDataGridViewTextBoxColumn, Me.AlarmTypeDataGridViewTextBoxColumn, Me.AlarmMessageDataGridViewTextBoxColumn})
-        Me.ReflowAlarmTableDataGridView.DataSource = Me.ReflowAlarmTableBindingSource
-        Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(15, 24)
-        Me.ReflowAlarmTableDataGridView.Name = "ReflowAlarmTableDataGridView"
-        Me.ReflowAlarmTableDataGridView.ReadOnly = True
-        Me.ReflowAlarmTableDataGridView.Size = New System.Drawing.Size(594, 220)
-        Me.ReflowAlarmTableDataGridView.TabIndex = 1
+        Me.ReflowAlarmInfoBindingSource.DataMember = "ReflowAlarmInfo"
+        Me.ReflowAlarmInfoBindingSource.DataSource = Me.DBxDataSet
         '
         'IDDataGridViewTextBoxColumn
         '
@@ -1930,6 +1994,138 @@ Partial Class frmMain
         Me.AlarmMessageDataGridViewTextBoxColumn.Name = "AlarmMessageDataGridViewTextBoxColumn"
         Me.AlarmMessageDataGridViewTextBoxColumn.ReadOnly = True
         '
+        'ReflowAlarmTableBindingSource
+        '
+        Me.ReflowAlarmTableBindingSource.DataMember = "ReflowAlarmTable"
+        Me.ReflowAlarmTableBindingSource.DataSource = Me.DBxDataSet
+        '
+        'MachineRecordBindingSource
+        '
+        Me.MachineRecordBindingSource.DataMember = "MachineRecord"
+        Me.MachineRecordBindingSource.DataSource = Me.DBxDataSet
+        '
+        'ReflowAlarmTableTableAdapter
+        '
+        Me.ReflowAlarmTableTableAdapter.ClearBeforeFill = True
+        '
+        'ReflowAlarmInfoTableAdapter
+        '
+        Me.ReflowAlarmInfoTableAdapter.ClearBeforeFill = True
+        '
+        'ReflowDataTableAdapter
+        '
+        Me.ReflowDataTableAdapter.ClearBeforeFill = True
+        '
+        'MachineRecordTableAdapter1
+        '
+        Me.MachineRecordTableAdapter1.ClearBeforeFill = True
+        '
+        'LotNoDataGridViewTextBoxColumn2
+        '
+        Me.LotNoDataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.LotNoDataGridViewTextBoxColumn2.DataPropertyName = "LotNo"
+        Me.LotNoDataGridViewTextBoxColumn2.HeaderText = "LotNo"
+        Me.LotNoDataGridViewTextBoxColumn2.Name = "LotNoDataGridViewTextBoxColumn2"
+        Me.LotNoDataGridViewTextBoxColumn2.Width = 77
+        '
+        'LotStartTimeDataGridViewTextBoxColumn1
+        '
+        Me.LotStartTimeDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.LotStartTimeDataGridViewTextBoxColumn1.DataPropertyName = "LotStartTime"
+        Me.LotStartTimeDataGridViewTextBoxColumn1.HeaderText = "LotStartTime"
+        Me.LotStartTimeDataGridViewTextBoxColumn1.Name = "LotStartTimeDataGridViewTextBoxColumn1"
+        Me.LotStartTimeDataGridViewTextBoxColumn1.Width = 124
+        '
+        'LotEndTimeDataGridViewTextBoxColumn1
+        '
+        Me.LotEndTimeDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.LotEndTimeDataGridViewTextBoxColumn1.DataPropertyName = "LotEndTime"
+        Me.LotEndTimeDataGridViewTextBoxColumn1.HeaderText = "LotEndTime"
+        Me.LotEndTimeDataGridViewTextBoxColumn1.Name = "LotEndTimeDataGridViewTextBoxColumn1"
+        Me.LotEndTimeDataGridViewTextBoxColumn1.Width = 118
+        '
+        'InputQtyDataGridViewTextBoxColumn1
+        '
+        Me.InputQtyDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.InputQtyDataGridViewTextBoxColumn1.DataPropertyName = "InputQty"
+        Me.InputQtyDataGridViewTextBoxColumn1.HeaderText = "InputQty"
+        Me.InputQtyDataGridViewTextBoxColumn1.Name = "InputQtyDataGridViewTextBoxColumn1"
+        Me.InputQtyDataGridViewTextBoxColumn1.Width = 94
+        '
+        'OutputQtyDataGridViewTextBoxColumn1
+        '
+        Me.OutputQtyDataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.OutputQtyDataGridViewTextBoxColumn1.DataPropertyName = "OutputQty"
+        Me.OutputQtyDataGridViewTextBoxColumn1.HeaderText = "OutputQty"
+        Me.OutputQtyDataGridViewTextBoxColumn1.Name = "OutputQtyDataGridViewTextBoxColumn1"
+        Me.OutputQtyDataGridViewTextBoxColumn1.Width = 104
+        '
+        'MCNoDataGridViewTextBoxColumn2
+        '
+        Me.MCNoDataGridViewTextBoxColumn2.DataPropertyName = "MCNo"
+        Me.MCNoDataGridViewTextBoxColumn2.HeaderText = "MCNo"
+        Me.MCNoDataGridViewTextBoxColumn2.Name = "MCNoDataGridViewTextBoxColumn2"
+        '
+        'PackageDataGridViewTextBoxColumn
+        '
+        Me.PackageDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.PackageDataGridViewTextBoxColumn.DataPropertyName = "Package"
+        Me.PackageDataGridViewTextBoxColumn.HeaderText = "Package"
+        Me.PackageDataGridViewTextBoxColumn.Name = "PackageDataGridViewTextBoxColumn"
+        Me.PackageDataGridViewTextBoxColumn.Width = 90
+        '
+        'DeviceDataGridViewTextBoxColumn
+        '
+        Me.DeviceDataGridViewTextBoxColumn.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
+        Me.DeviceDataGridViewTextBoxColumn.DataPropertyName = "Device"
+        Me.DeviceDataGridViewTextBoxColumn.HeaderText = "Device"
+        Me.DeviceDataGridViewTextBoxColumn.Name = "DeviceDataGridViewTextBoxColumn"
+        Me.DeviceDataGridViewTextBoxColumn.Width = 80
+        '
+        'OPNoDataGridViewTextBoxColumn1
+        '
+        Me.OPNoDataGridViewTextBoxColumn1.DataPropertyName = "OPNo"
+        Me.OPNoDataGridViewTextBoxColumn1.HeaderText = "OPNo"
+        Me.OPNoDataGridViewTextBoxColumn1.Name = "OPNoDataGridViewTextBoxColumn1"
+        '
+        'MagazineNoDataGridViewTextBoxColumn1
+        '
+        Me.MagazineNoDataGridViewTextBoxColumn1.DataPropertyName = "MagazineNo"
+        Me.MagazineNoDataGridViewTextBoxColumn1.HeaderText = "MagazineNo"
+        Me.MagazineNoDataGridViewTextBoxColumn1.Name = "MagazineNoDataGridViewTextBoxColumn1"
+        '
+        'TemperatureGroupDataGridViewTextBoxColumn1
+        '
+        Me.TemperatureGroupDataGridViewTextBoxColumn1.DataPropertyName = "TemperatureGroup"
+        Me.TemperatureGroupDataGridViewTextBoxColumn1.HeaderText = "TemperatureGroup"
+        Me.TemperatureGroupDataGridViewTextBoxColumn1.Name = "TemperatureGroupDataGridViewTextBoxColumn1"
+        '
+        'RemarkDataGridViewTextBoxColumn1
+        '
+        Me.RemarkDataGridViewTextBoxColumn1.DataPropertyName = "Remark"
+        Me.RemarkDataGridViewTextBoxColumn1.HeaderText = "Remark"
+        Me.RemarkDataGridViewTextBoxColumn1.Name = "RemarkDataGridViewTextBoxColumn1"
+        '
+        'AlarmTotalDataGridViewTextBoxColumn1
+        '
+        Me.AlarmTotalDataGridViewTextBoxColumn1.DataPropertyName = "AlarmTotal"
+        Me.AlarmTotalDataGridViewTextBoxColumn1.HeaderText = "AlarmTotal"
+        Me.AlarmTotalDataGridViewTextBoxColumn1.Name = "AlarmTotalDataGridViewTextBoxColumn1"
+        '
+        'selectLot
+        '
+        Me.selectLot.DataPropertyName = "LotId"
+        Me.selectLot.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.selectLot.HeaderText = ""
+        Me.selectLot.Name = "selectLot"
+        Me.selectLot.Text = "Select"
+        Me.selectLot.UseColumnTextForButtonValue = True
+        Me.selectLot.Width = 5
+        '
+        'ReflowDataBindingSource1
+        '
+        Me.ReflowDataBindingSource1.DataSource = GetType(WindowsApplication1.ReflowData)
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1949,10 +2145,6 @@ Partial Class frmMain
         Me.Name = "frmMain"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
         Me.Text = "Self Controller"
-        CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
         Me.Panel1.ResumeLayout(False)
@@ -1983,6 +2175,14 @@ Partial Class frmMain
         CType(Me.ReflowDataDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowAlarmInfoDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabRecord.ResumeLayout(False)
+        CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.MachineRecordBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2159,4 +2359,23 @@ Partial Class frmMain
     Friend WithEvents ButtonReload As Button
     Friend WithEvents ButtonReload2 As Button
     Friend WithEvents RemoveLotToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents tabRecord As TabPage
+    Private WithEvents dataGridViewRecord As DataGridView
+    Friend WithEvents ReflowDataBindingSource1 As BindingSource
+    Friend WithEvents MachineRecordTableAdapter1 As DBxDataSetTableAdapters.MachineRecordTableAdapter
+    Friend WithEvents MachineRecordBindingSource As BindingSource
+    Friend WithEvents LotNoDataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents LotStartTimeDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents LotEndTimeDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents InputQtyDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents OutputQtyDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents MCNoDataGridViewTextBoxColumn2 As DataGridViewTextBoxColumn
+    Friend WithEvents PackageDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents DeviceDataGridViewTextBoxColumn As DataGridViewTextBoxColumn
+    Friend WithEvents OPNoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents MagazineNoDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents TemperatureGroupDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents RemarkDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents AlarmTotalDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
+    Friend WithEvents selectLot As DataGridViewButtonColumn
 End Class

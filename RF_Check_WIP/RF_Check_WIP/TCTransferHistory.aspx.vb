@@ -1,6 +1,6 @@
 ﻿Public Class TCTransferHistory
     Inherits System.Web.UI.Page
-    Public c_TCTransfer As List(Of TransferData)
+    Public c_TCTransfer As New List(Of TransferData)
 
     Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
         Dim lotNo As String = Request.Params("LOTNO")
@@ -17,12 +17,12 @@
         End If
 
 
-        c_ColorList = {"default", "success", "danger", "info", "warning", "active"}
+
 
 
         c_TCTransfer = data
     End Sub
-    Public c_ColorList As String()
+    Public c_ColorList As String() = {"default", "success", "danger", "info", "warning", "active"}
     Private Function GetLotNoTCTransferData(lotNo As String) As List(Of TransferData)
         Dim data As DataTable = New DataTable()
         Using cmd As New SqlClient.SqlCommand
