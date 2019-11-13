@@ -39,6 +39,15 @@ Public Class ApcsPro
             c_Recipe = value
         End Set
     End Property
+    Private c_CarrierInfo As WindowsApplication1.iLibraryService.CarrierInfo
+    Public Property CarrierInfo() As WindowsApplication1.iLibraryService.CarrierInfo
+        Get
+            Return c_CarrierInfo
+        End Get
+        Set(ByVal value As WindowsApplication1.iLibraryService.CarrierInfo)
+            c_CarrierInfo = value
+        End Set
+    End Property
     'Private c_LotInfo As LotInfo
     'Public Property LotInfo() As LotInfo
     '    Get

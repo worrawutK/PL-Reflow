@@ -24,9 +24,6 @@
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Provider=Microsoft.ACE.OLEDB.12.0;Data Source=|DataDirectory|\TDCLog.accdb</Value>
     </Setting>
-    <Setting Name="MCNo" Type="System.String" Scope="User">
-      <Value Profile="(Default)">RF-R-10</Value>
-    </Setting>
     <Setting Name="IP" Type="System.String" Scope="User">
       <Value Profile="(Default)">10.1.1.50</Value>
     </Setting>
@@ -36,6 +33,9 @@
   &lt;ConnectionString&gt;Data Source=172.16.0.102;Initial Catalog=APCSDB;Persist Security Info=True;User ID=apcsdbuser&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Data Source=172.16.0.102;Initial Catalog=APCSDB;Persist Security Info=True;User ID=apcsdbuser</Value>
+    </Setting>
+    <Setting Name="MCNo" Type="System.String" Scope="User">
+      <Value Profile="(Default)">RF-R-00</Value>
     </Setting>
   </Settings>
 </SettingsFile>

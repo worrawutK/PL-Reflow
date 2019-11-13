@@ -244,10 +244,16 @@
     <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.CancelLotResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.CarrierInfo.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.CheckLotApcsProResult.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.EndLotResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.iReportResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Connected Services\iLibraryService\WindowsApplication1.iLibraryService.MachineAlarmResult.datasource">

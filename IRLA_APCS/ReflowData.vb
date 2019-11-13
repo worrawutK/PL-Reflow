@@ -223,6 +223,16 @@ Public Class ReflowData
         End Set
     End Property
 
+    Private _UnloadMagazineNo As String
+    Public Property UnloadMagazineNo() As String
+        Get
+            Return _UnloadMagazineNo
+        End Get
+        Set(ByVal value As String)
+            _UnloadMagazineNo = value
+        End Set
+    End Property
+
     Private _LbPageBG As String
     Public Property LbPageBG() As String
         Get

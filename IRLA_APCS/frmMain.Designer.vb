@@ -24,9 +24,16 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lbStart1 = New System.Windows.Forms.Label()
         Me.lbIp = New System.Windows.Forms.Label()
         Me.lbOpNo1 = New System.Windows.Forms.Label()
@@ -173,6 +180,8 @@ Partial Class frmMain
         Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView()
         Me.tabRecord = New System.Windows.Forms.TabPage()
         Me.dataGridViewRecord = New System.Windows.Forms.DataGridView()
+        Me.selectLot = New System.Windows.Forms.DataGridViewButtonColumn()
+        Me.ReflowDataBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.LotNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MCNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotStartTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -198,11 +207,6 @@ Partial Class frmMain
         Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowAlarmTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.MachineRecordBindingSource = New System.Windows.Forms.BindingSource(Me.components)
-        Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter()
-        Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter()
-        Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter()
-        Me.MachineRecordTableAdapter1 = New WindowsApplication1.DBxDataSetTableAdapters.MachineRecordTableAdapter()
         Me.LotNoDataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotStartTimeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotEndTimeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -216,8 +220,15 @@ Partial Class frmMain
         Me.TemperatureGroupDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RemarkDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
-        Me.selectLot = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.ReflowDataBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
+        Me.MachineRecordBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter()
+        Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter()
+        Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter()
+        Me.MachineRecordTableAdapter1 = New WindowsApplication1.DBxDataSetTableAdapters.MachineRecordTableAdapter()
+        Me.LbUnloadMagazine1 = New System.Windows.Forms.Label()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.LbUnloadMagazine2 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -242,12 +253,12 @@ Partial Class frmMain
         CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.tabRecord.SuspendLayout()
         CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MachineRecordBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbStart1
@@ -255,7 +266,7 @@ Partial Class frmMain
         Me.lbStart1.AutoSize = True
         Me.lbStart1.BackColor = System.Drawing.Color.Transparent
         Me.lbStart1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStart1.Location = New System.Drawing.Point(159, 363)
+        Me.lbStart1.Location = New System.Drawing.Point(213, 353)
         Me.lbStart1.Name = "lbStart1"
         Me.lbStart1.Size = New System.Drawing.Size(19, 25)
         Me.lbStart1.TabIndex = 27
@@ -278,7 +289,7 @@ Partial Class frmMain
         Me.lbOpNo1.AutoSize = True
         Me.lbOpNo1.BackColor = System.Drawing.Color.Transparent
         Me.lbOpNo1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbOpNo1.Location = New System.Drawing.Point(159, 14)
+        Me.lbOpNo1.Location = New System.Drawing.Point(213, 5)
         Me.lbOpNo1.Name = "lbOpNo1"
         Me.lbOpNo1.Size = New System.Drawing.Size(19, 25)
         Me.lbOpNo1.TabIndex = 28
@@ -289,7 +300,7 @@ Partial Class frmMain
         Me.lbStop1.AutoSize = True
         Me.lbStop1.BackColor = System.Drawing.Color.Transparent
         Me.lbStop1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStop1.Location = New System.Drawing.Point(159, 411)
+        Me.lbStop1.Location = New System.Drawing.Point(213, 394)
         Me.lbStop1.Name = "lbStop1"
         Me.lbStop1.Size = New System.Drawing.Size(19, 25)
         Me.lbStop1.TabIndex = 26
@@ -300,7 +311,7 @@ Partial Class frmMain
         Me.lbInput1.AutoSize = True
         Me.lbInput1.BackColor = System.Drawing.Color.Transparent
         Me.lbInput1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbInput1.Location = New System.Drawing.Point(159, 178)
+        Me.lbInput1.Location = New System.Drawing.Point(213, 162)
         Me.lbInput1.Name = "lbInput1"
         Me.lbInput1.Size = New System.Drawing.Size(19, 25)
         Me.lbInput1.TabIndex = 25
@@ -311,7 +322,7 @@ Partial Class frmMain
         Me.lbDevice1.AutoSize = True
         Me.lbDevice1.BackColor = System.Drawing.Color.Transparent
         Me.lbDevice1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbDevice1.Location = New System.Drawing.Point(159, 136)
+        Me.lbDevice1.Location = New System.Drawing.Point(213, 122)
         Me.lbDevice1.Name = "lbDevice1"
         Me.lbDevice1.Size = New System.Drawing.Size(19, 25)
         Me.lbDevice1.TabIndex = 21
@@ -322,7 +333,7 @@ Partial Class frmMain
         Me.lbOutput1.AutoSize = True
         Me.lbOutput1.BackColor = System.Drawing.Color.Transparent
         Me.lbOutput1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbOutput1.Location = New System.Drawing.Point(159, 224)
+        Me.lbOutput1.Location = New System.Drawing.Point(213, 201)
         Me.lbOutput1.Name = "lbOutput1"
         Me.lbOutput1.Size = New System.Drawing.Size(19, 25)
         Me.lbOutput1.TabIndex = 20
@@ -333,7 +344,7 @@ Partial Class frmMain
         Me.lbPackage1.AutoSize = True
         Me.lbPackage1.BackColor = System.Drawing.Color.Transparent
         Me.lbPackage1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbPackage1.Location = New System.Drawing.Point(159, 94)
+        Me.lbPackage1.Location = New System.Drawing.Point(213, 82)
         Me.lbPackage1.Name = "lbPackage1"
         Me.lbPackage1.Size = New System.Drawing.Size(19, 25)
         Me.lbPackage1.TabIndex = 23
@@ -344,7 +355,7 @@ Partial Class frmMain
         Me.lbLotNo1.AutoSize = True
         Me.lbLotNo1.BackColor = System.Drawing.Color.Transparent
         Me.lbLotNo1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbLotNo1.Location = New System.Drawing.Point(159, 53)
+        Me.lbLotNo1.Location = New System.Drawing.Point(213, 42)
         Me.lbLotNo1.Name = "lbLotNo1"
         Me.lbLotNo1.Size = New System.Drawing.Size(19, 25)
         Me.lbLotNo1.TabIndex = 22
@@ -380,7 +391,7 @@ Partial Class frmMain
         Me.LbGroup1.AutoSize = True
         Me.LbGroup1.BackColor = System.Drawing.Color.Transparent
         Me.LbGroup1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbGroup1.Location = New System.Drawing.Point(159, 317)
+        Me.LbGroup1.Location = New System.Drawing.Point(213, 317)
         Me.LbGroup1.Name = "LbGroup1"
         Me.LbGroup1.Size = New System.Drawing.Size(19, 25)
         Me.LbGroup1.TabIndex = 45
@@ -394,7 +405,7 @@ Partial Class frmMain
         Me.LbVersion.Name = "LbVersion"
         Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
-        Me.LbVersion.Text = "Reflow APCS Software Version 4.11"
+        Me.LbVersion.Text = "Reflow APCS Software Version 4.14"
         '
         'Lbtime
         '
@@ -418,7 +429,7 @@ Partial Class frmMain
         Me.LbMagazine1.AutoSize = True
         Me.LbMagazine1.BackColor = System.Drawing.Color.Transparent
         Me.LbMagazine1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbMagazine1.Location = New System.Drawing.Point(159, 270)
+        Me.LbMagazine1.Location = New System.Drawing.Point(213, 240)
         Me.LbMagazine1.Name = "LbMagazine1"
         Me.LbMagazine1.Size = New System.Drawing.Size(19, 25)
         Me.LbMagazine1.TabIndex = 51
@@ -623,9 +634,9 @@ Partial Class frmMain
         Me.Label3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label3.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label3.Location = New System.Drawing.Point(18, 12)
+        Me.Label3.Location = New System.Drawing.Point(18, 3)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(135, 27)
+        Me.Label3.Size = New System.Drawing.Size(189, 27)
         Me.Label3.TabIndex = 214
         Me.Label3.Text = "OP No.        "
         '
@@ -635,9 +646,9 @@ Partial Class frmMain
         Me.Label4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label4.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label4.Location = New System.Drawing.Point(18, 53)
+        Me.Label4.Location = New System.Drawing.Point(18, 42)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(135, 27)
+        Me.Label4.Size = New System.Drawing.Size(189, 27)
         Me.Label4.TabIndex = 214
         Me.Label4.Text = "Lot No.        "
         '
@@ -647,9 +658,9 @@ Partial Class frmMain
         Me.Label5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label5.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label5.Location = New System.Drawing.Point(18, 94)
+        Me.Label5.Location = New System.Drawing.Point(18, 82)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(135, 27)
+        Me.Label5.Size = New System.Drawing.Size(189, 27)
         Me.Label5.TabIndex = 214
         Me.Label5.Text = "Package      "
         '
@@ -659,9 +670,9 @@ Partial Class frmMain
         Me.Label6.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label6.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label6.Location = New System.Drawing.Point(18, 136)
+        Me.Label6.Location = New System.Drawing.Point(18, 122)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(135, 27)
+        Me.Label6.Size = New System.Drawing.Size(189, 27)
         Me.Label6.TabIndex = 214
         Me.Label6.Text = "Device         "
         '
@@ -671,9 +682,9 @@ Partial Class frmMain
         Me.Label7.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label7.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label7.Location = New System.Drawing.Point(18, 178)
+        Me.Label7.Location = New System.Drawing.Point(18, 162)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(135, 27)
+        Me.Label7.Size = New System.Drawing.Size(189, 27)
         Me.Label7.TabIndex = 214
         Me.Label7.Text = "Input Qty     "
         '
@@ -683,9 +694,9 @@ Partial Class frmMain
         Me.Label8.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label8.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label8.Location = New System.Drawing.Point(18, 224)
+        Me.Label8.Location = New System.Drawing.Point(18, 201)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(135, 27)
+        Me.Label8.Size = New System.Drawing.Size(189, 27)
         Me.Label8.TabIndex = 214
         Me.Label8.Text = "Output Qty  "
         '
@@ -695,11 +706,11 @@ Partial Class frmMain
         Me.Label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label9.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label9.Location = New System.Drawing.Point(18, 270)
+        Me.Label9.Location = New System.Drawing.Point(18, 240)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(135, 27)
+        Me.Label9.Size = New System.Drawing.Size(189, 27)
         Me.Label9.TabIndex = 214
-        Me.Label9.Text = "Magazine    "
+        Me.Label9.Text = "Load Magazine    "
         '
         'Label10
         '
@@ -709,7 +720,7 @@ Partial Class frmMain
         Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.Label10.Location = New System.Drawing.Point(18, 317)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(135, 27)
+        Me.Label10.Size = New System.Drawing.Size(189, 27)
         Me.Label10.TabIndex = 214
         Me.Label10.Text = "Group Name"
         '
@@ -719,9 +730,9 @@ Partial Class frmMain
         Me.Label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label11.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label11.Location = New System.Drawing.Point(18, 365)
+        Me.Label11.Location = New System.Drawing.Point(18, 355)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(135, 27)
+        Me.Label11.Size = New System.Drawing.Size(189, 27)
         Me.Label11.TabIndex = 214
         Me.Label11.Text = "Start Time   "
         '
@@ -731,9 +742,9 @@ Partial Class frmMain
         Me.Label12.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label12.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label12.Location = New System.Drawing.Point(18, 411)
+        Me.Label12.Location = New System.Drawing.Point(18, 394)
         Me.Label12.Name = "Label12"
-        Me.Label12.Size = New System.Drawing.Size(134, 27)
+        Me.Label12.Size = New System.Drawing.Size(188, 27)
         Me.Label12.TabIndex = 214
         Me.Label12.Text = "End Time    "
         '
@@ -743,9 +754,9 @@ Partial Class frmMain
         Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label13.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label13.Location = New System.Drawing.Point(18, 461)
+        Me.Label13.Location = New System.Drawing.Point(18, 435)
         Me.Label13.Name = "Label13"
-        Me.Label13.Size = New System.Drawing.Size(134, 27)
+        Me.Label13.Size = New System.Drawing.Size(188, 27)
         Me.Label13.TabIndex = 214
         Me.Label13.Text = "Lot Info.      "
         '
@@ -788,9 +799,11 @@ Partial Class frmMain
         Me.Panel1.Controls.Add(Me.Label11)
         Me.Panel1.Controls.Add(Me.lbStart1)
         Me.Panel1.Controls.Add(Me.Label10)
+        Me.Panel1.Controls.Add(Me.Label18)
         Me.Panel1.Controls.Add(Me.Label9)
         Me.Panel1.Controls.Add(Me.LbGroup1)
         Me.Panel1.Controls.Add(Me.Label8)
+        Me.Panel1.Controls.Add(Me.LbUnloadMagazine1)
         Me.Panel1.Controls.Add(Me.LbMagazine1)
         Me.Panel1.Controls.Add(Me.Label7)
         Me.Panel1.Controls.Add(Me.Label3)
@@ -845,10 +858,10 @@ Partial Class frmMain
         Me.TextBoxNotification1.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBoxNotification1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold)
         Me.TextBoxNotification1.ForeColor = System.Drawing.Color.DarkOrange
-        Me.TextBoxNotification1.Location = New System.Drawing.Point(162, 461)
+        Me.TextBoxNotification1.Location = New System.Drawing.Point(218, 435)
         Me.TextBoxNotification1.Multiline = True
         Me.TextBoxNotification1.Name = "TextBoxNotification1"
-        Me.TextBoxNotification1.Size = New System.Drawing.Size(389, 88)
+        Me.TextBoxNotification1.Size = New System.Drawing.Size(361, 88)
         Me.TextBoxNotification1.TabIndex = 215
         Me.TextBoxNotification1.Text = "-"
         '
@@ -873,8 +886,10 @@ Partial Class frmMain
         Me.Panel2.Controls.Add(Me.lbStart2)
         Me.Panel2.Controls.Add(Me.TabControl1)
         Me.Panel2.Controls.Add(Me.Label26)
+        Me.Panel2.Controls.Add(Me.Label21)
         Me.Panel2.Controls.Add(Me.Label28)
         Me.Panel2.Controls.Add(Me.LbGroup2)
+        Me.Panel2.Controls.Add(Me.LbUnloadMagazine2)
         Me.Panel2.Controls.Add(Me.Label30)
         Me.Panel2.Controls.Add(Me.LbMagazine2)
         Me.Panel2.Controls.Add(Me.Label32)
@@ -906,10 +921,10 @@ Partial Class frmMain
         Me.TextBoxNotification2.BorderStyle = System.Windows.Forms.BorderStyle.None
         Me.TextBoxNotification2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold)
         Me.TextBoxNotification2.ForeColor = System.Drawing.Color.DarkOrange
-        Me.TextBoxNotification2.Location = New System.Drawing.Point(161, 462)
+        Me.TextBoxNotification2.Location = New System.Drawing.Point(233, 436)
         Me.TextBoxNotification2.Multiline = True
         Me.TextBoxNotification2.Name = "TextBoxNotification2"
-        Me.TextBoxNotification2.Size = New System.Drawing.Size(388, 88)
+        Me.TextBoxNotification2.Size = New System.Drawing.Size(354, 88)
         Me.TextBoxNotification2.TabIndex = 216
         Me.TextBoxNotification2.Text = "-"
         '
@@ -931,7 +946,7 @@ Partial Class frmMain
         Me.lbOpNo2.AutoSize = True
         Me.lbOpNo2.BackColor = System.Drawing.Color.Transparent
         Me.lbOpNo2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbOpNo2.Location = New System.Drawing.Point(157, 13)
+        Me.lbOpNo2.Location = New System.Drawing.Point(228, 6)
         Me.lbOpNo2.Name = "lbOpNo2"
         Me.lbOpNo2.Size = New System.Drawing.Size(19, 25)
         Me.lbOpNo2.TabIndex = 28
@@ -942,7 +957,7 @@ Partial Class frmMain
         Me.lbLotNo2.AutoSize = True
         Me.lbLotNo2.BackColor = System.Drawing.Color.Transparent
         Me.lbLotNo2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbLotNo2.Location = New System.Drawing.Point(157, 54)
+        Me.lbLotNo2.Location = New System.Drawing.Point(228, 45)
         Me.lbLotNo2.Name = "lbLotNo2"
         Me.lbLotNo2.Size = New System.Drawing.Size(19, 25)
         Me.lbLotNo2.TabIndex = 22
@@ -953,7 +968,7 @@ Partial Class frmMain
         Me.lbPackage2.AutoSize = True
         Me.lbPackage2.BackColor = System.Drawing.Color.Transparent
         Me.lbPackage2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbPackage2.Location = New System.Drawing.Point(157, 95)
+        Me.lbPackage2.Location = New System.Drawing.Point(228, 85)
         Me.lbPackage2.Name = "lbPackage2"
         Me.lbPackage2.Size = New System.Drawing.Size(19, 25)
         Me.lbPackage2.TabIndex = 23
@@ -964,7 +979,7 @@ Partial Class frmMain
         Me.lbOutput2.AutoSize = True
         Me.lbOutput2.BackColor = System.Drawing.Color.Transparent
         Me.lbOutput2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbOutput2.Location = New System.Drawing.Point(157, 225)
+        Me.lbOutput2.Location = New System.Drawing.Point(228, 204)
         Me.lbOutput2.Name = "lbOutput2"
         Me.lbOutput2.Size = New System.Drawing.Size(19, 25)
         Me.lbOutput2.TabIndex = 20
@@ -975,7 +990,7 @@ Partial Class frmMain
         Me.lbDevice2.AutoSize = True
         Me.lbDevice2.BackColor = System.Drawing.Color.Transparent
         Me.lbDevice2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbDevice2.Location = New System.Drawing.Point(157, 137)
+        Me.lbDevice2.Location = New System.Drawing.Point(228, 125)
         Me.lbDevice2.Name = "lbDevice2"
         Me.lbDevice2.Size = New System.Drawing.Size(19, 25)
         Me.lbDevice2.TabIndex = 21
@@ -987,9 +1002,9 @@ Partial Class frmMain
         Me.Label20.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label20.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label20.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label20.Location = New System.Drawing.Point(17, 462)
+        Me.Label20.Location = New System.Drawing.Point(17, 436)
         Me.Label20.Name = "Label20"
-        Me.Label20.Size = New System.Drawing.Size(134, 27)
+        Me.Label20.Size = New System.Drawing.Size(203, 27)
         Me.Label20.TabIndex = 214
         Me.Label20.Text = "Lot Info.      "
         '
@@ -998,7 +1013,7 @@ Partial Class frmMain
         Me.lbInput2.AutoSize = True
         Me.lbInput2.BackColor = System.Drawing.Color.Transparent
         Me.lbInput2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbInput2.Location = New System.Drawing.Point(157, 179)
+        Me.lbInput2.Location = New System.Drawing.Point(228, 165)
         Me.lbInput2.Name = "lbInput2"
         Me.lbInput2.Size = New System.Drawing.Size(19, 25)
         Me.lbInput2.TabIndex = 25
@@ -1010,9 +1025,9 @@ Partial Class frmMain
         Me.Label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label22.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label22.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label22.Location = New System.Drawing.Point(16, 412)
+        Me.Label22.Location = New System.Drawing.Point(16, 395)
         Me.Label22.Name = "Label22"
-        Me.Label22.Size = New System.Drawing.Size(135, 27)
+        Me.Label22.Size = New System.Drawing.Size(204, 27)
         Me.Label22.TabIndex = 214
         Me.Label22.Text = "End Time    "
         '
@@ -1021,7 +1036,7 @@ Partial Class frmMain
         Me.lbStop2.AutoSize = True
         Me.lbStop2.BackColor = System.Drawing.Color.Transparent
         Me.lbStop2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStop2.Location = New System.Drawing.Point(156, 412)
+        Me.lbStop2.Location = New System.Drawing.Point(228, 395)
         Me.lbStop2.Name = "lbStop2"
         Me.lbStop2.Size = New System.Drawing.Size(19, 25)
         Me.lbStop2.TabIndex = 26
@@ -1033,9 +1048,9 @@ Partial Class frmMain
         Me.Label24.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label24.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label24.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label24.Location = New System.Drawing.Point(16, 366)
+        Me.Label24.Location = New System.Drawing.Point(16, 356)
         Me.Label24.Name = "Label24"
-        Me.Label24.Size = New System.Drawing.Size(135, 27)
+        Me.Label24.Size = New System.Drawing.Size(204, 27)
         Me.Label24.TabIndex = 214
         Me.Label24.Text = "Start Time   "
         '
@@ -1044,7 +1059,7 @@ Partial Class frmMain
         Me.lbStart2.AutoSize = True
         Me.lbStart2.BackColor = System.Drawing.Color.Transparent
         Me.lbStart2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.lbStart2.Location = New System.Drawing.Point(156, 364)
+        Me.lbStart2.Location = New System.Drawing.Point(228, 354)
         Me.lbStart2.Name = "lbStart2"
         Me.lbStart2.Size = New System.Drawing.Size(19, 25)
         Me.lbStart2.TabIndex = 27
@@ -1460,7 +1475,7 @@ Partial Class frmMain
         Me.Label26.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
         Me.Label26.Location = New System.Drawing.Point(16, 318)
         Me.Label26.Name = "Label26"
-        Me.Label26.Size = New System.Drawing.Size(135, 27)
+        Me.Label26.Size = New System.Drawing.Size(204, 27)
         Me.Label26.TabIndex = 214
         Me.Label26.Text = "Group Name"
         '
@@ -1470,18 +1485,18 @@ Partial Class frmMain
         Me.Label28.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label28.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label28.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label28.Location = New System.Drawing.Point(17, 271)
+        Me.Label28.Location = New System.Drawing.Point(16, 240)
         Me.Label28.Name = "Label28"
-        Me.Label28.Size = New System.Drawing.Size(135, 27)
+        Me.Label28.Size = New System.Drawing.Size(204, 27)
         Me.Label28.TabIndex = 214
-        Me.Label28.Text = "Magazine    "
+        Me.Label28.Text = "Load Magazine    "
         '
         'LbGroup2
         '
         Me.LbGroup2.AutoSize = True
         Me.LbGroup2.BackColor = System.Drawing.Color.Transparent
         Me.LbGroup2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbGroup2.Location = New System.Drawing.Point(156, 318)
+        Me.LbGroup2.Location = New System.Drawing.Point(228, 318)
         Me.LbGroup2.Name = "LbGroup2"
         Me.LbGroup2.Size = New System.Drawing.Size(19, 25)
         Me.LbGroup2.TabIndex = 45
@@ -1493,9 +1508,9 @@ Partial Class frmMain
         Me.Label30.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label30.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label30.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label30.Location = New System.Drawing.Point(17, 225)
+        Me.Label30.Location = New System.Drawing.Point(17, 202)
         Me.Label30.Name = "Label30"
-        Me.Label30.Size = New System.Drawing.Size(135, 27)
+        Me.Label30.Size = New System.Drawing.Size(204, 27)
         Me.Label30.TabIndex = 214
         Me.Label30.Text = "Output Qty  "
         '
@@ -1504,7 +1519,7 @@ Partial Class frmMain
         Me.LbMagazine2.AutoSize = True
         Me.LbMagazine2.BackColor = System.Drawing.Color.Transparent
         Me.LbMagazine2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbMagazine2.Location = New System.Drawing.Point(157, 271)
+        Me.LbMagazine2.Location = New System.Drawing.Point(228, 241)
         Me.LbMagazine2.Name = "LbMagazine2"
         Me.LbMagazine2.Size = New System.Drawing.Size(19, 25)
         Me.LbMagazine2.TabIndex = 51
@@ -1516,9 +1531,9 @@ Partial Class frmMain
         Me.Label32.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label32.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label32.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label32.Location = New System.Drawing.Point(17, 179)
+        Me.Label32.Location = New System.Drawing.Point(17, 163)
         Me.Label32.Name = "Label32"
-        Me.Label32.Size = New System.Drawing.Size(135, 27)
+        Me.Label32.Size = New System.Drawing.Size(204, 27)
         Me.Label32.TabIndex = 214
         Me.Label32.Text = "Input Qty     "
         '
@@ -1528,9 +1543,9 @@ Partial Class frmMain
         Me.Label33.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label33.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label33.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label33.Location = New System.Drawing.Point(17, 13)
+        Me.Label33.Location = New System.Drawing.Point(17, 4)
         Me.Label33.Name = "Label33"
-        Me.Label33.Size = New System.Drawing.Size(135, 27)
+        Me.Label33.Size = New System.Drawing.Size(204, 27)
         Me.Label33.TabIndex = 214
         Me.Label33.Text = "OP No.        "
         '
@@ -1540,9 +1555,9 @@ Partial Class frmMain
         Me.Label34.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label34.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label34.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label34.Location = New System.Drawing.Point(17, 137)
+        Me.Label34.Location = New System.Drawing.Point(17, 123)
         Me.Label34.Name = "Label34"
-        Me.Label34.Size = New System.Drawing.Size(134, 27)
+        Me.Label34.Size = New System.Drawing.Size(203, 27)
         Me.Label34.TabIndex = 214
         Me.Label34.Text = "Device         "
         '
@@ -1552,9 +1567,9 @@ Partial Class frmMain
         Me.Label35.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label35.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label35.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label35.Location = New System.Drawing.Point(17, 54)
+        Me.Label35.Location = New System.Drawing.Point(17, 43)
         Me.Label35.Name = "Label35"
-        Me.Label35.Size = New System.Drawing.Size(135, 27)
+        Me.Label35.Size = New System.Drawing.Size(204, 27)
         Me.Label35.TabIndex = 214
         Me.Label35.Text = "Lot No.        "
         '
@@ -1564,9 +1579,9 @@ Partial Class frmMain
         Me.Label36.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
         Me.Label36.FlatStyle = System.Windows.Forms.FlatStyle.Flat
         Me.Label36.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label36.Location = New System.Drawing.Point(17, 95)
+        Me.Label36.Location = New System.Drawing.Point(17, 83)
         Me.Label36.Name = "Label36"
-        Me.Label36.Size = New System.Drawing.Size(134, 27)
+        Me.Label36.Size = New System.Drawing.Size(203, 27)
         Me.Label36.TabIndex = 214
         Me.Label36.Text = "Package      "
         '
@@ -1748,9 +1763,25 @@ Partial Class frmMain
         Me.ReflowDataDataGridView.AllowUserToAddRows = False
         Me.ReflowDataDataGridView.AllowUserToDeleteRows = False
         Me.ReflowDataDataGridView.AutoGenerateColumns = False
+        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ReflowDataDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
         Me.ReflowDataDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowDataDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn1, Me.LotStartTimeDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn, Me.InputQtyDataGridViewTextBoxColumn, Me.OutputQtyDataGridViewTextBoxColumn, Me.LotEndTimeDataGridViewTextBoxColumn, Me.MagazineNoDataGridViewTextBoxColumn, Me.TemperatureGroupDataGridViewTextBoxColumn, Me.RemarkDataGridViewTextBoxColumn, Me.AlarmTotalDataGridViewTextBoxColumn})
         Me.ReflowDataDataGridView.DataSource = Me.ReflowDataBindingSource
+        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ReflowDataDataGridView.DefaultCellStyle = DataGridViewCellStyle12
         Me.ReflowDataDataGridView.Location = New System.Drawing.Point(15, 272)
         Me.ReflowDataDataGridView.Name = "ReflowDataDataGridView"
         Me.ReflowDataDataGridView.ReadOnly = True
@@ -1761,9 +1792,25 @@ Partial Class frmMain
         '
         Me.ReflowAlarmInfoDataGridView.AllowUserToAddRows = False
         Me.ReflowAlarmInfoDataGridView.AutoGenerateColumns = False
+        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ReflowAlarmInfoDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
         Me.ReflowAlarmInfoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowAlarmInfoDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecordTimeDataGridViewTextBoxColumn, Me.MCNoDataGridViewTextBoxColumn, Me.AlarmIDDataGridViewTextBoxColumn, Me.LotNoDataGridViewTextBoxColumn, Me.ClearTimeDataGridViewTextBoxColumn})
         Me.ReflowAlarmInfoDataGridView.DataSource = Me.ReflowAlarmInfoBindingSource
+        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ReflowAlarmInfoDataGridView.DefaultCellStyle = DataGridViewCellStyle14
         Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(642, 24)
         Me.ReflowAlarmInfoDataGridView.Name = "ReflowAlarmInfoDataGridView"
         Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(567, 220)
@@ -1774,9 +1821,25 @@ Partial Class frmMain
         Me.ReflowAlarmTableDataGridView.AllowUserToAddRows = False
         Me.ReflowAlarmTableDataGridView.AllowUserToDeleteRows = False
         Me.ReflowAlarmTableDataGridView.AutoGenerateColumns = False
+        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ReflowAlarmTableDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle15
         Me.ReflowAlarmTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowAlarmTableDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDDataGridViewTextBoxColumn, Me.AlarmNoDataGridViewTextBoxColumn, Me.MachineTypeDataGridViewTextBoxColumn, Me.AlarmTypeDataGridViewTextBoxColumn, Me.AlarmMessageDataGridViewTextBoxColumn})
         Me.ReflowAlarmTableDataGridView.DataSource = Me.ReflowAlarmTableBindingSource
+        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ReflowAlarmTableDataGridView.DefaultCellStyle = DataGridViewCellStyle16
         Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(15, 24)
         Me.ReflowAlarmTableDataGridView.Name = "ReflowAlarmTableDataGridView"
         Me.ReflowAlarmTableDataGridView.ReadOnly = True
@@ -1801,41 +1864,59 @@ Partial Class frmMain
         Me.dataGridViewRecord.AllowUserToResizeColumns = False
         Me.dataGridViewRecord.AllowUserToResizeRows = False
         Me.dataGridViewRecord.AutoGenerateColumns = False
-        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle1.BackColor = System.Drawing.Color.Teal
-        DataGridViewCellStyle1.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle1.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle1.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dataGridViewRecord.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
+        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle17.BackColor = System.Drawing.Color.Teal
+        DataGridViewCellStyle17.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle17.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridViewRecord.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
         Me.dataGridViewRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.dataGridViewRecord.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn2, Me.LotStartTimeDataGridViewTextBoxColumn1, Me.LotEndTimeDataGridViewTextBoxColumn1, Me.InputQtyDataGridViewTextBoxColumn1, Me.OutputQtyDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn2, Me.PackageDataGridViewTextBoxColumn, Me.DeviceDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn1, Me.MagazineNoDataGridViewTextBoxColumn1, Me.TemperatureGroupDataGridViewTextBoxColumn1, Me.RemarkDataGridViewTextBoxColumn1, Me.AlarmTotalDataGridViewTextBoxColumn1, Me.selectLot})
         Me.dataGridViewRecord.DataSource = Me.MachineRecordBindingSource
+        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dataGridViewRecord.DefaultCellStyle = DataGridViewCellStyle18
         Me.dataGridViewRecord.Dock = System.Windows.Forms.DockStyle.Fill
         Me.dataGridViewRecord.EnableHeadersVisualStyles = False
         Me.dataGridViewRecord.Location = New System.Drawing.Point(3, 3)
         Me.dataGridViewRecord.Margin = New System.Windows.Forms.Padding(4)
         Me.dataGridViewRecord.MultiSelect = False
         Me.dataGridViewRecord.Name = "dataGridViewRecord"
-        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle2.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle2.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dataGridViewRecord.RowHeadersDefaultCellStyle = DataGridViewCellStyle2
+        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle19.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridViewRecord.RowHeadersDefaultCellStyle = DataGridViewCellStyle19
         Me.dataGridViewRecord.RowHeadersVisible = False
-        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.dataGridViewRecord.RowsDefaultCellStyle = DataGridViewCellStyle3
+        DataGridViewCellStyle20.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.dataGridViewRecord.RowsDefaultCellStyle = DataGridViewCellStyle20
         Me.dataGridViewRecord.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
         Me.dataGridViewRecord.RowTemplate.Height = 30
         Me.dataGridViewRecord.RowTemplate.ReadOnly = True
         Me.dataGridViewRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
         Me.dataGridViewRecord.Size = New System.Drawing.Size(1225, 783)
         Me.dataGridViewRecord.TabIndex = 4
+        '
+        'selectLot
+        '
+        Me.selectLot.DataPropertyName = "LotId"
+        Me.selectLot.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.selectLot.HeaderText = ""
+        Me.selectLot.Name = "selectLot"
+        Me.selectLot.Text = "Select"
+        Me.selectLot.UseColumnTextForButtonValue = True
+        Me.selectLot.Width = 5
         '
         'LotNoDataGridViewTextBoxColumn1
         '
@@ -1999,27 +2080,6 @@ Partial Class frmMain
         Me.ReflowAlarmTableBindingSource.DataMember = "ReflowAlarmTable"
         Me.ReflowAlarmTableBindingSource.DataSource = Me.DBxDataSet
         '
-        'MachineRecordBindingSource
-        '
-        Me.MachineRecordBindingSource.DataMember = "MachineRecord"
-        Me.MachineRecordBindingSource.DataSource = Me.DBxDataSet
-        '
-        'ReflowAlarmTableTableAdapter
-        '
-        Me.ReflowAlarmTableTableAdapter.ClearBeforeFill = True
-        '
-        'ReflowAlarmInfoTableAdapter
-        '
-        Me.ReflowAlarmInfoTableAdapter.ClearBeforeFill = True
-        '
-        'ReflowDataTableAdapter
-        '
-        Me.ReflowDataTableAdapter.ClearBeforeFill = True
-        '
-        'MachineRecordTableAdapter1
-        '
-        Me.MachineRecordTableAdapter1.ClearBeforeFill = True
-        '
         'LotNoDataGridViewTextBoxColumn2
         '
         Me.LotNoDataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells
@@ -2112,19 +2172,72 @@ Partial Class frmMain
         Me.AlarmTotalDataGridViewTextBoxColumn1.HeaderText = "AlarmTotal"
         Me.AlarmTotalDataGridViewTextBoxColumn1.Name = "AlarmTotalDataGridViewTextBoxColumn1"
         '
-        'selectLot
+        'MachineRecordBindingSource
         '
-        Me.selectLot.DataPropertyName = "LotId"
-        Me.selectLot.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.selectLot.HeaderText = ""
-        Me.selectLot.Name = "selectLot"
-        Me.selectLot.Text = "Select"
-        Me.selectLot.UseColumnTextForButtonValue = True
-        Me.selectLot.Width = 5
+        Me.MachineRecordBindingSource.DataMember = "MachineRecord"
+        Me.MachineRecordBindingSource.DataSource = Me.DBxDataSet
         '
-        'ReflowDataBindingSource1
+        'ReflowAlarmTableTableAdapter
         '
-        Me.ReflowDataBindingSource1.DataSource = GetType(WindowsApplication1.ReflowData)
+        Me.ReflowAlarmTableTableAdapter.ClearBeforeFill = True
+        '
+        'ReflowAlarmInfoTableAdapter
+        '
+        Me.ReflowAlarmInfoTableAdapter.ClearBeforeFill = True
+        '
+        'ReflowDataTableAdapter
+        '
+        Me.ReflowDataTableAdapter.ClearBeforeFill = True
+        '
+        'MachineRecordTableAdapter1
+        '
+        Me.MachineRecordTableAdapter1.ClearBeforeFill = True
+        '
+        'LbUnloadMagazine1
+        '
+        Me.LbUnloadMagazine1.AutoSize = True
+        Me.LbUnloadMagazine1.BackColor = System.Drawing.Color.Transparent
+        Me.LbUnloadMagazine1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.LbUnloadMagazine1.Location = New System.Drawing.Point(213, 278)
+        Me.LbUnloadMagazine1.Name = "LbUnloadMagazine1"
+        Me.LbUnloadMagazine1.Size = New System.Drawing.Size(19, 25)
+        Me.LbUnloadMagazine1.TabIndex = 51
+        Me.LbUnloadMagazine1.Text = "-"
+        '
+        'Label18
+        '
+        Me.Label18.BackColor = System.Drawing.Color.Transparent
+        Me.Label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.Label18.Location = New System.Drawing.Point(18, 278)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(189, 27)
+        Me.Label18.TabIndex = 214
+        Me.Label18.Text = "Unload Magazine    "
+        '
+        'LbUnloadMagazine2
+        '
+        Me.LbUnloadMagazine2.AutoSize = True
+        Me.LbUnloadMagazine2.BackColor = System.Drawing.Color.Transparent
+        Me.LbUnloadMagazine2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.LbUnloadMagazine2.Location = New System.Drawing.Point(228, 279)
+        Me.LbUnloadMagazine2.Name = "LbUnloadMagazine2"
+        Me.LbUnloadMagazine2.Size = New System.Drawing.Size(19, 25)
+        Me.LbUnloadMagazine2.TabIndex = 51
+        Me.LbUnloadMagazine2.Text = "-"
+        '
+        'Label21
+        '
+        Me.Label21.BackColor = System.Drawing.Color.Transparent
+        Me.Label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label21.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.Label21.Location = New System.Drawing.Point(16, 279)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(204, 27)
+        Me.Label21.TabIndex = 214
+        Me.Label21.Text = "Unload Magazine"
         '
         'frmMain
         '
@@ -2177,12 +2290,12 @@ Partial Class frmMain
         CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         Me.tabRecord.ResumeLayout(False)
         CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MachineRecordBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -2378,4 +2491,8 @@ Partial Class frmMain
     Friend WithEvents RemarkDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents AlarmTotalDataGridViewTextBoxColumn1 As DataGridViewTextBoxColumn
     Friend WithEvents selectLot As DataGridViewButtonColumn
+    Friend WithEvents Label18 As Label
+    Friend WithEvents LbUnloadMagazine1 As Label
+    Friend WithEvents Label21 As Label
+    Friend WithEvents LbUnloadMagazine2 As Label
 End Class

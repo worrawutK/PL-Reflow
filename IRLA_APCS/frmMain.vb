@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "190920 Support APCS Pro." 'Add Search Record
+        lbNetversion.Text = "191113 Support APCS Pro." 'Add Search Record
 
         'Load Alarm table
         ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
@@ -281,14 +281,38 @@ Public Class frmMain
             Case "LR"   'LR,LotNo,PackageNo,DeviceNo,OpNo,Input,Mag,pcs/frm,Group
 
                 Try
-                    Dim strLotNo As String = strText(1).Trim
-                    Dim strPackage As String = strText(2).Trim
-                    Dim strDevice As String = strText(3).Trim
-                    Dim strOPNo As String = strText(4).Trim
-                    Dim intInputData As Integer = CInt(CLng("&H" & strText(5)))
-                    Dim strMaga As String = strText(6).Trim.ToUpper()
-                    Dim strPCS_Frame As Integer = CInt(CLng("&H" & strText(7)))
-                    Dim strGroup As String = Trim(strText(8)).Substring(0, 1)
+                    Dim strLotNo As String '= strText(1).Trim
+                    Dim strPackage As String '= strText(2).Trim
+                    Dim strDevice As String '= strText(3).Trim
+                    Dim strOPNo As String '= strText(4).Trim
+                    Dim intInputData As Integer '= CInt(CLng("&H" & strText(5)))
+                    Dim strLoadCarrierNo As String '= strText(6).Trim.ToUpper()
+                    Dim strTranferCarrierNo As String = "" '= strText(7).Trim.ToUpper()
+                    Dim strPCS_Frame As Integer '= CInt(CLng("&H" & strText(7)))
+                    Dim strGroup As String '= Trim(strText(8)).Substring(0, 1)
+
+                    Select Case strText.Count()
+                        Case 9
+                            strLotNo = strText(1).Trim
+                            strPackage = strText(2).Trim
+                            strDevice = strText(3).Trim
+                            strOPNo = strText(4).Trim
+                            intInputData = CInt(CLng("&H" & strText(5)))
+                            strLoadCarrierNo = strText(6).Trim.ToUpper()
+                            strPCS_Frame = CInt(CLng("&H" & strText(7)))
+                            strGroup = Trim(strText(8)).Substring(0, 1)
+                        Case Else '10
+                            strLotNo = strText(1).Trim
+                            strPackage = strText(2).Trim
+                            strDevice = strText(3).Trim
+                            strOPNo = strText(4).Trim
+                            intInputData = CInt(CLng("&H" & strText(5)))
+                            strLoadCarrierNo = strText(6).Trim.ToUpper()
+                            strTranferCarrierNo = strText(7).Trim.ToUpper()
+                            strPCS_Frame = CInt(CLng("&H" & strText(8)))
+                            strGroup = Trim(strText(9)).Substring(0, 1)
+                    End Select
+
                     If SearchData(strLotNo) Then
                         SendTheMessage(My.Settings.IP, "LP00" & vbCr, My.Settings.MCNo)
                         Exit Sub
@@ -313,10 +337,14 @@ Public Class frmMain
                         }
 
                     ' .StopTime = "",
-                    If (strMaga = "0000000000") Then
+                    If (strLoadCarrierNo = "0000000000") Then
                         data.MagazineNo = ""
+                        AlarmMessage("MagazineNo ไม่ถูกต้องกรุณากรุณาตรวจสอบ MagazineNo ใหม่อีกครั้ง")
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
+                        Exit Sub
                     Else
-                        data.MagazineNo = strMaga
+                        data.MagazineNo = strLoadCarrierNo
+                        data.UnloadMagazineNo = strTranferCarrierNo
                     End If
                     ' End If
                     'เชค Data error
@@ -339,7 +367,7 @@ Public Class frmMain
                     End If
                     AutoCancelReflowData(strLotNo)
                     ReFlowDataList.Add(data)
-                    Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal, strOPNo)
+                    Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal, strOPNo, strLoadCarrierNo, strTranferCarrierNo)
                     If ApcsInfo.IsPass = False Then
                         SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
                         data.LotInform = ApcsInfo.ErrorMessage
@@ -742,7 +770,12 @@ Public Class frmMain
         Return True
     End Function
     Private Sub GetMachineRecord()
-        MachineRecordTableAdapter1.FillMachineRecord(DBxDataSet.MachineRecord, My.Settings.MCNo)
+        Dim dateValue = Now
+        If dateValue.Hour > 0 And dateValue.Hour < 8 Then
+            dateValue.AddDays(-1)
+        End If
+        DateTime.TryParse("08:00:00", dateValue)
+        MachineRecordTableAdapter1.FillMachineRecord(DBxDataSet.MachineRecord, My.Settings.MCNo, dateValue)
         'Dim reflowDatas As List(Of ReflowData) = New List(Of ReflowData)
 
         'For Each rowData As DBxDataSet.ReflowDataRow In reflowTable
@@ -777,6 +810,7 @@ Public Class frmMain
         TextBoxNotification1.Text = "-"
         LbGroup1.Text = "-"
         LbMagazine1.Text = "-"
+        LbUnloadMagazine1.Text = "-"
 
         lbOpNo2.Text = "-"
         lbLotNo2.Text = "-"
@@ -791,7 +825,7 @@ Public Class frmMain
         TextBoxNotification2.Text = "-"
         LbGroup2.Text = "-"
         LbMagazine2.Text = "-"
-
+        LbUnloadMagazine2.Text = "-"
     End Sub
     Public Sub UpdateDisplay(dataList As List(Of ReflowData), Optional backup As Boolean = True)
         'lbMC.Text = My.Settings.MCNo 'data.McNo
@@ -865,6 +899,11 @@ Public Class frmMain
                 Else
                     LbMagazine1.Text = "-"
                 End If
+                If Not data.UnloadMagazineNo Is Nothing Then
+                    LbUnloadMagazine1.Text = data.UnloadMagazineNo
+                Else
+                    LbUnloadMagazine1.Text = "-"
+                End If
 
 
 
@@ -932,7 +971,11 @@ Public Class frmMain
                 Else
                     LbMagazine2.Text = "-"
                 End If
-
+                If Not data.UnloadMagazineNo Is Nothing Then
+                    LbUnloadMagazine2.Text = data.UnloadMagazineNo
+                Else
+                    LbUnloadMagazine2.Text = "-"
+                End If
                 Select Case data.LotStatus
                     Case _StatusLot.LotSetup
                         lbStart2.BackColor = Color.Transparent
@@ -962,6 +1005,7 @@ Public Class frmMain
             lbInput1.Text = "-"
             lbOutput1.Text = "-"
             LbMagazine1.Text = "-"
+            LbUnloadMagazine1.Text = "-"
             LbGroup1.Text = "-"
             lbStart1.Text = "-"
             lbStop1.Text = "-"
@@ -976,6 +1020,7 @@ Public Class frmMain
             lbInput2.Text = "-"
             lbOutput2.Text = "-"
             LbMagazine2.Text = "-"
+            LbUnloadMagazine2.Text = "-"
             LbGroup2.Text = "-"
             lbStart2.Text = "-"
             lbStop2.Text = "-"
@@ -990,6 +1035,7 @@ Public Class frmMain
             lbInput1.Text = "-"
             lbOutput1.Text = "-"
             LbMagazine1.Text = "-"
+            LbUnloadMagazine1.Text = "-"
             LbGroup1.Text = "-"
             lbStart1.Text = "-"
             lbStop1.Text = "-"
@@ -1004,6 +1050,7 @@ Public Class frmMain
             lbInput2.Text = "-"
             lbOutput2.Text = "-"
             LbMagazine2.Text = "-"
+            LbUnloadMagazine2.Text = "-"
             LbGroup2.Text = "-"
             lbStart2.Text = "-"
             lbStop2.Text = "-"
@@ -2153,7 +2200,7 @@ Public Class frmMain
         End Try
     End Sub
 
-    Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType, OpNo As String) As TDCInfo
+    Function LotRequestTDC(ByVal LotNo As String, ByVal rm As RunModeType, OpNo As String, loadCarrierNo As String, tranferCarrierNo As String) As TDCInfo
         Dim apcsInfo As New TDCInfo
         Dim mc As String = My.Settings.MCNo
         Dim ap As New DBxDataSetTableAdapters.QueriesTableAdapter
@@ -2165,7 +2212,21 @@ Public Class frmMain
         Catch ex As Exception
             TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
         End Try
+        Try
+            c_ApcsPro.CarrierInfo = c_ServiceiLibrary.GetCarrierInfo(mc, LotNo, OpNo)
 
+            If c_ApcsPro.CarrierInfo.LoadCarrier = CarrierInfo.Status.Use Then
+                c_ApcsPro.CarrierInfo.LoadCarrierNo = loadCarrierNo
+            End If
+            If c_ApcsPro.CarrierInfo.RegisterCarrier = CarrierInfo.Status.Use Then
+                c_ApcsPro.CarrierInfo.RegisterCarrierNo = loadCarrierNo
+            End If
+            If c_ApcsPro.CarrierInfo.TransferCarrier = CarrierInfo.Status.Use Then
+                c_ApcsPro.CarrierInfo.TransferCarrierNo = tranferCarrierNo
+            End If
+        Catch ex As Exception
+
+        End Try
         'If c_ApcsProService.CheckPackageEnable(data.Package, c_Log) AndAlso c_ApcsProService.CheckLotisExist(LotNo, c_Log) Then
         '    If Not SetUpApcsPro(mc, LotNo, OpNo) Then
         '        apcsInfo.ErrorMessage = c_LotUpdateInfo.ErrorMessage
@@ -2175,8 +2236,10 @@ Public Class frmMain
         '    End If
         'End If
         Try
-            'If c_ServiceiLibrary.CheckLotApcsProManual(LotNo, mc, data.Package).IsPass Then
-            Dim result As SetupLotResult = c_ServiceiLibrary.SetupLot(LotNo, mc, OpNo, "PL", "")
+            'Dim setupSpecial As SetupLotSpecialParametersEventArgs = New SetupLotSpecialParametersEventArgs()
+            'setupSpecial.LayerNoApcs = ""
+            'setupSpecial.RunModeApcs = RunMode.Normal
+            Dim result As SetupLotResult = c_ServiceiLibrary.SetupLotPhase2(LotNo, mc, OpNo, "PL", Licenser.Check, c_ApcsPro.CarrierInfo, Nothing)
             If result.IsPass = SetupLotResult.Status.NotPass Then
                 MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
                 apcsInfo.ErrorMessage = result.Cause
@@ -2185,6 +2248,15 @@ Public Class frmMain
             ElseIf (result.IsPass = SetupLotResult.Status.Warning) Then
                 MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
             End If
+            'Dim result As SetupLotResult = c_ServiceiLibrary.SetupLot(LotNo, mc, OpNo, "PL", "")
+            'If result.IsPass = SetupLotResult.Status.NotPass Then
+            '    MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
+            '    apcsInfo.ErrorMessage = result.Cause
+            '    apcsInfo.IsPass = False
+            '    Return apcsInfo
+            'ElseIf (result.IsPass = SetupLotResult.Status.Warning) Then
+            '    MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
+            'End If
             c_ApcsPro.Recipe = result.Recipe
             XmlSave(c_ApcsPro)
             'End If
@@ -2231,7 +2303,7 @@ Public Class frmMain
 
         Try
 
-            Dim result As StartLotResult = c_ServiceiLibrary.StartLot(LotNo, MCno, OpNo, c_ApcsPro.Recipe)
+            Dim result As StartLotResult = c_ServiceiLibrary.StartLotPhase2(LotNo, MCno, OpNo, c_ApcsPro.Recipe, c_ApcsPro.CarrierInfo, Nothing)
             If Not result.IsPass Then
                 If lbLotNo1.Text = LotNo Then
                     TextBoxNotification1.Text = "StartLot :" & result.Cause
@@ -2240,6 +2312,15 @@ Public Class frmMain
                 End If
 
             End If
+            'Dim result As StartLotResult = c_ServiceiLibrary.StartLot(LotNo, MCno, OpNo, c_ApcsPro.Recipe)
+            'If Not result.IsPass Then
+            '    If lbLotNo1.Text = LotNo Then
+            '        TextBoxNotification1.Text = "StartLot :" & result.Cause
+            '    Else
+            '        TextBoxNotification2.Text = "StartLot :" & result.Cause
+            '    End If
+
+            'End If
             c_ServiceiLibrary.OnlineStart(LotNo, MCno, OpNo)
         Catch ex As Exception
             If lbLotNo1.Text = LotNo Then
@@ -2269,7 +2350,11 @@ Public Class frmMain
         Try
             c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
             If modeEnd = EndMode.Normal Then
-                Dim endLotResult = c_ServiceiLibrary.EndLotNoCheckLicenser(LotNo, McNo, OpNo, Good, Ng)
+                'Dim endLotResult = c_ServiceiLibrary.EndLotNoCheckLicenser(LotNo, McNo, OpNo, Good, Ng)
+                If (c_ApcsPro.CarrierInfo.UnloadCarrier = CarrierInfo.Status.Use) Then
+                    c_ApcsPro.CarrierInfo.UnloadCarrierNo = c_ApcsPro.CarrierInfo.TransferCarrierNo
+                End If
+                Dim endLotResult = c_ServiceiLibrary.EndLotPhase2(LotNo, McNo, OpNo, Good, Ng, Licenser.NoCheck, c_ApcsPro.CarrierInfo, Nothing)
             Else
                 Dim reinputLotResult = c_ServiceiLibrary.Reinput(LotNo, McNo, OpNo, Good, Ng, modeEnd)
             End If
