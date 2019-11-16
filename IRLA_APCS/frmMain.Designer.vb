@@ -24,16 +24,16 @@ Partial Class frmMain
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmMain))
-        Dim DataGridViewCellStyle11 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle12 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle13 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle14 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle15 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle16 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle17 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle18 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle19 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
-        Dim DataGridViewCellStyle20 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle5 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle6 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle7 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle8 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle9 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
+        Dim DataGridViewCellStyle10 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Me.lbStart1 = New System.Windows.Forms.Label()
         Me.lbIp = New System.Windows.Forms.Label()
         Me.lbOpNo1 = New System.Windows.Forms.Label()
@@ -100,6 +100,8 @@ Partial Class frmMain
         Me.RemoveLotToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ButtonReload = New System.Windows.Forms.Button()
         Me.TextBoxNotification1 = New System.Windows.Forms.TextBox()
+        Me.Label18 = New System.Windows.Forms.Label()
+        Me.LbUnloadMagazine1 = New System.Windows.Forms.Label()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.ButtonReload2 = New System.Windows.Forms.Button()
         Me.TextBoxNotification2 = New System.Windows.Forms.TextBox()
@@ -151,8 +153,10 @@ Partial Class frmMain
         Me.Button4 = New System.Windows.Forms.Button()
         Me.Button5 = New System.Windows.Forms.Button()
         Me.Label26 = New System.Windows.Forms.Label()
+        Me.Label21 = New System.Windows.Forms.Label()
         Me.Label28 = New System.Windows.Forms.Label()
         Me.LbGroup2 = New System.Windows.Forms.Label()
+        Me.LbUnloadMagazine2 = New System.Windows.Forms.Label()
         Me.Label30 = New System.Windows.Forms.Label()
         Me.LbMagazine2 = New System.Windows.Forms.Label()
         Me.Label32 = New System.Windows.Forms.Label()
@@ -176,12 +180,6 @@ Partial Class frmMain
         Me.TabPage4 = New System.Windows.Forms.TabPage()
         Me.Panel3 = New System.Windows.Forms.Panel()
         Me.ReflowDataDataGridView = New System.Windows.Forms.DataGridView()
-        Me.ReflowAlarmInfoDataGridView = New System.Windows.Forms.DataGridView()
-        Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView()
-        Me.tabRecord = New System.Windows.Forms.TabPage()
-        Me.dataGridViewRecord = New System.Windows.Forms.DataGridView()
-        Me.selectLot = New System.Windows.Forms.DataGridViewButtonColumn()
-        Me.ReflowDataBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.LotNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MCNoDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotStartTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -195,18 +193,22 @@ Partial Class frmMain
         Me.AlarmTotalDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowDataBindingSource = New System.Windows.Forms.BindingSource(Me.components)
         Me.DBxDataSet = New WindowsApplication1.DBxDataSet()
+        Me.ReflowAlarmInfoDataGridView = New System.Windows.Forms.DataGridView()
         Me.RecordTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MCNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmIDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ClearTimeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowAlarmInfoBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ReflowAlarmTableDataGridView = New System.Windows.Forms.DataGridView()
         Me.IDDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmNoDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.MachineTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTypeDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmMessageDataGridViewTextBoxColumn = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.ReflowAlarmTableBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.tabRecord = New System.Windows.Forms.TabPage()
+        Me.dataGridViewRecord = New System.Windows.Forms.DataGridView()
         Me.LotNoDataGridViewTextBoxColumn2 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotStartTimeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.LotEndTimeDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
@@ -220,15 +222,13 @@ Partial Class frmMain
         Me.TemperatureGroupDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.RemarkDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
         Me.AlarmTotalDataGridViewTextBoxColumn1 = New System.Windows.Forms.DataGridViewTextBoxColumn()
+        Me.selectLot = New System.Windows.Forms.DataGridViewButtonColumn()
         Me.MachineRecordBindingSource = New System.Windows.Forms.BindingSource(Me.components)
+        Me.ReflowDataBindingSource1 = New System.Windows.Forms.BindingSource(Me.components)
         Me.ReflowAlarmTableTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmTableTableAdapter()
         Me.ReflowAlarmInfoTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowAlarmInfoTableAdapter()
         Me.ReflowDataTableAdapter = New WindowsApplication1.DBxDataSetTableAdapters.ReflowDataTableAdapter()
         Me.MachineRecordTableAdapter1 = New WindowsApplication1.DBxDataSetTableAdapters.MachineRecordTableAdapter()
-        Me.LbUnloadMagazine1 = New System.Windows.Forms.Label()
-        Me.Label18 = New System.Windows.Forms.Label()
-        Me.LbUnloadMagazine2 = New System.Windows.Forms.Label()
-        Me.Label21 = New System.Windows.Forms.Label()
         Me.MenuStrip1.SuspendLayout()
         Me.Panel1.SuspendLayout()
         Me.ContextMenuStrip1.SuspendLayout()
@@ -249,16 +249,16 @@ Partial Class frmMain
         Me.TabPage4.SuspendLayout()
         Me.Panel3.SuspendLayout()
         CType(Me.ReflowDataDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ReflowAlarmInfoDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.tabRecord.SuspendLayout()
-        CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).BeginInit()
-        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowAlarmInfoDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.tabRecord.SuspendLayout()
+        CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.MachineRecordBindingSource, System.ComponentModel.ISupportInitialize).BeginInit()
+        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'lbStart1
@@ -405,7 +405,7 @@ Partial Class frmMain
         Me.LbVersion.Name = "LbVersion"
         Me.LbVersion.Size = New System.Drawing.Size(178, 13)
         Me.LbVersion.TabIndex = 47
-        Me.LbVersion.Text = "Reflow APCS Software Version 4.14"
+        Me.LbVersion.Text = "Reflow APCS Software Version 4.15"
         '
         'Lbtime
         '
@@ -864,6 +864,29 @@ Partial Class frmMain
         Me.TextBoxNotification1.Size = New System.Drawing.Size(361, 88)
         Me.TextBoxNotification1.TabIndex = 215
         Me.TextBoxNotification1.Text = "-"
+        '
+        'Label18
+        '
+        Me.Label18.BackColor = System.Drawing.Color.Transparent
+        Me.Label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.Label18.Location = New System.Drawing.Point(18, 278)
+        Me.Label18.Name = "Label18"
+        Me.Label18.Size = New System.Drawing.Size(189, 27)
+        Me.Label18.TabIndex = 214
+        Me.Label18.Text = "Unload Magazine    "
+        '
+        'LbUnloadMagazine1
+        '
+        Me.LbUnloadMagazine1.AutoSize = True
+        Me.LbUnloadMagazine1.BackColor = System.Drawing.Color.Transparent
+        Me.LbUnloadMagazine1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.LbUnloadMagazine1.Location = New System.Drawing.Point(213, 278)
+        Me.LbUnloadMagazine1.Name = "LbUnloadMagazine1"
+        Me.LbUnloadMagazine1.Size = New System.Drawing.Size(19, 25)
+        Me.LbUnloadMagazine1.TabIndex = 51
+        Me.LbUnloadMagazine1.Text = "-"
         '
         'Panel2
         '
@@ -1479,6 +1502,18 @@ Partial Class frmMain
         Me.Label26.TabIndex = 214
         Me.Label26.Text = "Group Name"
         '
+        'Label21
+        '
+        Me.Label21.BackColor = System.Drawing.Color.Transparent
+        Me.Label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+        Me.Label21.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.Label21.Location = New System.Drawing.Point(16, 279)
+        Me.Label21.Name = "Label21"
+        Me.Label21.Size = New System.Drawing.Size(204, 27)
+        Me.Label21.TabIndex = 214
+        Me.Label21.Text = "Unload Magazine"
+        '
         'Label28
         '
         Me.Label28.BackColor = System.Drawing.Color.Transparent
@@ -1501,6 +1536,17 @@ Partial Class frmMain
         Me.LbGroup2.Size = New System.Drawing.Size(19, 25)
         Me.LbGroup2.TabIndex = 45
         Me.LbGroup2.Text = "-"
+        '
+        'LbUnloadMagazine2
+        '
+        Me.LbUnloadMagazine2.AutoSize = True
+        Me.LbUnloadMagazine2.BackColor = System.Drawing.Color.Transparent
+        Me.LbUnloadMagazine2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.LbUnloadMagazine2.Location = New System.Drawing.Point(228, 279)
+        Me.LbUnloadMagazine2.Name = "LbUnloadMagazine2"
+        Me.LbUnloadMagazine2.Size = New System.Drawing.Size(19, 25)
+        Me.LbUnloadMagazine2.TabIndex = 51
+        Me.LbUnloadMagazine2.Text = "-"
         '
         'Label30
         '
@@ -1763,160 +1809,30 @@ Partial Class frmMain
         Me.ReflowDataDataGridView.AllowUserToAddRows = False
         Me.ReflowDataDataGridView.AllowUserToDeleteRows = False
         Me.ReflowDataDataGridView.AutoGenerateColumns = False
-        DataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle11.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle11.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ReflowDataDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle11
+        DataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ReflowDataDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle1
         Me.ReflowDataDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
         Me.ReflowDataDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn1, Me.LotStartTimeDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn, Me.InputQtyDataGridViewTextBoxColumn, Me.OutputQtyDataGridViewTextBoxColumn, Me.LotEndTimeDataGridViewTextBoxColumn, Me.MagazineNoDataGridViewTextBoxColumn, Me.TemperatureGroupDataGridViewTextBoxColumn, Me.RemarkDataGridViewTextBoxColumn, Me.AlarmTotalDataGridViewTextBoxColumn})
         Me.ReflowDataDataGridView.DataSource = Me.ReflowDataBindingSource
-        DataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle12.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle12.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle12.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle12.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle12.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle12.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ReflowDataDataGridView.DefaultCellStyle = DataGridViewCellStyle12
+        DataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ReflowDataDataGridView.DefaultCellStyle = DataGridViewCellStyle2
         Me.ReflowDataDataGridView.Location = New System.Drawing.Point(15, 272)
         Me.ReflowDataDataGridView.Name = "ReflowDataDataGridView"
         Me.ReflowDataDataGridView.ReadOnly = True
         Me.ReflowDataDataGridView.Size = New System.Drawing.Size(1194, 234)
         Me.ReflowDataDataGridView.TabIndex = 4
-        '
-        'ReflowAlarmInfoDataGridView
-        '
-        Me.ReflowAlarmInfoDataGridView.AllowUserToAddRows = False
-        Me.ReflowAlarmInfoDataGridView.AutoGenerateColumns = False
-        DataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle13.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle13.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle13.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle13.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle13.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ReflowAlarmInfoDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle13
-        Me.ReflowAlarmInfoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ReflowAlarmInfoDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecordTimeDataGridViewTextBoxColumn, Me.MCNoDataGridViewTextBoxColumn, Me.AlarmIDDataGridViewTextBoxColumn, Me.LotNoDataGridViewTextBoxColumn, Me.ClearTimeDataGridViewTextBoxColumn})
-        Me.ReflowAlarmInfoDataGridView.DataSource = Me.ReflowAlarmInfoBindingSource
-        DataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle14.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ReflowAlarmInfoDataGridView.DefaultCellStyle = DataGridViewCellStyle14
-        Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(642, 24)
-        Me.ReflowAlarmInfoDataGridView.Name = "ReflowAlarmInfoDataGridView"
-        Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(567, 220)
-        Me.ReflowAlarmInfoDataGridView.TabIndex = 2
-        '
-        'ReflowAlarmTableDataGridView
-        '
-        Me.ReflowAlarmTableDataGridView.AllowUserToAddRows = False
-        Me.ReflowAlarmTableDataGridView.AllowUserToDeleteRows = False
-        Me.ReflowAlarmTableDataGridView.AutoGenerateColumns = False
-        DataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle15.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText
-        DataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.ReflowAlarmTableDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle15
-        Me.ReflowAlarmTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.ReflowAlarmTableDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDDataGridViewTextBoxColumn, Me.AlarmNoDataGridViewTextBoxColumn, Me.MachineTypeDataGridViewTextBoxColumn, Me.AlarmTypeDataGridViewTextBoxColumn, Me.AlarmMessageDataGridViewTextBoxColumn})
-        Me.ReflowAlarmTableDataGridView.DataSource = Me.ReflowAlarmTableBindingSource
-        DataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle16.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle16.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.ReflowAlarmTableDataGridView.DefaultCellStyle = DataGridViewCellStyle16
-        Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(15, 24)
-        Me.ReflowAlarmTableDataGridView.Name = "ReflowAlarmTableDataGridView"
-        Me.ReflowAlarmTableDataGridView.ReadOnly = True
-        Me.ReflowAlarmTableDataGridView.Size = New System.Drawing.Size(594, 220)
-        Me.ReflowAlarmTableDataGridView.TabIndex = 1
-        '
-        'tabRecord
-        '
-        Me.tabRecord.Controls.Add(Me.dataGridViewRecord)
-        Me.tabRecord.Location = New System.Drawing.Point(4, 22)
-        Me.tabRecord.Name = "tabRecord"
-        Me.tabRecord.Padding = New System.Windows.Forms.Padding(3)
-        Me.tabRecord.Size = New System.Drawing.Size(1231, 789)
-        Me.tabRecord.TabIndex = 2
-        Me.tabRecord.Text = "Record"
-        Me.tabRecord.UseVisualStyleBackColor = True
-        '
-        'dataGridViewRecord
-        '
-        Me.dataGridViewRecord.AllowUserToAddRows = False
-        Me.dataGridViewRecord.AllowUserToDeleteRows = False
-        Me.dataGridViewRecord.AllowUserToResizeColumns = False
-        Me.dataGridViewRecord.AllowUserToResizeRows = False
-        Me.dataGridViewRecord.AutoGenerateColumns = False
-        DataGridViewCellStyle17.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle17.BackColor = System.Drawing.Color.Teal
-        DataGridViewCellStyle17.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle17.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle17.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
-        DataGridViewCellStyle17.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle17.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle17.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dataGridViewRecord.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle17
-        Me.dataGridViewRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-        Me.dataGridViewRecord.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn2, Me.LotStartTimeDataGridViewTextBoxColumn1, Me.LotEndTimeDataGridViewTextBoxColumn1, Me.InputQtyDataGridViewTextBoxColumn1, Me.OutputQtyDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn2, Me.PackageDataGridViewTextBoxColumn, Me.DeviceDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn1, Me.MagazineNoDataGridViewTextBoxColumn1, Me.TemperatureGroupDataGridViewTextBoxColumn1, Me.RemarkDataGridViewTextBoxColumn1, Me.AlarmTotalDataGridViewTextBoxColumn1, Me.selectLot})
-        Me.dataGridViewRecord.DataSource = Me.MachineRecordBindingSource
-        DataGridViewCellStyle18.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle18.BackColor = System.Drawing.SystemColors.Window
-        DataGridViewCellStyle18.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle18.ForeColor = System.Drawing.SystemColors.ControlText
-        DataGridViewCellStyle18.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle18.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle18.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
-        Me.dataGridViewRecord.DefaultCellStyle = DataGridViewCellStyle18
-        Me.dataGridViewRecord.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.dataGridViewRecord.EnableHeadersVisualStyles = False
-        Me.dataGridViewRecord.Location = New System.Drawing.Point(3, 3)
-        Me.dataGridViewRecord.Margin = New System.Windows.Forms.Padding(4)
-        Me.dataGridViewRecord.MultiSelect = False
-        Me.dataGridViewRecord.Name = "dataGridViewRecord"
-        DataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
-        DataGridViewCellStyle19.BackColor = System.Drawing.SystemColors.Control
-        DataGridViewCellStyle19.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        DataGridViewCellStyle19.ForeColor = System.Drawing.Color.White
-        DataGridViewCellStyle19.SelectionBackColor = System.Drawing.SystemColors.Highlight
-        DataGridViewCellStyle19.SelectionForeColor = System.Drawing.SystemColors.HighlightText
-        DataGridViewCellStyle19.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
-        Me.dataGridViewRecord.RowHeadersDefaultCellStyle = DataGridViewCellStyle19
-        Me.dataGridViewRecord.RowHeadersVisible = False
-        DataGridViewCellStyle20.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.dataGridViewRecord.RowsDefaultCellStyle = DataGridViewCellStyle20
-        Me.dataGridViewRecord.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
-        Me.dataGridViewRecord.RowTemplate.Height = 30
-        Me.dataGridViewRecord.RowTemplate.ReadOnly = True
-        Me.dataGridViewRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.dataGridViewRecord.Size = New System.Drawing.Size(1225, 783)
-        Me.dataGridViewRecord.TabIndex = 4
-        '
-        'selectLot
-        '
-        Me.selectLot.DataPropertyName = "LotId"
-        Me.selectLot.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.selectLot.HeaderText = ""
-        Me.selectLot.Name = "selectLot"
-        Me.selectLot.Text = "Select"
-        Me.selectLot.UseColumnTextForButtonValue = True
-        Me.selectLot.Width = 5
         '
         'LotNoDataGridViewTextBoxColumn1
         '
@@ -2005,6 +1921,34 @@ Partial Class frmMain
         Me.DBxDataSet.DataSetName = "DBxDataSet"
         Me.DBxDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema
         '
+        'ReflowAlarmInfoDataGridView
+        '
+        Me.ReflowAlarmInfoDataGridView.AllowUserToAddRows = False
+        Me.ReflowAlarmInfoDataGridView.AutoGenerateColumns = False
+        DataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ReflowAlarmInfoDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle3
+        Me.ReflowAlarmInfoDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ReflowAlarmInfoDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.RecordTimeDataGridViewTextBoxColumn, Me.MCNoDataGridViewTextBoxColumn, Me.AlarmIDDataGridViewTextBoxColumn, Me.LotNoDataGridViewTextBoxColumn, Me.ClearTimeDataGridViewTextBoxColumn})
+        Me.ReflowAlarmInfoDataGridView.DataSource = Me.ReflowAlarmInfoBindingSource
+        DataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ReflowAlarmInfoDataGridView.DefaultCellStyle = DataGridViewCellStyle4
+        Me.ReflowAlarmInfoDataGridView.Location = New System.Drawing.Point(642, 24)
+        Me.ReflowAlarmInfoDataGridView.Name = "ReflowAlarmInfoDataGridView"
+        Me.ReflowAlarmInfoDataGridView.Size = New System.Drawing.Size(567, 220)
+        Me.ReflowAlarmInfoDataGridView.TabIndex = 2
+        '
         'RecordTimeDataGridViewTextBoxColumn
         '
         Me.RecordTimeDataGridViewTextBoxColumn.DataPropertyName = "RecordTime"
@@ -2039,6 +1983,36 @@ Partial Class frmMain
         '
         Me.ReflowAlarmInfoBindingSource.DataMember = "ReflowAlarmInfo"
         Me.ReflowAlarmInfoBindingSource.DataSource = Me.DBxDataSet
+        '
+        'ReflowAlarmTableDataGridView
+        '
+        Me.ReflowAlarmTableDataGridView.AllowUserToAddRows = False
+        Me.ReflowAlarmTableDataGridView.AllowUserToDeleteRows = False
+        Me.ReflowAlarmTableDataGridView.AutoGenerateColumns = False
+        DataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText
+        DataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.ReflowAlarmTableDataGridView.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle5
+        Me.ReflowAlarmTableDataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.ReflowAlarmTableDataGridView.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.IDDataGridViewTextBoxColumn, Me.AlarmNoDataGridViewTextBoxColumn, Me.MachineTypeDataGridViewTextBoxColumn, Me.AlarmTypeDataGridViewTextBoxColumn, Me.AlarmMessageDataGridViewTextBoxColumn})
+        Me.ReflowAlarmTableDataGridView.DataSource = Me.ReflowAlarmTableBindingSource
+        DataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.ReflowAlarmTableDataGridView.DefaultCellStyle = DataGridViewCellStyle6
+        Me.ReflowAlarmTableDataGridView.Location = New System.Drawing.Point(15, 24)
+        Me.ReflowAlarmTableDataGridView.Name = "ReflowAlarmTableDataGridView"
+        Me.ReflowAlarmTableDataGridView.ReadOnly = True
+        Me.ReflowAlarmTableDataGridView.Size = New System.Drawing.Size(594, 220)
+        Me.ReflowAlarmTableDataGridView.TabIndex = 1
         '
         'IDDataGridViewTextBoxColumn
         '
@@ -2079,6 +2053,68 @@ Partial Class frmMain
         '
         Me.ReflowAlarmTableBindingSource.DataMember = "ReflowAlarmTable"
         Me.ReflowAlarmTableBindingSource.DataSource = Me.DBxDataSet
+        '
+        'tabRecord
+        '
+        Me.tabRecord.Controls.Add(Me.dataGridViewRecord)
+        Me.tabRecord.Location = New System.Drawing.Point(4, 22)
+        Me.tabRecord.Name = "tabRecord"
+        Me.tabRecord.Padding = New System.Windows.Forms.Padding(3)
+        Me.tabRecord.Size = New System.Drawing.Size(1231, 789)
+        Me.tabRecord.TabIndex = 2
+        Me.tabRecord.Text = "Record"
+        Me.tabRecord.UseVisualStyleBackColor = True
+        '
+        'dataGridViewRecord
+        '
+        Me.dataGridViewRecord.AllowUserToAddRows = False
+        Me.dataGridViewRecord.AllowUserToDeleteRows = False
+        Me.dataGridViewRecord.AllowUserToResizeColumns = False
+        Me.dataGridViewRecord.AllowUserToResizeRows = False
+        Me.dataGridViewRecord.AutoGenerateColumns = False
+        DataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle7.BackColor = System.Drawing.Color.Teal
+        DataGridViewCellStyle7.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle7.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle7.Padding = New System.Windows.Forms.Padding(0, 4, 0, 4)
+        DataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridViewRecord.ColumnHeadersDefaultCellStyle = DataGridViewCellStyle7
+        Me.dataGridViewRecord.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+        Me.dataGridViewRecord.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.LotNoDataGridViewTextBoxColumn2, Me.LotStartTimeDataGridViewTextBoxColumn1, Me.LotEndTimeDataGridViewTextBoxColumn1, Me.InputQtyDataGridViewTextBoxColumn1, Me.OutputQtyDataGridViewTextBoxColumn1, Me.MCNoDataGridViewTextBoxColumn2, Me.PackageDataGridViewTextBoxColumn, Me.DeviceDataGridViewTextBoxColumn, Me.OPNoDataGridViewTextBoxColumn1, Me.MagazineNoDataGridViewTextBoxColumn1, Me.TemperatureGroupDataGridViewTextBoxColumn1, Me.RemarkDataGridViewTextBoxColumn1, Me.AlarmTotalDataGridViewTextBoxColumn1, Me.selectLot})
+        Me.dataGridViewRecord.DataSource = Me.MachineRecordBindingSource
+        DataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window
+        DataGridViewCellStyle8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.ControlText
+        DataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.[False]
+        Me.dataGridViewRecord.DefaultCellStyle = DataGridViewCellStyle8
+        Me.dataGridViewRecord.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.dataGridViewRecord.EnableHeadersVisualStyles = False
+        Me.dataGridViewRecord.Location = New System.Drawing.Point(3, 3)
+        Me.dataGridViewRecord.Margin = New System.Windows.Forms.Padding(4)
+        Me.dataGridViewRecord.MultiSelect = False
+        Me.dataGridViewRecord.Name = "dataGridViewRecord"
+        DataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft
+        DataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Control
+        DataGridViewCellStyle9.Font = New System.Drawing.Font("Cambria", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        DataGridViewCellStyle9.ForeColor = System.Drawing.Color.White
+        DataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight
+        DataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText
+        DataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.[True]
+        Me.dataGridViewRecord.RowHeadersDefaultCellStyle = DataGridViewCellStyle9
+        Me.dataGridViewRecord.RowHeadersVisible = False
+        DataGridViewCellStyle10.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
+        Me.dataGridViewRecord.RowsDefaultCellStyle = DataGridViewCellStyle10
+        Me.dataGridViewRecord.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer))
+        Me.dataGridViewRecord.RowTemplate.Height = 30
+        Me.dataGridViewRecord.RowTemplate.ReadOnly = True
+        Me.dataGridViewRecord.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+        Me.dataGridViewRecord.Size = New System.Drawing.Size(1225, 783)
+        Me.dataGridViewRecord.TabIndex = 4
         '
         'LotNoDataGridViewTextBoxColumn2
         '
@@ -2172,6 +2208,16 @@ Partial Class frmMain
         Me.AlarmTotalDataGridViewTextBoxColumn1.HeaderText = "AlarmTotal"
         Me.AlarmTotalDataGridViewTextBoxColumn1.Name = "AlarmTotalDataGridViewTextBoxColumn1"
         '
+        'selectLot
+        '
+        Me.selectLot.DataPropertyName = "LotId"
+        Me.selectLot.FlatStyle = System.Windows.Forms.FlatStyle.System
+        Me.selectLot.HeaderText = ""
+        Me.selectLot.Name = "selectLot"
+        Me.selectLot.Text = "Select"
+        Me.selectLot.UseColumnTextForButtonValue = True
+        Me.selectLot.Width = 5
+        '
         'MachineRecordBindingSource
         '
         Me.MachineRecordBindingSource.DataMember = "MachineRecord"
@@ -2192,52 +2238,6 @@ Partial Class frmMain
         'MachineRecordTableAdapter1
         '
         Me.MachineRecordTableAdapter1.ClearBeforeFill = True
-        '
-        'LbUnloadMagazine1
-        '
-        Me.LbUnloadMagazine1.AutoSize = True
-        Me.LbUnloadMagazine1.BackColor = System.Drawing.Color.Transparent
-        Me.LbUnloadMagazine1.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbUnloadMagazine1.Location = New System.Drawing.Point(213, 278)
-        Me.LbUnloadMagazine1.Name = "LbUnloadMagazine1"
-        Me.LbUnloadMagazine1.Size = New System.Drawing.Size(19, 25)
-        Me.LbUnloadMagazine1.TabIndex = 51
-        Me.LbUnloadMagazine1.Text = "-"
-        '
-        'Label18
-        '
-        Me.Label18.BackColor = System.Drawing.Color.Transparent
-        Me.Label18.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label18.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Label18.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label18.Location = New System.Drawing.Point(18, 278)
-        Me.Label18.Name = "Label18"
-        Me.Label18.Size = New System.Drawing.Size(189, 27)
-        Me.Label18.TabIndex = 214
-        Me.Label18.Text = "Unload Magazine    "
-        '
-        'LbUnloadMagazine2
-        '
-        Me.LbUnloadMagazine2.AutoSize = True
-        Me.LbUnloadMagazine2.BackColor = System.Drawing.Color.Transparent
-        Me.LbUnloadMagazine2.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.LbUnloadMagazine2.Location = New System.Drawing.Point(228, 279)
-        Me.LbUnloadMagazine2.Name = "LbUnloadMagazine2"
-        Me.LbUnloadMagazine2.Size = New System.Drawing.Size(19, 25)
-        Me.LbUnloadMagazine2.TabIndex = 51
-        Me.LbUnloadMagazine2.Text = "-"
-        '
-        'Label21
-        '
-        Me.Label21.BackColor = System.Drawing.Color.Transparent
-        Me.Label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-        Me.Label21.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-        Me.Label21.Font = New System.Drawing.Font("Microsoft Sans Serif", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(222, Byte))
-        Me.Label21.Location = New System.Drawing.Point(16, 279)
-        Me.Label21.Name = "Label21"
-        Me.Label21.Size = New System.Drawing.Size(204, 27)
-        Me.Label21.TabIndex = 214
-        Me.Label21.Text = "Unload Magazine"
         '
         'frmMain
         '
@@ -2286,16 +2286,16 @@ Partial Class frmMain
         Me.TabPage4.ResumeLayout(False)
         Me.Panel3.ResumeLayout(False)
         CType(Me.ReflowDataDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReflowAlarmInfoDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.tabRecord.ResumeLayout(False)
-        CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).EndInit()
-        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowDataBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.DBxDataSet, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowAlarmInfoDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowAlarmInfoBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowAlarmTableDataGridView, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.ReflowAlarmTableBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.tabRecord.ResumeLayout(False)
+        CType(Me.dataGridViewRecord, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.MachineRecordBindingSource, System.ComponentModel.ISupportInitialize).EndInit()
+        CType(Me.ReflowDataBindingSource1, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 

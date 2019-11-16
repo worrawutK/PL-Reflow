@@ -2214,16 +2214,18 @@ Public Class frmMain
         End Try
         Try
             c_ApcsPro.CarrierInfo = c_ServiceiLibrary.GetCarrierInfo(mc, LotNo, OpNo)
+            If c_ApcsPro.CarrierInfo.EnabledControlCarrier = CarrierInfo.Status.Use AndAlso c_ApcsPro.CarrierInfo.InControlCarrier = CarrierInfo.Status.Use Then
+                If c_ApcsPro.CarrierInfo.LoadCarrier = CarrierInfo.Status.Use Then
+                    c_ApcsPro.CarrierInfo.LoadCarrierNo = loadCarrierNo
+                End If
+                If c_ApcsPro.CarrierInfo.RegisterCarrier = CarrierInfo.Status.Use Then
+                    c_ApcsPro.CarrierInfo.RegisterCarrierNo = loadCarrierNo
+                End If
+                If c_ApcsPro.CarrierInfo.TransferCarrier = CarrierInfo.Status.Use Then
+                    c_ApcsPro.CarrierInfo.TransferCarrierNo = tranferCarrierNo
+                End If
+            End If
 
-            If c_ApcsPro.CarrierInfo.LoadCarrier = CarrierInfo.Status.Use Then
-                c_ApcsPro.CarrierInfo.LoadCarrierNo = loadCarrierNo
-            End If
-            If c_ApcsPro.CarrierInfo.RegisterCarrier = CarrierInfo.Status.Use Then
-                c_ApcsPro.CarrierInfo.RegisterCarrierNo = loadCarrierNo
-            End If
-            If c_ApcsPro.CarrierInfo.TransferCarrier = CarrierInfo.Status.Use Then
-                c_ApcsPro.CarrierInfo.TransferCarrierNo = tranferCarrierNo
-            End If
         Catch ex As Exception
 
         End Try
@@ -2351,9 +2353,12 @@ Public Class frmMain
             c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
             If modeEnd = EndMode.Normal Then
                 'Dim endLotResult = c_ServiceiLibrary.EndLotNoCheckLicenser(LotNo, McNo, OpNo, Good, Ng)
-                If (c_ApcsPro.CarrierInfo.UnloadCarrier = CarrierInfo.Status.Use) Then
-                    c_ApcsPro.CarrierInfo.UnloadCarrierNo = c_ApcsPro.CarrierInfo.TransferCarrierNo
+                If c_ApcsPro.CarrierInfo.EnabledControlCarrier = CarrierInfo.Status.Use AndAlso c_ApcsPro.CarrierInfo.InControlCarrier = CarrierInfo.Status.Use Then
+                    If (c_ApcsPro.CarrierInfo.UnloadCarrier = CarrierInfo.Status.Use) Then
+                        c_ApcsPro.CarrierInfo.UnloadCarrierNo = c_ApcsPro.CarrierInfo.TransferCarrierNo
+                    End If
                 End If
+
                 Dim endLotResult = c_ServiceiLibrary.EndLotPhase2(LotNo, McNo, OpNo, Good, Ng, Licenser.NoCheck, c_ApcsPro.CarrierInfo, Nothing)
             Else
                 Dim reinputLotResult = c_ServiceiLibrary.Reinput(LotNo, McNo, OpNo, Good, Ng, modeEnd)
@@ -2869,8 +2874,6 @@ Public Class frmMain
 
         'Dim alarmData As List(Of ReflowAlarmInfoData) = data.AlarmInfoDatas.Where(Function(x) x.AlarmId = AlarmID).ToList
         Try
-
-            c_ServiceiLibrary.MachineAlarm(data.LotNo, data.McNo, data.OpNo, alarmNo, alarm)
             Select Case alarm
                 Case AlarmState.SET
                     Dim AlarmID As Integer
@@ -2895,6 +2898,7 @@ Public Class frmMain
                         alarmData.ClearTime = alarmClear
                     Next
             End Select
+            c_ServiceiLibrary.MachineAlarm(data.LotNo, data.McNo, data.OpNo, alarmNo, alarm)
         Catch ex As Exception
             TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
         End Try
