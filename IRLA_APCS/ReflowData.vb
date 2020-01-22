@@ -2,7 +2,26 @@
 Public Class ReflowData
     Sub New()
         c_AlarmInfoDatas = New List(Of ReflowAlarmInfoData)
+        c_CarrierInfo = New iLibraryService.CarrierInfo
     End Sub
+    Private c_Recipe As String
+    Public Property Recipe() As String
+        Get
+            Return c_Recipe
+        End Get
+        Set(ByVal value As String)
+            c_Recipe = value
+        End Set
+    End Property
+    Private c_CarrierInfo As WindowsApplication1.iLibraryService.CarrierInfo
+    Public Property CarrierInfo() As WindowsApplication1.iLibraryService.CarrierInfo
+        Get
+            Return c_CarrierInfo
+        End Get
+        Set(ByVal value As WindowsApplication1.iLibraryService.CarrierInfo)
+            c_CarrierInfo = value
+        End Set
+    End Property
     Private c_AlarmInfoDatas As List(Of ReflowAlarmInfoData)
     Public Property AlarmInfoDatas() As List(Of ReflowAlarmInfoData)
         Get

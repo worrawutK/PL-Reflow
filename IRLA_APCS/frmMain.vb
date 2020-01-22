@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "191113 Support APCS Pro." 'Add Search Record
+        lbNetversion.Text = "191118 Carrier Control" 'Add Search Record
 
         'Load Alarm table
         ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
@@ -77,7 +77,7 @@ Public Class frmMain
             TextBoxNotification1.Text = "MachineOnlineState :" & ex.ToString()
         End Try
 
-        XmlLoad(c_ApcsPro, c_ApcsPro.GetType())
+        'XmlLoad(c_ApcsPro, c_ApcsPro.GetType())
     End Sub
     Sub LoadPFAlarmTable()
         Dim pathReflowTable As String = Path.Combine(My.Application.Info.DirectoryPath, "ReflowAlarmTable.xml")
@@ -278,8 +278,7 @@ Public Class frmMain
         Dim Header As String = strText(0).Trim
         Select Case Header
 
-            Case "LR"   'LR,LotNo,PackageNo,DeviceNo,OpNo,Input,Mag,pcs/frm,Group
-
+            Case "LR"   'LR,LotNo,PackageNo,DeviceNo,OpNo,Input,
                 Try
                     Dim strLotNo As String '= strText(1).Trim
                     Dim strPackage As String '= strText(2).Trim
@@ -2213,16 +2212,19 @@ Public Class frmMain
             TextBoxNotification1.Text = "Update_MachineState :" & ex.ToString()
         End Try
         Try
-            c_ApcsPro.CarrierInfo = c_ServiceiLibrary.GetCarrierInfo(mc, LotNo, OpNo)
-            If c_ApcsPro.CarrierInfo.EnabledControlCarrier = CarrierInfo.Status.Use AndAlso c_ApcsPro.CarrierInfo.InControlCarrier = CarrierInfo.Status.Use Then
-                If c_ApcsPro.CarrierInfo.LoadCarrier = CarrierInfo.Status.Use Then
-                    c_ApcsPro.CarrierInfo.LoadCarrierNo = loadCarrierNo
+            data.CarrierInfo = c_ServiceiLibrary.GetCarrierInfo(mc, LotNo, OpNo)
+            'c_ApcsPro.CarrierInfo = c_ServiceiLibrary.GetCarrierInfo(mc, LotNo, OpNo)
+            If data.CarrierInfo.EnabledControlCarrier = CarrierInfo.CarrierStatus.Use AndAlso
+                data.CarrierInfo.InControlCarrier = CarrierInfo.CarrierStatus.Use Then
+
+                If data.CarrierInfo.LoadCarrier = CarrierInfo.CarrierStatus.Use Then
+                    data.CarrierInfo.LoadCarrierNo = loadCarrierNo
                 End If
-                If c_ApcsPro.CarrierInfo.RegisterCarrier = CarrierInfo.Status.Use Then
-                    c_ApcsPro.CarrierInfo.RegisterCarrierNo = loadCarrierNo
+                If data.CarrierInfo.RegisterCarrier = CarrierInfo.CarrierStatus.Use Then
+                    data.CarrierInfo.RegisterCarrierNo = loadCarrierNo
                 End If
-                If c_ApcsPro.CarrierInfo.TransferCarrier = CarrierInfo.Status.Use Then
-                    c_ApcsPro.CarrierInfo.TransferCarrierNo = tranferCarrierNo
+                If data.CarrierInfo.TransferCarrier = CarrierInfo.CarrierStatus.Use Then
+                    data.CarrierInfo.TransferCarrierNo = tranferCarrierNo
                 End If
             End If
 
@@ -2241,9 +2243,9 @@ Public Class frmMain
             'Dim setupSpecial As SetupLotSpecialParametersEventArgs = New SetupLotSpecialParametersEventArgs()
             'setupSpecial.LayerNoApcs = ""
             'setupSpecial.RunModeApcs = RunMode.Normal
-            Dim result As SetupLotResult = c_ServiceiLibrary.SetupLotPhase2(LotNo, mc, OpNo, "PL", Licenser.Check, c_ApcsPro.CarrierInfo, Nothing)
+            Dim result As SetupLotResult = c_ServiceiLibrary.SetupLotPhase2(LotNo, mc, OpNo, "PL", Licenser.Check, data.CarrierInfo, Nothing)
             If result.IsPass = SetupLotResult.Status.NotPass Then
-                MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
+                MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause & vbCrLf & "Magazine Load:[" & data.CarrierInfo.LoadCarrierNo & "],Magazine Transfer:[" & data.CarrierInfo.TransferCarrierNo & "]", result.Type.ToString(), result.ErrorNo)
                 apcsInfo.ErrorMessage = result.Cause
                 apcsInfo.IsPass = False
                 Return apcsInfo
@@ -2259,8 +2261,8 @@ Public Class frmMain
             'ElseIf (result.IsPass = SetupLotResult.Status.Warning) Then
             '    MessageBoxDialog.ShowMessage(result.FunctionName, result.Cause, result.Type.ToString(), result.ErrorNo)
             'End If
-            c_ApcsPro.Recipe = result.Recipe
-            XmlSave(c_ApcsPro)
+            data.Recipe = result.Recipe
+            'XmlSave(c_ApcsPro)
             'End If
 
         Catch ex As Exception
@@ -2269,33 +2271,6 @@ Public Class frmMain
         apcsInfo.ErrorMessage = "00 : Run Normal"
         apcsInfo.IsPass = True
         Return apcsInfo
-
-        'Dim res As TdcLotRequestResponse = m_TdcService.LotRequest(mc, LotNo, rm)
-
-        'If res.HasError Then
-
-        '    Using svError As ApcsWebServiceSoapClient = New ApcsWebServiceSoapClient
-        '        If svError.LotRptIgnoreError(mc, res.ErrorCode) = False Then
-        '            Dim li As Rohm.Apcs.Tdc.LotInfo = Nothing
-        '            li = m_TdcService.GetLotInfo(LotNo, mc)
-        '            c_dlg = New TdcAlarmMessageForm(res.ErrorCode, res.ErrorMessage, LotNo, li)
-        '            c_dlg.Show()
-        '            apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
-        '            apcsInfo.ErrorCode = res.ErrorCode
-        '            apcsInfo.IsPass = False
-        '            Return apcsInfo
-        '        End If
-        '    End Using
-        '    apcsInfo.ErrorMessage = res.ErrorCode & " : " & res.ErrorMessage
-        '    apcsInfo.IsPass = True
-        '    Return apcsInfo
-        'Else
-
-        '    apcsInfo.ErrorMessage = "00 : Run Normal"
-        '    apcsInfo.IsPass = True
-        '    Return apcsInfo
-        'End If
-
     End Function
 
     Private Sub LotSetTdc(MCno As String, LotNo As String, StartTime As DateTime, OpNo As String)
@@ -2305,7 +2280,7 @@ Public Class frmMain
 
         Try
 
-            Dim result As StartLotResult = c_ServiceiLibrary.StartLotPhase2(LotNo, MCno, OpNo, c_ApcsPro.Recipe, c_ApcsPro.CarrierInfo, Nothing)
+            Dim result As StartLotResult = c_ServiceiLibrary.StartLotPhase2(LotNo, MCno, OpNo, data.Recipe, data.CarrierInfo, Nothing)
             If Not result.IsPass Then
                 If lbLotNo1.Text = LotNo Then
                     TextBoxNotification1.Text = "StartLot :" & result.Cause
@@ -2352,14 +2327,16 @@ Public Class frmMain
         Try
             c_ServiceiLibrary.OnlineEnd(LotNo, McNo, OpNo, Good, Ng)
             If modeEnd = EndMode.Normal Then
+                data.CarrierInfo = c_ServiceiLibrary.GetCarrierInfo(McNo, LotNo, OpNo)
+
                 'Dim endLotResult = c_ServiceiLibrary.EndLotNoCheckLicenser(LotNo, McNo, OpNo, Good, Ng)
-                If c_ApcsPro.CarrierInfo.EnabledControlCarrier = CarrierInfo.Status.Use AndAlso c_ApcsPro.CarrierInfo.InControlCarrier = CarrierInfo.Status.Use Then
-                    If (c_ApcsPro.CarrierInfo.UnloadCarrier = CarrierInfo.Status.Use) Then
-                        c_ApcsPro.CarrierInfo.UnloadCarrierNo = c_ApcsPro.CarrierInfo.TransferCarrierNo
+                If data.CarrierInfo.EnabledControlCarrier = CarrierInfo.CarrierStatus.Use AndAlso data.CarrierInfo.InControlCarrier = CarrierInfo.CarrierStatus.Use Then
+                    If (data.CarrierInfo.UnloadCarrier = CarrierInfo.CarrierStatus.Use) Then
+                        data.CarrierInfo.UnloadCarrierNo = data.CarrierInfo.NextCarrierNo
                     End If
                 End If
 
-                Dim endLotResult = c_ServiceiLibrary.EndLotPhase2(LotNo, McNo, OpNo, Good, Ng, Licenser.NoCheck, c_ApcsPro.CarrierInfo, Nothing)
+                Dim endLotResult = c_ServiceiLibrary.EndLotPhase2(LotNo, McNo, OpNo, Good, Ng, Licenser.NoCheck, data.CarrierInfo, Nothing)
             Else
                 Dim reinputLotResult = c_ServiceiLibrary.Reinput(LotNo, McNo, OpNo, Good, Ng, modeEnd)
             End If

@@ -1782,37 +1782,43 @@ Namespace iLibraryService
         Private extensionDataField As System.Runtime.Serialization.ExtensionDataObject
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private EnabledControlCarrierField As iLibraryService.CarrierInfo.Status
+        Private CurrentCarrierNoField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private InControlCarrierField As iLibraryService.CarrierInfo.Status
+        Private EnabledControlCarrierField As iLibraryService.CarrierInfo.CarrierStatus
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private InControlCarrierField As iLibraryService.CarrierInfo.CarrierStatus
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private IsPassField As Boolean
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private LoadCarrierField As iLibraryService.CarrierInfo.Status
+        Private LoadCarrierField As iLibraryService.CarrierInfo.CarrierStatus
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private LoadCarrierNoField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
+        Private NextCarrierNoField As String
+        
+        <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private ReasonField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private RegisterCarrierField As iLibraryService.CarrierInfo.Status
+        Private RegisterCarrierField As iLibraryService.CarrierInfo.CarrierStatus
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private RegisterCarrierNoField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private TransferCarrierField As iLibraryService.CarrierInfo.Status
+        Private TransferCarrierField As iLibraryService.CarrierInfo.CarrierStatus
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private TransferCarrierNoField As String
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
-        Private UnloadCarrierField As iLibraryService.CarrierInfo.Status
+        Private UnloadCarrierField As iLibraryService.CarrierInfo.CarrierStatus
         
         <System.Runtime.Serialization.OptionalFieldAttribute()>  _
         Private UnloadCarrierNoField As String
@@ -1828,7 +1834,20 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property EnabledControlCarrier() As iLibraryService.CarrierInfo.Status
+        Public Property CurrentCarrierNo() As String
+            Get
+                Return Me.CurrentCarrierNoField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.CurrentCarrierNoField, value) <> true) Then
+                    Me.CurrentCarrierNoField = value
+                    Me.RaisePropertyChanged("CurrentCarrierNo")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property EnabledControlCarrier() As iLibraryService.CarrierInfo.CarrierStatus
             Get
                 Return Me.EnabledControlCarrierField
             End Get
@@ -1841,7 +1860,7 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property InControlCarrier() As iLibraryService.CarrierInfo.Status
+        Public Property InControlCarrier() As iLibraryService.CarrierInfo.CarrierStatus
             Get
                 Return Me.InControlCarrierField
             End Get
@@ -1867,7 +1886,7 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property LoadCarrier() As iLibraryService.CarrierInfo.Status
+        Public Property LoadCarrier() As iLibraryService.CarrierInfo.CarrierStatus
             Get
                 Return Me.LoadCarrierField
             End Get
@@ -1893,6 +1912,19 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
+        Public Property NextCarrierNo() As String
+            Get
+                Return Me.NextCarrierNoField
+            End Get
+            Set
+                If (Object.ReferenceEquals(Me.NextCarrierNoField, value) <> true) Then
+                    Me.NextCarrierNoField = value
+                    Me.RaisePropertyChanged("NextCarrierNo")
+                End If
+            End Set
+        End Property
+        
+        <System.Runtime.Serialization.DataMemberAttribute()>  _
         Public Property Reason() As String
             Get
                 Return Me.ReasonField
@@ -1906,7 +1938,7 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property RegisterCarrier() As iLibraryService.CarrierInfo.Status
+        Public Property RegisterCarrier() As iLibraryService.CarrierInfo.CarrierStatus
             Get
                 Return Me.RegisterCarrierField
             End Get
@@ -1932,7 +1964,7 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property TransferCarrier() As iLibraryService.CarrierInfo.Status
+        Public Property TransferCarrier() As iLibraryService.CarrierInfo.CarrierStatus
             Get
                 Return Me.TransferCarrierField
             End Get
@@ -1958,7 +1990,7 @@ Namespace iLibraryService
         End Property
         
         <System.Runtime.Serialization.DataMemberAttribute()>  _
-        Public Property UnloadCarrier() As iLibraryService.CarrierInfo.Status
+        Public Property UnloadCarrier() As iLibraryService.CarrierInfo.CarrierStatus
             Get
                 Return Me.UnloadCarrierField
             End Get
@@ -1993,8 +2025,8 @@ Namespace iLibraryService
         End Sub
         
         <System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0"),  _
-         System.Runtime.Serialization.DataContractAttribute(Name:="CarrierInfo.Status", [Namespace]:="http://schemas.datacontract.org/2004/07/")>  _
-        Public Enum Status As Integer
+         System.Runtime.Serialization.DataContractAttribute(Name:="CarrierInfo.CarrierStatus", [Namespace]:="http://schemas.datacontract.org/2004/07/")>  _
+        Public Enum CarrierStatus As Integer
             
             <System.Runtime.Serialization.EnumMemberAttribute()>  _
             No_Use = 0

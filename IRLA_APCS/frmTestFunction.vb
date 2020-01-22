@@ -10,7 +10,7 @@
     End Sub
     Private Ip As String = "10.1.1.50"
     Private Sub frmTestFunction_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        TextBoxLR.Text = "LR,9999A0005V,SSOP-B28W ,BD3805F1234(BW)        ,007441,07D8,0000000000,001E,B."
+        TextBoxLR.Text = "LR,9999A0005V,SSOP-B28W ,BD3805F1234(BW)        ,007441,07D8,0000000000,0000000000,001E,B."
         TextBoxLS.Text = "LS,9999A0005V"
         TextBoxSD.Text = "SD,9999A0005V,000000C2"
         TextBoxLE.Text = "LE,9999A0005V,000000C2,Normal"
