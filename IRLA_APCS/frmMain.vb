@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "191118 Carrier Control" 'Add Search Record
+        lbNetversion.Text = "20200219 Carrier Control" 'Add Search Record
 
         'Load Alarm table
         ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
@@ -308,6 +308,11 @@ Public Class frmMain
                             intInputData = CInt(CLng("&H" & strText(5)))
                             strLoadCarrierNo = strText(6).Trim.ToUpper()
                             strTranferCarrierNo = strText(7).Trim.ToUpper()
+                            If strLoadCarrierNo = strTranferCarrierNo Then
+                                SendTheMessage(My.Settings.IP, "LP01" & vbCr, My.Settings.MCNo)
+                                MessageBoxDialog.ShowMessage("SetupLot", "ไม่สามารถใช้ Carrier Load และ Tranfer เหมือนกันได้", "LR")
+                                Exit Sub
+                            End If
                             strPCS_Frame = CInt(CLng("&H" & strText(8)))
                             strGroup = Trim(strText(9)).Substring(0, 1)
                     End Select
