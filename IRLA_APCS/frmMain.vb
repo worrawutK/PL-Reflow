@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "20200219 Carrier Control" 'Add Search Record
+        lbNetversion.Text = "20200420 Carrier Control" 'Add Search Record
 
         'Load Alarm table
         ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
@@ -291,7 +291,7 @@ Public Class frmMain
                     Dim strGroup As String '= Trim(strText(8)).Substring(0, 1)
 
                     Select Case strText.Count()
-                        Case 9
+                        Case 9 'subport PLC old program
                             strLotNo = strText(1).Trim
                             strPackage = strText(2).Trim
                             strDevice = strText(3).Trim
@@ -841,19 +841,19 @@ Public Class frmMain
         TextBoxNotificationNextLot.Text = "-"
         PanelNextLot.BackColor = Color.Silver
         RemoveDisplay(dataList)
-        For Each data As ReflowData In dataList
-
-            'lbMC.Text = My.Settings.MCNo 'data.McNo
-            'lbIp.Text = My.Settings.IP ' data.IPA
-            If (data.StartTime Is Nothing) Then
-                LabelNextLot.Text = data.LotNo
-                If Not data.LotInform Is Nothing Then
-                    TextBoxNotificationNextLot.Text = data.LotInform
-                Else
-                    TextBoxNotificationNextLot.Text = "-"
-                End If
-                PanelNextLot.BackColor = Color.LawnGreen
-            ElseIf (lbLotNo1.Text = "-" OrElse lbStop1.Text <> "-" Or lbLotNo1.Text = data.LotNo) And lbLotNo2.Text <> data.LotNo Then
+        For Each data As ReflowData In dataList.Where(Function(x) x.StartTime Is Nothing).Take(1)
+            LabelNextLot.Text = data.LotNo
+            If Not data.LotInform Is Nothing Then
+                TextBoxNotificationNextLot.Text = data.LotInform
+            Else
+                TextBoxNotificationNextLot.Text = "-"
+            End If
+            PanelNextLot.BackColor = Color.LawnGreen
+        Next
+        Dim count As Integer = 0
+        For Each data As ReflowData In dataList.Where(Function(x) x.StartTime IsNot Nothing).OrderBy(Function(x) x.StartTime).Take(2)
+            count += 1
+            If count = 1 Then
                 If Not data.OpNo Is Nothing Then
                     lbOpNo1.Text = data.OpNo
                 End If
@@ -921,7 +921,7 @@ Public Class frmMain
                     Case _StatusLot.LotEnd
                         lbStart1.BackColor = Color.Transparent
                 End Select
-            Else
+            ElseIf count = 2 Then
                 If Not data.OpNo Is Nothing Then
                     lbOpNo2.Text = data.OpNo
                 Else
@@ -991,6 +991,21 @@ Public Class frmMain
                         lbStart2.BackColor = Color.Transparent
                 End Select
             End If
+            'lbMC.Text = My.Settings.MCNo 'data.McNo
+            'lbIp.Text = My.Settings.IP ' data.IPA
+            'If (data.StartTime Is Nothing) Then
+            '    LabelNextLot.Text = data.LotNo
+            '    If Not data.LotInform Is Nothing Then
+            '        TextBoxNotificationNextLot.Text = data.LotInform
+            '    Else
+            '        TextBoxNotificationNextLot.Text = "-"
+            '    End If
+            '    PanelNextLot.BackColor = Color.LawnGreen
+            'ElseIf (lbLotNo1.Text = "-" OrElse lbStop1.Text <> "-" Or lbLotNo1.Text = data.LotNo) And lbLotNo2.Text <> data.LotNo Then
+
+            'Else
+
+            'End If
 
         Next
         If backup = True Then
