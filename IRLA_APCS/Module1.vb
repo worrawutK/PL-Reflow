@@ -19,6 +19,7 @@
         LotAlarm = 3
         LotEnd = 4
         LotStop = 5
+        LotEndMc = 6
     End Enum
 
     Enum _SelfConMode

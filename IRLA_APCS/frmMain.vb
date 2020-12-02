@@ -43,7 +43,7 @@ Public Class frmMain
         c_ServiceiLibrary = New ServiceiLibraryClient()
         lbMC.Text = My.Settings.MCNo
         lbIp.Text = My.Settings.IP
-        lbNetversion.Text = "20200420 Carrier Control" 'Add Search Record
+        lbNetversion.Text = "20201130 Carrier Control" 'Add Search Record
 
         'Load Alarm table
         ReflowAlarmTableTableAdapter.Fill(DBxDataSet.ReflowAlarmTable)
@@ -340,6 +340,12 @@ Public Class frmMain
                             .LotSetOfSending = False
                         }
 
+                    Dim lotdataNg = ReFlowDataList.Where(Function(x) x.LotStatus = _StatusLot.LotEndMc).ToList
+                    If lotdataNg.Count >= 1 Then
+                        SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
+                        MessageBoxDialog.ShowMessage("SetupLot", "กรุณาจบ lot no:" & lotdataNg(0).LotNo & " นี้ก่อนทำการ SetupLot ใหม่", "")
+                        Exit Sub
+                    End If
                     ' .StopTime = "",
                     If (strLoadCarrierNo = "0000000000") Then
                         data.MagazineNo = ""
@@ -373,6 +379,7 @@ Public Class frmMain
                     ReFlowDataList.Add(data)
                     Dim ApcsInfo = LotRequestTDC(strLotNo, RunModeType.Normal, strOPNo, strLoadCarrierNo, strTranferCarrierNo)
                     If ApcsInfo.IsPass = False Then
+                        addlogfile(ApcsInfo.ErrorMessage)
                         SendTheMessage(data.IPA, "LP01" & vbCr, data.McNo)
                         data.LotInform = ApcsInfo.ErrorMessage
                         UpdateDisplay(ReFlowDataList, False)
@@ -635,7 +642,7 @@ Public Class frmMain
                         Exit Sub
                     End If
                     SendTheMessage(My.Settings.IP, "CP" & vbCr, My.Settings.MCNo)
-                    If Not EndLot(strText(1), strText(2), True) Then
+                    If Not EndLot(strText(1), strText(2), True, EndMode.Normal, False) Then
                         Exit Select
                     End If
 
@@ -690,13 +697,13 @@ Public Class frmMain
         End Select
     End Sub
 
-    Private Function EndLot(LotNo As String, good As String, Optional isHexadecimal As Boolean = False, Optional endMode As EndMode = EndMode.Normal) As Boolean
+    Private Function EndLot(LotNo As String, good As String, Optional isHexadecimal As Boolean = False, Optional endMode As EndMode = EndMode.Normal, Optional isManualEnd As Boolean = True) As Boolean
         Dim data As ReflowData = SearchReflowData(LotNo)
         If data Is Nothing Then
             MessageBox.Show("ไม่พบข้อมูลของ LotNo:" & LotNo)
             Return False
         End If
-        If data.StopTime <> "" OrElse (data.StartTime = "" AndAlso data.StopTime = "") Then
+        If (data.StartTime = "" AndAlso data.StopTime = "") Then 'data.StopTime <> "" OrElse 
             Return False
         End If
 
@@ -712,18 +719,26 @@ Public Class frmMain
         If GoodPCS > data.Input Then 'Output มาเกิน ทำให้มันค่าเท่ากับ Input
             GoodPCS = data.Input
         End If
-
-        data.Output = GoodPCS
-        data.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
-        data.LotStatus = _StatusLot.LotEnd
-        data.NGQty = CInt(data.Input) - CInt(data.Output)
-
-        If CInt(data.NGQty) < 0 Then
-            data.NGQty = 0
-        ElseIf CInt(data.NGQty) >= CInt(data.Input) Then
-            data.NGQty = 0
+        data.LotStatus = _StatusLot.LotEndMc
+        If String.IsNullOrEmpty(data.StopTime) Then
+            data.StopTime = Format(Now, "yyyy/MM/dd HH:mm:ss")
+            UpdateDisplay(ReFlowDataList)
         End If
 
+        If CInt(data.Input) <> GoodPCS Then
+            If isManualEnd Then
+                addlogfile("Manual : Input=" & CInt(data.Input) & ",Output=" & CInt(data.Output))
+            Else
+                addlogfile("Auto : Input=" & CInt(data.Input) & ",Output=" & CInt(data.Output))
+                Return False
+                'MessageBox.Show("จำนวนงานไม่ครบ กรุณาทำการ adjust จำนวนงาน")
+            End If
+
+        End If
+        data.Output = GoodPCS
+
+        data.LotStatus = _StatusLot.LotEnd
+        data.NGQty = CInt(data.Input) - CInt(data.Output)
 
         'If data.LotSetOfSending = False Then
         '    Try
@@ -920,6 +935,9 @@ Public Class frmMain
                 'lbStart.BackColor = Color.Red
                     Case _StatusLot.LotEnd
                         lbStart1.BackColor = Color.Transparent
+                    Case _StatusLot.LotEndMc
+                        lbOutput1.BackColor = Color.Red
+
                 End Select
             ElseIf count = 2 Then
                 If Not data.OpNo Is Nothing Then
@@ -989,6 +1007,8 @@ Public Class frmMain
             'lbStart.BackColor = Color.Red
                     Case _StatusLot.LotEnd
                         lbStart2.BackColor = Color.Transparent
+                    Case _StatusLot.LotEndMc
+                        lbOutput2.BackColor = Color.Red
                 End Select
             End If
             'lbMC.Text = My.Settings.MCNo 'data.McNo
@@ -1016,8 +1036,8 @@ Public Class frmMain
     End Sub
 
     Private Sub RemoveDisplay(dataList As List(Of ReflowData))
-        If dataList.Count = 0 Then
-            lbLotNo1.Text = "-"
+        'If dataList.Count = 0 Then
+        lbLotNo1.Text = "-"
             lbOpNo1.Text = "-"
             lbPackage1.Text = "-"
             lbDevice1.Text = "-"
@@ -1030,9 +1050,10 @@ Public Class frmMain
             lbStop1.Text = "-"
             TextBoxNotification1.Text = "-"
             PanelLot1.BackColor = Color.Silver
-            lbStart1.BackColor = Color.Transparent
+        lbStart1.BackColor = Color.Transparent
+        lbOutput1.BackColor = Color.Transparent
 
-            lbLotNo2.Text = "-"
+        lbLotNo2.Text = "-"
             lbOpNo2.Text = "-"
             lbPackage2.Text = "-"
             lbDevice2.Text = "-"
@@ -1045,38 +1066,39 @@ Public Class frmMain
             lbStop2.Text = "-"
             TextBoxNotification2.Text = "-"
             PanelLot2.BackColor = Color.Silver
-            lbStart2.BackColor = Color.Transparent
-        ElseIf Not dataList.Where(Function(x) x.LotNo = lbLotNo1.Text).Any() Then
-            lbLotNo1.Text = "-"
-            lbOpNo1.Text = "-"
-            lbPackage1.Text = "-"
-            lbDevice1.Text = "-"
-            lbInput1.Text = "-"
-            lbOutput1.Text = "-"
-            LbMagazine1.Text = "-"
-            LbUnloadMagazine1.Text = "-"
-            LbGroup1.Text = "-"
-            lbStart1.Text = "-"
-            lbStop1.Text = "-"
-            TextBoxNotification1.Text = "-"
-            PanelLot1.BackColor = Color.Silver
-            lbStart1.BackColor = Color.Transparent
-        ElseIf Not dataList.Where(Function(x) x.LotNo = lbLotNo2.Text).Any() Then
-            lbLotNo2.Text = "-"
-            lbOpNo2.Text = "-"
-            lbPackage2.Text = "-"
-            lbDevice2.Text = "-"
-            lbInput2.Text = "-"
-            lbOutput2.Text = "-"
-            LbMagazine2.Text = "-"
-            LbUnloadMagazine2.Text = "-"
-            LbGroup2.Text = "-"
-            lbStart2.Text = "-"
-            lbStop2.Text = "-"
-            TextBoxNotification2.Text = "-"
-            PanelLot2.BackColor = Color.Silver
-            lbStart2.BackColor = Color.Transparent
-        End If
+        lbStart2.BackColor = Color.Transparent
+        lbOutput2.BackColor = Color.Transparent
+        'ElseIf Not dataList.Where(Function(x) x.LotNo = lbLotNo1.Text).Any() Then
+        '    lbLotNo1.Text = "-"
+        '    lbOpNo1.Text = "-"
+        '    lbPackage1.Text = "-"
+        '    lbDevice1.Text = "-"
+        '    lbInput1.Text = "-"
+        '    lbOutput1.Text = "-"
+        '    LbMagazine1.Text = "-"
+        '    LbUnloadMagazine1.Text = "-"
+        '    LbGroup1.Text = "-"
+        '    lbStart1.Text = "-"
+        '    lbStop1.Text = "-"
+        '    TextBoxNotification1.Text = "-"
+        '    PanelLot1.BackColor = Color.Silver
+        '    lbStart1.BackColor = Color.Transparent
+        'ElseIf Not dataList.Where(Function(x) x.LotNo = lbLotNo2.Text).Any() Then
+        '    lbLotNo2.Text = "-"
+        '    lbOpNo2.Text = "-"
+        '    lbPackage2.Text = "-"
+        '    lbDevice2.Text = "-"
+        '    lbInput2.Text = "-"
+        '    lbOutput2.Text = "-"
+        '    LbMagazine2.Text = "-"
+        '    LbUnloadMagazine2.Text = "-"
+        '    LbGroup2.Text = "-"
+        '    lbStart2.Text = "-"
+        '    lbStop2.Text = "-"
+        '    TextBoxNotification2.Text = "-"
+        '    PanelLot2.BackColor = Color.Silver
+        '    lbStart2.BackColor = Color.Transparent
+        ' End If
 
 
 
@@ -2287,6 +2309,9 @@ Public Class frmMain
 
         Catch ex As Exception
             TextBoxNotification1.Text = "SetupLot :" & ex.ToString()
+            apcsInfo.ErrorMessage = "SetupLot :" & ex.ToString()
+            apcsInfo.IsPass = False
+            Return apcsInfo
         End Try
         apcsInfo.ErrorMessage = "00 : Run Normal"
         apcsInfo.IsPass = True
