@@ -65,7 +65,7 @@
       <HintPath>DllSource\iLibrary.dll</HintPath>
     </Reference>
     <Reference Include="MessageDialog">
-      <HintPath>C:\Users\user099\source\repos\WebServiceLSIFlow\WCFServiceiLibrary\MessageDialog\bin\Debug\MessageDialog.dll</HintPath>
+      <HintPath>DllSource\MessageDialog.dll</HintPath>
     </Reference>
     <Reference Include="Rohm.Apcs.Tdc, Version=1.0.0.1, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>DllSource\Rohm.Apcs.Tdc.dll</HintPath>
